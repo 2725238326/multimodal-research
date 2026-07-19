@@ -1,0 +1,61 @@
+# Secrets and machine-local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.*
+
+# Python and notebook state
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Virtual environments and tool caches
+.venv/
+venv/
+env/
+.cache/
+
+# Raw and derived research assets
+data/raw/
+data/interim/
+data/processed/
+models/checkpoints/
+literature/papers/
+
+# Run-scale records and generated outputs
+experiments/logs/
+experiments/manifests/
+results/
+
+# Generated reports and office state
+reports/**/*.docx
+reports/**/*.pdf
+reports/**/qa_*/
+reports/**/.lo_profile*/
+reports/**/~$*
+reports/assets/
+
+# Archives, weights, and common large artifacts
+*.zip
+*.7z
+*.rar
+*.tar
+*.tar.gz
+*.tgz
+*.pth
+*.pt
+*.ckpt
+*.safetensors
+*.onnx
+
+# OS and editor state
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
