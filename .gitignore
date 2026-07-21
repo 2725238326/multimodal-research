@@ -19,6 +19,7 @@ __pycache__/
 venv/
 env/
 .cache/
+tmp/
 
 # Raw and derived research assets
 data/raw/
@@ -26,6 +27,7 @@ data/interim/
 data/processed/
 models/checkpoints/
 literature/papers/
+paper/
 
 # Run-scale records and generated outputs
 experiments/logs/
@@ -35,6 +37,8 @@ results/
 # Generated reports and office state
 reports/**/*.docx
 reports/**/*.pdf
+reports/**/report.html
+reports/**/*.verification-failure.png
 reports/**/qa_*/
 reports/**/.lo_profile*/
 reports/**/~$*
@@ -58,4 +62,3 @@ reports/assets/
 Thumbs.db
 .idea/
 .vscode/
-

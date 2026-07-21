@@ -1,0 +1,170 @@
+{
+  "surface": "report",
+  "manifest": {
+    "version": 1,
+    "surface": "report",
+    "title": "多模态研究仓库：任务、证据与推进路线",
+    "description": "面向新协作者的技术报告，解释材质恒常性主线、语义—物理研究问题、已有结果、工程边界和下一步。",
+    "generatedAt": "2026-07-21T18:00:00+08:00",
+    "charts": [
+      {
+        "id": "rgb_baseline_chart",
+        "title": "RGB 跨光照翻转率",
+        "subtitle": "66 个独立材质区域，每个区域 5 个光照",
+        "headerMarkdown": "两个模型都出现跨光照翻转。",
+        "type": "bar",
+        "dataset": "rgb_baseline_metrics",
+        "sourceId": "rgb_chart_data",
+        "valueFormat": "percent",
+        "encodings": {
+          "x": {"field": "model", "type": "nominal", "label": "模型"},
+          "y": {"field": "value", "type": "quantitative", "label": "翻转率", "format": "percent"},
+          "tooltip": [
+            {"field": "denominator", "type": "quantitative", "label": "分母"},
+            {"field": "unit", "type": "nominal", "label": "统计单元"}
+          ]
+        },
+        "yAxisTitle": "比例",
+        "layout": "full"
+      }
+    ],
+    "sources": [
+      {"id": "rgb_chart_data", "label": "报告内 RGB 基线图数据", "path": "artifact.json"}
+    ],
+    "blocks": [
+      {
+        "id": "title",
+        "type": "markdown",
+        "body": "# 多模态研究仓库：任务、证据与推进路线"
+      },
+      {
+        "id": "technical_summary",
+        "type": "markdown",
+        "body": "## 技术摘要：研究的是物理稳定识别，不是简单增加模态\n\n**本仓库当前的核心任务，是研究视觉模型和多模态大模型在光照改变时能否稳定识别同一表面材质，以及语义信息应该怎样与光照、反射、albedo、深度等物理证据分工。**\n\n已经完成的冻结模型实验表明：Qwen 与 InternVL 都会因光照改变而频繁更换材质答案；把估计 albedo、粗糙度/金属度文本或共同区域框直接加入输入，没有形成跨模型、统计稳定的准确率提升。因此，仓库已经否决“给冻结 VLM 多看一张物理图就会自然变好”的路线。\n\n当前最合理的新主线不是去除全部光照信息，而是把材质的**稳定身份**与具有判别力的**受光响应**分开建模，再通过可靠性门控或选择性蒸馏迁移给部署时只看 RGB 的学生模型。语义只负责提出候选、路由和解释；物理证据保留验证与否决权。\n\n这仍是研究计划而不是已验证方法。项目在正式训练前还必须完成环境锁定、数据许可与哈希、可移植路径、自动化 smoke test 和既有基线复现。"
+      },
+      {
+        "id": "task_definition",
+        "type": "markdown",
+        "body": "## 任务定义：同一材质换了光，模型还能认出它吗？\n\n可以把当前问题想成一个受控测试：同一块木头、玻璃或金属保持不变，只改变照明方向和亮度；模型每次只能从固定材质列表里选择一个答案。理想模型不仅要答对，还应在五个不同光照下保持一致。\n\n仓库要回答四层问题：\n\n1. **现象层**：当前 VLM 是否真的存在跨光照材质翻转？\n2. **机制层**：错误来自低层视觉编码、语义共现、区域对齐，还是融合接口？\n3. **方法层**：不变表征、受光响应、语义候选和物理验证怎样组合才有可归因收益？\n4. **部署层**：训练时可用多光照/albedo/depth 等特权信息时，能否让最终 RGB-only 模型更准、更稳？\n\n仓库不是以“使用某个大模型”或“做一个 agent”为最终目的。Qwen、InternVL、Gemma、DINO、SigLIP、Depth Anything 或 agent 都只是用来检验机制的可替换组件。"
+      },
+      {
+        "id": "track_explanation",
+        "type": "markdown",
+        "body": "## 主线只有一条，NYUv2 支撑关系仍是待核验候选\n\n材质恒常性已经有数据清单、两模型预测、干预和统计，是当前事实主线。NYUv2 支撑关系包只有 167 个几何候选，其中目前人工审核 14 个，标签为 2 个 support、11 个 non-support、1 个 uncertain；生成链、来源和许可还没有闭环。因此它只能作为未来“语义提出关系—深度几何验证”的候选任务，不能与当前材质主线等量齐观。"
+      },
+      {
+        "id": "pipeline",
+        "type": "markdown",
+        "body": "## 现有实验怎样从原始场景走到结论\n\n1. 数据构建脚本从 MIT Multi-Illumination 场景读取材质 mask 和 25 个光照方向。\n2. 对目标材质寻找足够大的连通区域，在内部最安全的位置裁出 96×96 patch，并要求区域纯度至少 0.82。\n3. 每个区域根据 RGB 均值和标准差选择 5 个差异较大的光照，形成同一区域的配对观测。\n4. Qwen3-VL-2B-Instruct 与 InternVL3.5-2B-HF 在不训练、确定性解码下，从固定标签列表选择一个材质。\n5. Marigold IID 生成估计 albedo；后续条件分别测试 albedo-only、RGB+albedo、RGB+粗糙度/金属度文本，以及完整场景中的共同红框。\n6. 统计脚本计算样本准确率、宏平均类别准确率、区域一致性、发生任意答案翻转的区域比例，并在区域级做 bootstrap。\n\n这个设计的关键是：同一区域的五张光照图不是五个独立物体。任何显著性判断都应以区域或场景为独立单元，不能把 330 张图直接当作 330 个完全独立样本。"
+      },
+      {
+        "id": "findings",
+        "type": "markdown",
+        "body": "## 已有结果：模型看见了干预，但没有学会稳定利用它\n\nRGB 基线已经证明跨光照翻转不是单模型偶然：Qwen 有 57.6% 的区域至少翻转一次，InternVL 为 66.7%；两个模型中任意一个翻转的区域达到 72.7%，翻转集合 Jaccard 为 0.708。\n\n单独使用 albedo 会使两个模型准确率都下降约 24 个百分点。RGB+albedo 对 Qwen 仅提高 0.91 个百分点，对 InternVL 下降 1.82 个百分点，两者置信区间均跨零。把粗糙度/金属度写成文本虽然让输出更一致，却把准确率降至 36.7% 和 25.1%——这是“更稳定地答错”，不能算进步。\n\n共同区域框改变了约 60/330 个答案，说明模型确实感知到接口变化；但相对单框的准确率提升仍然跨零，而且 Qwen 共同框结果显著低于原始 RGB。因此区域对齐可能只是问题的一小部分，并未证明冻结 VLM 能解释 albedo。\n\n这里使用精确表格而没有绘制统一柱状图，因为不同干预采用的输入界面和比较基线不完全相同；将它们画成单一排名会掩盖配对比较与置信区间边界。"
+      },
+      {"id": "rgb_baseline_chart_block", "type": "chart", "chartId": "rgb_baseline_chart", "layout": "full"},
+      {
+        "id": "metric_definitions",
+        "type": "markdown",
+        "body": "## 怎样理解这些指标和结论强度\n\n- **样本准确率**：330 次光照观测中答对的比例；它直观，但会重复计算同一物理区域。\n- **宏平均类别准确率**：先计算每个材质类别准确率再平均，避免样本较多的类别完全主导结果。\n- **区域一致性**：一个区域五次预测中最常见答案所占比例；高一致性不保证答案正确。\n- **区域翻转率**：66 个区域中，五次光照预测是否出现至少两个不同答案。\n- **配对差值与 bootstrap CI**：在同一区域比较干预与基线；95% 区间跨 0 时，本项目不把变化写成稳定提升。\n\n现有结论是诊断性和比较性的，不是因果机制证明。比如“albedo-only 变差”说明该表示或接口在当前设置下不足，不能证明 albedo 在所有架构中都无用。"
+      },
+      {
+        "id": "semantic_physical",
+        "type": "markdown",
+        "body": "## 语义与物理证据应当分工，而不是互相冒充\n\n原始想法可以拆成三种完全不同的研究设计：\n\n- **不采用**：VLM 根据对象常识直接把“杯子”推成玻璃或塑料，把语义先验冒充实际材质。\n- **不继续扩大**：把 RGB、albedo、depth 等图直接拼给冻结 VLM，希望它自动学会模态语义。\n- **重点研究**：语义模型提出 top-k 候选和可观察属性，光照响应、反射、几何或其他传感器负责验证；发生冲突时允许否决、降级到上位类别或请求新观测。\n\n对于材质，完全追求光照不变也可能有害，因为玻璃、金属、透明塑料、粗糙表面的区分恰恰依赖高光、透射和随光变化。当前主线因此采用“不变身份—受光响应因子化”：一条分支学习跨光稳定部分，另一条分支学习具有材质判别力的响应规律，再由质量路由决定如何使用。"
+      },
+      {
+        "id": "research_portfolio",
+        "type": "markdown",
+        "body": "## 候选创新组合必须先过廉价 gate\n\n**主线候选：不变身份—光响应因子化 + 选择性特权蒸馏。** 先用 DINO/SigLIP 冻结特征比较单 RGB、多光均值、方差、成对响应和 RGB/albedo residual；只有受光响应提供超出不变均值的额外信息，才训练 teacher/student。\n\n**邻接 gate 1：语义提案—光学验证。** VLM 只提出材质候选；验证器用高光、纹理、跨光响应等证据，重点测试能否推翻故意错误的对象—材质常识。\n\n**邻接 gate 2：结构引导物理关系 agent。** 语义提出支撑或接触候选，depth/segmentation 和几何程序验证；当前因 NYUv2 证据链不完整而阻塞。\n\n**高风险探索：主动反事实照明 agent。** 只有在真实多光照数据上，选光策略显著优于固定和随机策略后，才允许加入生成式 relighting。\n\n项目同时最多维护一条主线、两个邻接 gate 和一个高风险探索，避免模块堆叠、多重比较和算力失控。"
+      },
+      {
+        "id": "project_phases",
+        "type": "markdown",
+        "body": "## 当前真正的工作阶段：先把仓库变成可复现研究，再训练\n\n仓库已经完成若干实验，但整体项目仍处在 Phase 0/1 与 Phase 2 规划交界处。候选创新已经提出，不代表获准大规模训练。正式进入 Phase 3 前，必须先让另一个执行者能在小样本上复跑同一输入、模型和统计结果。"
+      },
+      {
+        "id": "limitations",
+        "type": "markdown",
+        "body": "## 当前限制决定了哪些话还不能说\n\n1. 四个共享 JSON 配置仍包含 `/home/xjy/...` 绝对路径，尚不具备跨机器可移植性。\n2. 仓库未发现 requirements、Conda、锁文件或容器定义，也没有自动化单元测试和 smoke-test 流程。\n3. 数据来源、再分发许可、哈希、完整预处理版本尚未统一登记，模型 revision 也只在部分环节完整。\n4. 初始提交已经跟踪大量数据、逐样本结果、缓存和 Office/QA 文件；新增 `.gitignore` 只能阻止未来新增，不能清除历史。\n5. 当前样本只有 30 个场景、66 个区域，类别分布不平衡；它足以形成失败诊断，尚不足以支持广泛泛化结论。\n6. 已有实验主要是冻结模型、零训练干预；不能据此否定经过专门对齐或训练的物理辅助模态。\n7. 文献碰撞检查可以降低重复风险，但任何“论文创新性”仍需在实验 claim 冻结后再次查新。"
+      },
+      {
+        "id": "next_steps",
+        "type": "markdown",
+        "body": "## 推荐推进顺序：先复现，再定位信息，最后训练\n\n1. **修复复现底座**：建立环境锁定；将共享配置改为相对路径/环境变量；补齐数据与模型 provenance；给数据构建、标签解析、区域统计做最小测试。\n2. **复跑一个固定 smoke manifest**：确认新环境的聚合结果与既有摘要一致，记录 commit、配置 hash、manifest hash、模型 revision、命令和资源。\n3. **形成现有错误图谱**：按材质、场景、亮度、高光、区域大小及两模型冲突重分析 330 个样本，找出最需要修复的子集。\n4. **执行 illumination-pair oracle**：用简单 RGB 统计、跨光均值/方差/residual 检查受光响应是否真的含有额外材质信息；若没有，主线立即 No-Go。\n5. **执行同容量 frozen-feature probe**：比较 DINO、SigLIP/CLIP、可选 depth 特征以及受控融合，使用 scene split 和错误/打乱辅助证据。\n6. **只有 gate 通过才训练**：先轻量头和选择性 teacher/student，再考虑 projector、adapter、LoRA 或 agent。\n7. **对外协作**：从最新 upstream/main 建短期主题分支，提交自有代码、可移植配置、实验计划和聚合摘要；不把 PDF、权重、数据和逐样本输出放入 PR。"
+      },
+      {
+        "id": "definition_done",
+        "type": "markdown",
+        "body": "## 怎样才算这个仓库的任务真正完成\n\n短期完成不是“又跑了一个模型”，而是 Phase 0/1 闭环并能可靠复现现有失败。\n\n中期完成是找到一个通过强简单基线、错误证据控制和区域/场景统计的机制：它必须同时改善材质判别与跨光稳定性，且收益不能只来自更多参数、更多 token 或更强通用编码器。\n\n长期完成是形成一个可外部验证、部署输入明确的系统：训练可利用多光照或其他物理特权信息，推理条件符合实际；对语义—物理冲突能校准或拒答；代码、配置、聚合证据和许可允许向上游提供聚焦成果。"
+      },
+      {
+        "id": "further_questions",
+        "type": "markdown",
+        "body": "## 仍需回答的关键问题\n\n- 多光照响应相对单图强视觉特征究竟增加了多少可预测信息？\n- 哪些材质需要保持光照不变，哪些材质必须保留光照响应？\n- teacher 在哪些样本上可靠，能否用可观测质量而非最终标签选择性蒸馏？\n- 物理验证器能否在反常对象—材质组合上真正推翻 VLM 先验？\n- NYUv2 支撑任务的数据来源、许可、生成代码和足够人工真值能否闭环？\n- 初始提交是否已被其他协作者使用，从而决定采用前向资产清理还是经一致同意的历史重写？"
+      }
+    ]
+  },
+  "snapshot": {
+    "version": 1,
+    "generatedAt": "2026-07-21T18:00:00+08:00",
+    "status": "ready",
+    "datasets": {
+      "headline": [{"samples": 330, "regions": 66, "scenes": 30, "classes": 11, "papers": 42}],
+      "rgb_baseline_metrics": [
+        {"model": "Qwen", "metric": "翻转率", "value": 0.576, "denominator": 66, "unit": "材质区域", "regions": 66, "scenes": 30},
+        {"model": "InternVL", "metric": "翻转率", "value": 0.667, "denominator": 66, "unit": "材质区域", "regions": 66, "scenes": 30}
+      ],
+      "experiment_results": [
+        {"order": 1, "condition": "RGB", "model": "Qwen3-VL-2B", "accuracy": 0.603, "flip_rate": 0.576, "comparison": "主基线", "status": "Completed"},
+        {"order": 2, "condition": "RGB", "model": "InternVL3.5-2B", "accuracy": 0.5303, "flip_rate": 0.667, "comparison": "复现模型基线", "status": "Completed"},
+        {"order": 3, "condition": "Albedo only", "model": "Qwen3-VL-2B", "accuracy": 0.3636, "flip_rate": 0.712, "comparison": "相对 RGB -23.94 pp；CI 不跨 0", "status": "No-Go"},
+        {"order": 4, "condition": "Albedo only", "model": "InternVL3.5-2B", "accuracy": 0.2939, "flip_rate": 0.773, "comparison": "相对 RGB -23.64 pp；CI 不跨 0", "status": "No-Go"},
+        {"order": 5, "condition": "RGB + albedo crop", "model": "Qwen3-VL-2B", "accuracy": 0.6121, "flip_rate": 0.5, "comparison": "相对 RGB +0.91 pp；CI 跨 0", "status": "No-Go"},
+        {"order": 6, "condition": "RGB + albedo crop", "model": "InternVL3.5-2B", "accuracy": 0.5121, "flip_rate": 0.651, "comparison": "相对 RGB -1.82 pp；CI 跨 0", "status": "No-Go"},
+        {"order": 7, "condition": "RGB + intrinsic text", "model": "Qwen3-VL-2B", "accuracy": 0.3667, "flip_rate": 0.364, "comparison": "稳定性升、准确率 -23.64 pp", "status": "No-Go"},
+        {"order": 8, "condition": "RGB + intrinsic text", "model": "InternVL3.5-2B", "accuracy": 0.2515, "flip_rate": 0.364, "comparison": "稳定性升、准确率 -27.88 pp", "status": "No-Go"},
+        {"order": 9, "condition": "共同区域框", "model": "Qwen3-VL-2B", "accuracy": 0.4758, "flip_rate": 0.5152, "comparison": "相对单框 +1.82 pp；CI 跨 0", "status": "No-Go"},
+        {"order": 10, "condition": "共同区域框", "model": "InternVL3.5-2B", "accuracy": 0.5121, "flip_rate": 0.4545, "comparison": "相对单框 +2.42 pp；CI 跨 0", "status": "No-Go"}
+      ],
+      "research_tracks": [
+        {"order": 1, "track": "材质恒常性跨光照诊断", "role": "当前事实主线", "evidence": "30 场景、66 区域、330 样本；两模型和三类干预", "status": "Completed / 继续机制研究"},
+        {"order": 2, "track": "NYUv2 支撑关系", "role": "未来邻接候选", "evidence": "167 个候选；当前仅 14 条人工审核", "status": "Needs verification / Blocked"},
+        {"order": 3, "track": "Agent 主动测量", "role": "高风险方法候选", "evidence": "只有路线与对照设计，尚无本地实验", "status": "Exploration"}
+      ],
+      "phases": [
+        {"order": 0, "phase": "Phase 0 仓库治理", "purpose": "明确哪些资产能协作和公开", "exit": "资产分类、路径可移植、清理策略经协作者确认", "current": "未完成；已跟踪资产治理 Blocked"},
+        {"order": 1, "phase": "Phase 1 复现基线", "purpose": "证明既有结果能被可靠复跑", "exit": "环境锁定、provenance、测试、固定 smoke manifest", "current": "未完成；环境和测试尚缺"},
+        {"order": 2, "phase": "Phase 2 方向决策", "purpose": "用廉价 gate 淘汰无信息或重复路线", "exit": "碰撞检查、oracle/frozen probe、Go/No-Go", "current": "设计已完成；主线 gate 未运行"},
+        {"order": 3, "phase": "Phase 3 受控实验", "purpose": "验证冻结的机制假设", "exit": "独立单元统计、完整消融、外部验证和交接", "current": "尚未获准启动新训练"}
+      ],
+      "components": [
+        {"order": 1, "component": "configs/", "responsibility": "冻结实验参数、模型和输入条件", "examples": "RGB gate、albedo、region alignment 四个 JSON"},
+        {"order": 2, "component": "scripts/", "responsibility": "数据下载/裁剪、模型推理、统计比较", "examples": "build_material_constancy_pilot.py 等"},
+        {"order": 3, "component": "experiments/manifests/", "responsibility": "固定每个样本、区域、场景、标签、光照和文件映射", "examples": "material_constancy_rgb_manifest.jsonl"},
+        {"order": 4, "component": "results/quantitative/", "responsibility": "保存逐样本输出与聚合结果；未来逐样本结果应留本地", "examples": "两模型 summaries 与 paired comparisons"},
+        {"order": 5, "component": "docs/ 与 reports/", "responsibility": "记录计划、状态、No-Go、治理和可共享聚合证据", "examples": "project-status、decision-log、region alignment report"},
+        {"order": 6, "component": "literature/ 与 paper/", "responsibility": "记录查新索引与本地论文副本", "examples": "42 篇索引；PDF 被 Git 忽略"}
+      ]
+    }
+  },
+  "sources": [
+    {
+      "id": "rgb_chart_data",
+      "label": "报告内 RGB 基线图数据",
+      "path": "artifact.json",
+      "query": {
+        "engine": "duckdb",
+        "language": "sql",
+        "description": "从经过审阅的报告快照中读取 RGB 基线图数据；原始数值来自两模型聚合结果。",
+        "sql": "SELECT x.* FROM read_json_auto('artifact.json'), UNNEST(snapshot.datasets.rgb_baseline_metrics) t(x)",
+        "tables_used": ["artifact.json"],
+        "executed_at": "2026-07-21T18:00:00+08:00"
+      }
+    }
+  ],
+  "package_info": {
+    "originUrl": "artifact://multimodal-research-project-task-guide",
+    "controls": {"edit": false, "refresh": false}
+  }
+}

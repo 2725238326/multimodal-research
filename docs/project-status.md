@@ -1,6 +1,6 @@
 # 项目状态
 
-**更新时间：2026-07-19**
+**更新时间：2026-07-21**
 
 状态定义：`Verified`、`Completed`、`Needs verification`、`No-Go`、`Blocked`、`Not started`。
 
@@ -13,7 +13,9 @@
 | RGB + albedo intervention | 两模型配对比较和 bootstrap CI 存在 | No-Go | Qwen +0.91 pp、InternVL -1.82 pp，两个准确率 CI 均跨零 |
 | Shared region marker | 两模型、330 样本报告与结果存在 | No-Go | 相对单框有同方向小幅变化，但 CI 跨零，且不能恢复 Qwen RGB 基线 |
 | NYUv2 support review | 167 张候选图；14 条人工审核记录 | Needs verification | 当前 CSV 为 2 support、11 non-support、1 uncertain；生成链和数据许可未在仓库内闭合 |
-| 文献证据库 | `literature/notes/` 为空 | Not started | 缺论文索引、来源、许可和与实验的对应关系 |
+| 文献证据库 | 42 篇官方来源 PDF、本地 SHA-256、分类索引与使用边界 | Completed | 新增语义—物理融合、材质、深度、低照度、事件、偏振和结构引导相邻工作；PDF 保持本地忽略 |
+| 科研设计模式库 | 12 个核心模式、反模式、机制迁移卡、探索/确认分轨与组合上限 | Completed | 新方向须引用模式并预注册角色、控制与门槛 |
+| 语义—物理路线审计 | 本仓库负结果与 2024–2026 相邻工作碰撞矩阵 | Completed | 直接语义替代物理和冻结 VLM 拼图保持 No-Go；三类受控路线进入候选 |
 
 ## 工程与复现
 
@@ -26,4 +28,5 @@
 | 数据/模型 provenance | Needs verification | 模型 ID/revision 部分存在；数据许可、哈希和完整下载来源未统一登记 |
 | Git 忽略边界 | Completed | 已新增 `.gitignore` 防止后续新增本地资产 |
 | 已跟踪资产治理 | Blocked | 1,237 个文件中含 781 个 data、249 个 results、117 个 Office/QA 临时项；清理方式待协作者决策 |
-
+| fork/upstream 协作 | Needs verification | 已确认 origin 为个人 fork、upstream 为原仓库；远端引用显示双方各 1 个独有提交，正式同步前需在网络恢复后重新 fetch |
+| 项目任务技术报告 | Completed | 已依据代码、配置、manifest、聚合结果和治理文档形成自包含 HTML 与可审计 artifact；自动浏览器 QA 受阅读器顶部栏约 8 px 横向溢出限制，结构校验通过 |

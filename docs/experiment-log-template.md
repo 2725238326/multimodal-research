@@ -11,10 +11,26 @@
 
 - Research question:
 - Falsifiable hypothesis:
+- Track: Exploratory / Confirmatory
+- Design patterns used:
 - Existing failure being addressed:
 - Closest prior work and collision risk:
+- Novel claim after collision check:
 - Go threshold:
 - No-Go threshold:
+- Complexity / compute budget:
+
+## Mechanism and modality roles
+
+| Component / modality | Role | Information available | May it determine the target? |
+| --- | --- | --- | --- |
+| | Measurement / Proposal / Prior / Router / Supervisor / Verifier | | |
+
+- Semantic authority boundary:
+- Physical verification or veto:
+- Deployment-time inputs:
+- Cross-domain mechanism source:
+- Assumptions that do not transfer:
 
 ## Data
 
@@ -50,6 +66,14 @@
 - Statistical unit and method:
 - Resource limits:
 
+### Counterfactual controls
+
+- Correct relevant evidence:
+- Wrong / reversed evidence:
+- Shuffled region or sample:
+- Information-matched irrelevant evidence:
+- Equal-parameter / equal-compute control:
+
 ## Execution
 
 ```text
@@ -76,6 +100,8 @@
 - Claim supported:
 - Claim not supported:
 - Known uncertainty:
+- Claim-to-evidence mapping:
+- Strongest alternative explanation:
+- Design pattern violations:
 - Decision:
 - Next action:
-
