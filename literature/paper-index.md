@@ -77,6 +77,28 @@
 | S3-PHYS | [CVPRW 2026](https://openaccess.thecvf.com/content/CVPR2026W/OpenSUN3D/html/Lan_Efficient_Structure-Guided_3D_Physical_Property_Reasoning_CVPRW_2026_paper.html) | `2026_cvprw_structure_guided_physical_reasoning.pdf` | 先用 DINO 建结构，再在高质量视图稀疏提取 CLIP 材质/物理属性；对应结构先于语义密集化 |
 | SAIL | [WACV 2026](https://openaccess.thecvf.com/content/WACV2026/html/Chai_SAIL_Lighting-Invariant_Representation_for_Consistent_Semantic_Understanding_WACV_2026_paper.html) | `2026_wacv_sail_lighting_invariant.pdf` | 用生成先验学习照明不变表征；作为“只做不变性”对照，需防止丢失材质响应线索 |
 
+## F. 本轮补充：基础数据、物理模态和可靠性方法
+
+这些 PDF 下载到本地 `paper/这些文献是什么作用和思路的提供/`，并按作用分子目录保存。它们补的是基础定义、物理验证器、结构语义桥接、主动测量和校准/拒答，不改变既有实验结论。
+
+| 论文 | 原始来源 | 本地文件 | 对本项目的作用 |
+| --- | --- | --- | --- |
+| Material Recognition in the Wild / MINC | [CVPR 2015](https://openaccess.thecvf.com/content_cvpr_2015/html/Bell_Material_Recognition_in_2015_CVPR_paper.html) | `paper/这些文献是什么作用和思路的提供/01_材质数据与基准/2015_cvpr_minc_material_recognition.pdf` | 材质分类经典野外基准；用于类别、patch/segment 输入和简单视觉基线设计 |
+| OpenSurfaces | [Cornell project PDF](https://www.cs.cornell.edu/~paulu/opensurfaces.pdf) | `paper/这些文献是什么作用和思路的提供/01_材质数据与基准/2013_siggraph_opensurfaces.pdf` | 表面级外观、材质、分割和场景上下文标注；补充材质标签与 provenance 思路 |
+| Intrinsic Images in the Wild | [Cornell project PDF](https://www.cs.cornell.edu/~sbell/pdf/siggraph2014-intrinsic.pdf) | `paper/这些文献是什么作用和思路的提供/02_内禀图像_反射_材质估计/2014_siggraph_intrinsic_images_in_the_wild.pdf` | 内禀图像相对反射标注协议；用于审计 albedo 辅助证据 |
+| Intrinsic Image Diffusion for Indoor Single-view Material Estimation | [CVPR 2024](https://openaccess.thecvf.com/content/CVPR2024/html/Kocsis_Intrinsic_Image_Diffusion_for_Indoor_Single-view_Material_Estimation_CVPR_2024_paper.html) | `paper/这些文献是什么作用和思路的提供/02_内禀图像_反射_材质估计/2024_cvpr_intrinsic_image_diffusion.pdf` | 更强 intrinsic/material estimator 候选；只能作为组件或 teacher，不替代 gate |
+| Intrinsic Image Fusion for Multi-View 3D Material Reconstruction | [CVPR 2026](https://openaccess.thecvf.com/content/CVPR2026/html/Kocsis_Intrinsic_Image_Fusion_for_Multi-View_3D_Material_Reconstruction_CVPR_2026_paper.html) | `paper/这些文献是什么作用和思路的提供/02_内禀图像_反射_材质估计/2026_cvpr_intrinsic_image_fusion.pdf` | 多视角 intrinsic fusion；为多光照/多视角 teacher 和外部验证提供参考 |
+| Multimodal Material Segmentation | [CVPR 2022](https://openaccess.thecvf.com/content/CVPR2022/html/Liang_Multimodal_Material_Segmentation_CVPR_2022_paper.html) | `paper/这些文献是什么作用和思路的提供/03_多物理模态与材质分割/2022_cvpr_multimodal_material_segmentation.pdf` | RGB、flash、polarization 等物理模态的材质分割；支持物理验证器设计 |
+| Glass Segmentation Using Intensity and Spectral Polarization Cues | [CVPR 2022](https://openaccess.thecvf.com/content/CVPR2022/html/Mei_Glass_Segmentation_Using_Intensity_and_Spectral_Polarization_Cues_CVPR_2022_paper.html) | `paper/这些文献是什么作用和思路的提供/03_多物理模态与材质分割/2022_cvpr_glass_polarization_segmentation.pdf` | 玻璃/透明材料的强度与偏振验证；支撑光学属性纠错子集 |
+| Beyond Appearances: Material Segmentation with Embedded Spectral Information from RGB-D | [CVPRW 2024](https://openaccess.thecvf.com/content/CVPR2024W/LXCV/html/Perez_Beyond_Appearances_Material_Segmentation_with_Embedded_Spectral_Information_from_RGB-D_CVPRW_2024_paper.html) | `paper/这些文献是什么作用和思路的提供/03_多物理模态与材质分割/2024_cvprw_rgbd_spectral_material_segmentation.pdf` | RGB-D 到光谱线索的材质分割；作为深度/谱先验的邻接参考 |
+| Physical Property Understanding from Language-Embedded Feature Fields / NeRF2Physics | [CVPR 2024](https://openaccess.thecvf.com/content/CVPR2024/html/Zhai_Physical_Property_Understanding_from_Language-Embedded_Feature_Fields_CVPR_2024_paper.html) | `paper/这些文献是什么作用和思路的提供/04_结构语义桥接与物理属性/2024_cvpr_nerf2physics.pdf` | 语言嵌入特征场与物理属性；为结构化物理 claim 和 3D 场景候选提供参考 |
+| SAM-CLIP | [CVPRW 2024](https://openaccess.thecvf.com/content/CVPR2024W/ELVM/html/Wang_SAM-CLIP_Merging_Vision_Foundation_Models_Towards_Semantic_and_Spatial_Understanding_CVPRW_2024_paper.html) | `paper/这些文献是什么作用和思路的提供/04_结构语义桥接与物理属性/2024_cvprw_sam_clip.pdf` | SAM 空间能力与 CLIP 语义能力桥接；对应结构先于语义密集化 |
+| CLIP-DINOiser | [ECCV 2024](https://www.ecva.net/papers/eccv_2024/papers_ECCV/html/141_ECCV_2024_paper.php) | `paper/这些文献是什么作用和思路的提供/04_结构语义桥接与物理属性/2024_eccv_clip_dinoiser.pdf` | CLIP 与 DINO 特征融合；作为 DINO/SigLIP frozen-feature gate 的对照 |
+| GenNBV | [CVPR 2024](https://openaccess.thecvf.com/content/CVPR2024/html/Chen_GenNBV_Generalizable_Next-Best-View_Policy_for_Active_3D_Reconstruction_CVPR_2024_paper.html) | `paper/这些文献是什么作用和思路的提供/05_主动测量与下一视角/2024_cvpr_gennbv_next_best_view.pdf` | 主动 next-best-view 策略；为主动光照 agent 的固定/随机/oracle 对照提供参考 |
+| On Calibration of Modern Neural Networks | [ICML 2017 / PMLR](https://proceedings.mlr.press/v70/guo17a.html) | `paper/这些文献是什么作用和思路的提供/06_可靠性_校准_拒答/2017_icml_calibration_modern_neural_networks.pdf` | 置信度校准；用于 teacher 可靠性、路由器和拒答阈值 |
+| SelectiveNet | [ICML 2019 / PMLR](https://proceedings.mlr.press/v97/geifman19a.html) | `paper/这些文献是什么作用和思路的提供/06_可靠性_校准_拒答/2019_icml_selectivenet_reject_option.pdf` | 选择性预测与拒答；用于冲突时降级、拒答或请求额外测量 |
+| Distilling the Knowledge in a Neural Network | [arXiv:1503.02531](https://arxiv.org/abs/1503.02531) | `paper/这些文献是什么作用和思路的提供/07_蒸馏基础/2015_arxiv_distilling_knowledge_neural_network.pdf` | 普通 KD 基线；选择性特权蒸馏必须优于朴素 KD 与等容量学生 |
+
 ## 阅读顺序
 
 1. `Multi-Illumination`、`ITA`、`Eyes Wide Shut`：先定位本项目现象和视觉缺陷。

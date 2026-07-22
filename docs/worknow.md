@@ -1,6 +1,53 @@
 # 当前工作
 
-**更新时间：2026-07-21**
+**更新时间：2026-07-22**
+
+## 当前任务：部署 material response probe 阶段预备工作
+
+- **目标**：将下一阶段主线 gate 落到可执行的研究与测试预备资产上，优先建立 `material_response_probe_v0` 的预注册计划、可移植配置、固定 smoke 清单和最小自动化校验。
+- **范围**：只做计划、配置、清单生成/校验脚本、测试和文档状态更新；可使用现有 manifest/result 聚合信息生成小型脱敏 smoke manifest。
+- **不在范围**：不训练模型；不运行大规模特征抽取；不下载新数据或权重；不删除或重写已跟踪研究资产；不提交或推送。
+- **证据**：`docs/semantic-physical-route-audit.md`、`docs/research-design-patterns.md`、`docs/experiment-log-template.md`、现有 RGB/albedo/region alignment 聚合结果、现有 manifests 和配置中的路径问题。
+- **预期产出**：`experiments/plans/material_response_probe_v0.md`、`configs/material_response_probe_v0.json`、smoke manifest 生成/校验工具、最小测试入口，以及更新后的状态/交接说明。
+- **下一步**：读取现有脚本和 manifest schema，按最小风险方式实现离线可验证的预备资产。
+
+### 本轮完成
+
+- 已建立 `experiments/plans/material_response_probe_v0.md`，冻结研究问题、独立统计单元、scene split、条件、反事实控制、Go/No-Go 阈值和禁止训练边界。
+- 已新增 `configs/material_response_probe_v0.json`，全部使用仓库相对路径；新增 `configs/material_response_probe_v0.local.example.json` 和 `.gitignore` 规则，防止本机覆盖配置进入 Git。
+- 已新增 `scripts/prepare_material_response_probe.py`，可从现有 albedo manifest 生成相对路径 smoke manifest，并校验必需字段、路径、region/light 结构和源 manifest SHA-256。
+- 已新增 `tests/test_prepare_material_response_probe.py`，使用 Python 标准库 unittest 覆盖路径归一化、目标材料抽样和文件存在检查。
+- 已运行 `python -m unittest tests/test_prepare_material_response_probe.py`，3 项测试通过。
+- 已运行 `python scripts/prepare_material_response_probe.py --config configs/material_response_probe_v0.json --check-files`，本地生成 18 样本、6 区域、6 场景、6 材料 smoke manifest；输出 SHA-256 为 `61e0b22a493c0c6b0475a49006ae998b3c523247368ece635d328548e4e7fffc`。生成 manifest 与结果摘要位于忽略目录，未进入 Git。
+
+### 当前判断与下一条可执行检查
+
+- `material_response_probe_v0` 已具备输入链路 smoke 基础，但还没有环境锁、模型 revision 和 frozen feature 代码，因此仍不能启动训练或声称机制有效。
+- 本机旧 manifest 中存在非必需 `albedo_full_path` 文件缺失；probe 配置当前只要求 `rgb_crop_path` 和 `albedo_crop_path` 存在，后续若要使用 full-frame albedo 必须单独修复或重建。
+- **下一条检查**：补 `scripts/extract_material_response_features.py` 的只读特征缓存接口和 `scripts/evaluate_material_response_probe.py` 的浅层头评估框架，先支持 dry-run/schema 验证，再接入实际 frozen encoder。
+
+## 当前任务：文档复核、文献补充与推进建议
+
+- **目标**：依据本仓库文档、聚合结果和本地文献库，给出后续研究推进建议；梳理 `paper/` 中可借鉴的方法，并补充下载若干官方来源论文，按“这些文献是什么作用和思路的提供”归类。
+- **范围**：读取项目治理、状态、计划、决策、报告和文献索引；只从官方论文页面或原始 arXiv/CVF/ACL 等来源补充 PDF；记录文献用途、来源、下载位置和可用思路。
+- **不在范围**：不运行新训练；不扩大数据集实验；不把未复现论文结论写成项目稳定事实；不提交或推送。
+- **证据**：`AGENTS.md`、`rules.md`、`docs/`、`reports/material_constancy_region_alignment_v1.md`、聚合结果摘要、`literature/paper-index.md`、`paper/` 现有 PDF 及经核验的外部论文原始来源。
+- **预期产出**：面向用户的最新推进意见；本地新增文献 PDF 与按作用分类的说明文件；必要时补充本地 SHA-256 校验记录。
+- **下一步**：盘点现有 42 篇论文的方法作用，联网核验并下载补充文献，最后执行文档/下载资产的边界检查。
+
+### 本轮完成
+
+- 已按项目启动序列执行 `git pull --ff-only` 和 `git status --short`；读取 `AGENTS.md`、`rules.md`、`docs/worknow.md`、`docs/project-status.md` 以及计划、决策、审计、报告和文献索引。
+- 已复核现有结果：RGB+albedo、intrinsic text 和共同区域标记仍保持 `No-Go`；当前最优先路线仍是不变身份—光照响应因子化 + 选择性特权蒸馏，且训练前必须先过 Phase 0/1 与 frozen-feature/oracle gate。
+- 已从官方或原始来源补充下载 15 篇 PDF 到 `paper/这些文献是什么作用和思路的提供/`，分为材质数据、内禀/反射、多物理模态、结构语义桥接、主动测量、可靠性拒答和蒸馏基础。
+- 已为新增目录写入本地 `README.md`，并同步 `literature/paper-index.md` 与 `literature/paper-sha256.txt`；本地文献库由 42 篇扩展到 57 篇。
+- 已校验新增 PDF 文件头和页数，15/15 均为可解析 PDF；`paper/` 忽略规则确认命中，PDF 本体不会进入 Git。
+
+### 当前判断与下一条可执行检查
+
+- 当前不建议继续扩大冻结 VLM 的提示堆叠；应先完成可移植配置、环境锁定、数据许可/哈希和固定 smoke manifest。
+- 文献能直接借的方法是：MINC/OpenSurfaces 的材质基准与标注框架、IIW/Intrinsic Diffusion/Fusion 的内禀证据、Multimodal Material Segmentation/Glass Polarization 的物理验证器、SAM-CLIP/CLIP-DINOiser 的结构—语义特征桥接、Calibration/SelectiveNet 的可靠性与拒答、KD/C2KD 的选择性蒸馏对照。
+- **下一条检查**：建立 `experiments/plans/material_response_probe_v0.md`，冻结独立统计单元、scene split、oracle/frozen-feature 条件、错误/打乱/无关证据控制和 1–2 天 No-Go 阈值；未完成前不启动训练。
 
 ## 当前任务：完整解释本仓库的研究任务
 

@@ -1,0 +1,26 @@
+{
+  "extends": "configs/material_response_probe_v0.json",
+  "device": "cuda:0",
+  "model_cache_dir": "models/checkpoints",
+  "resolved_feature_extractors": [
+    {
+      "id": "siglip_base_patch16_224",
+      "model_id": "google/siglip-base-patch16-224",
+      "local_dir": "models/checkpoints/siglip-base-patch16-224",
+      "revision": "RECORD_EXACT_REVISION_BEFORE_RUN",
+      "license": "RECORD_LICENSE_BEFORE_RUN"
+    },
+    {
+      "id": "dinov2_base_patch14",
+      "model_id": "facebook/dinov2-base",
+      "local_dir": "models/checkpoints/dinov2-base",
+      "revision": "RECORD_EXACT_REVISION_BEFORE_RUN",
+      "license": "RECORD_LICENSE_BEFORE_RUN"
+    }
+  ],
+  "notes": [
+    "Copy this file to configs/material_response_probe_v0.local.json for machine-specific paths.",
+    "The copied local file is ignored by Git.",
+    "Do not store tokens, absolute personal paths, or credentials here."
+  ]
+}

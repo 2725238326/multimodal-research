@@ -43,6 +43,8 @@
 - 邻接方向：结构引导的物理关系 agent，当前受数据闭环阻塞；
 - 高风险探索：主动反事实光照 agent，只在真实光照选择 gate 通过后考虑生成式干预。
 
+当前已部署的下一步预备资产为 `material_response_probe_v0`：先用固定 smoke manifest、相对路径配置和 unittest 验证输入链路，再进入 frozen-feature/oracle gate。该阶段不授权训练、LoRA、VLM 提示扩展或新数据下载。
+
 任何候选在 Phase 0/1 完成前只允许数据审计、离线分析和不启动训练的计划工作。
 
 ## Phase 3 — 受控实验

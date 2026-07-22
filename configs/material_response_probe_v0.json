@@ -1,0 +1,140 @@
+{
+  "experiment_id": "material_response_probe_v0",
+  "status": "planned",
+  "seed": 20260722,
+  "workspace_root": ".",
+  "source_manifests": {
+    "rgb_gate_v2": "experiments/manifests/material_constancy_rgb_gate_v2/material_constancy_rgb_manifest.jsonl",
+    "albedo_v1": "experiments/manifests/material_constancy_albedo_v1/material_constancy_albedo_manifest.jsonl"
+  },
+  "source_manifest_sha256": {
+    "rgb_gate_v2": "0651737375c61300bd60055e70e155c627a855e09bf1cfcf11ffcb13112f9828",
+    "albedo_v1": "c3b52b82589e22b2fc8b02cdd7b2b0b89c1b8ec716bf465ef69f9c853cd297d2"
+  },
+  "smoke_manifest": {
+    "source": "albedo_v1",
+    "output_manifest": "experiments/manifests/material_response_probe_v0/material_response_probe_smoke.jsonl",
+    "summary_output": "results/diagnostics/material_response_probe_v0/smoke_manifest_summary.json",
+    "max_regions": 6,
+    "lights_per_region": 3,
+    "target_material_labels": [
+      "ceramic",
+      "glass",
+      "metal",
+      "opaque plastic",
+      "tile",
+      "wood"
+    ],
+    "path_mode": "repo_relative"
+  },
+  "split": {
+    "strategy": "scene_grouped",
+    "unit": "scene",
+    "folds": 5,
+    "holdout_fraction": 0.2,
+    "forbid_scene_overlap": true
+  },
+  "candidate_feature_extractors": [
+    {
+      "id": "siglip_base_patch16_224",
+      "family": "SigLIP",
+      "model_id": "google/siglip-base-patch16-224",
+      "role": "semantic_visual_measurement",
+      "revision": "TBD before run"
+    },
+    {
+      "id": "dinov2_base_patch14",
+      "family": "DINO",
+      "model_id": "facebook/dinov2-base",
+      "role": "dense_visual_measurement",
+      "revision": "TBD before run"
+    },
+    {
+      "id": "dinov3_candidate",
+      "family": "DINO",
+      "model_id": "TBD local official DINOv3 checkpoint if available",
+      "role": "dense_visual_measurement",
+      "revision": "TBD before run"
+    },
+    {
+      "id": "clip_vit_base_patch32",
+      "family": "CLIP",
+      "model_id": "openai/clip-vit-base-patch32",
+      "role": "semantic_visual_baseline",
+      "revision": "TBD before run"
+    }
+  ],
+  "probe_conditions": [
+    {
+      "id": "single_rgb",
+      "purpose": "strong simple baseline",
+      "input_keys": ["rgb_crop_path"],
+      "aggregation": "single_light"
+    },
+    {
+      "id": "multi_light_mean",
+      "purpose": "illumination-invariant summary",
+      "input_keys": ["rgb_crop_path"],
+      "aggregation": "region_mean"
+    },
+    {
+      "id": "multi_light_mean_variance",
+      "purpose": "simple response summary",
+      "input_keys": ["rgb_crop_path"],
+      "aggregation": "region_mean_and_variance"
+    },
+    {
+      "id": "pairwise_response",
+      "purpose": "main response intervention",
+      "input_keys": ["rgb_crop_path"],
+      "aggregation": "pairwise_light_differences"
+    },
+    {
+      "id": "rgb_albedo_concat",
+      "purpose": "trained shallow-head bridge to prior No-Go prompt condition",
+      "input_keys": ["rgb_crop_path", "albedo_crop_path"],
+      "aggregation": "single_light_concat"
+    },
+    {
+      "id": "rgb_albedo_residual",
+      "purpose": "physical response proxy",
+      "input_keys": ["rgb_crop_path", "albedo_crop_path"],
+      "aggregation": "rgb_minus_albedo"
+    }
+  ],
+  "negative_controls": [
+    "shuffled_light_pair",
+    "wrong_region_albedo",
+    "random_residual",
+    "equal_parameter_branch"
+  ],
+  "metrics": {
+    "primary": "mean_region_accuracy",
+    "guardrails": [
+      "macro_class_accuracy",
+      "region_flip_rate",
+      "worst_light_accuracy",
+      "missing_feature_count"
+    ],
+    "statistical_unit": "region",
+    "bootstrap_unit": "scene",
+    "bootstrap_draws": 10000
+  },
+  "thresholds": {
+    "go_accuracy_delta_min": 0.05,
+    "go_flip_rate_delta_max": -0.10,
+    "control_margin_min": 0.03,
+    "macro_accuracy_drop_no_more_than": 0.02,
+    "ci_level": 0.95
+  },
+  "outputs": {
+    "feature_cache_dir": "data/processed/material_response_probe_v0/features",
+    "results_dir": "results/quantitative/material_response_probe_v0",
+    "logs_dir": "experiments/logs/material_response_probe_v0"
+  },
+  "notes": [
+    "This shared config intentionally uses repository-relative paths only.",
+    "Create an ignored local override for machine paths, model cache paths, device IDs, and exact model revisions before feature extraction.",
+    "No training or large-scale feature extraction is authorized until the smoke manifest and tests pass."
+  ]
+}
