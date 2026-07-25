@@ -1,0 +1,16 @@
+{
+  "collision_notes": "",
+  "design_patterns": [
+    "RP-11"
+  ],
+  "detail": "信任地图的终点。需真值与强负对照；先真实选光显著优于随机再谈生成式干预。",
+  "experiment_ids": [],
+  "id": "idea-active-measurement-agent",
+  "links": [
+    "idea-identifiability-aware-division-of-labor"
+  ],
+  "slot": "high_risk",
+  "status": "parked",
+  "thesis": "欠定区域触发最省的下一次测量（换光/移视角/换传感器）最大化信息增益。",
+  "title": "⑥ 主动测量 agent（高风险）"
+}

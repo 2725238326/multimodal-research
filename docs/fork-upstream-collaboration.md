@@ -1,6 +1,6 @@
 # Fork 与上游协作说明
 
-**核验日期：2026-07-21**
+**核验日期：2026-07-23**
 
 ## 1. 当前关系
 
@@ -11,12 +11,23 @@
 
 GitHub 页面确认 `2725238326/multimodal-research` fork 自 `aspera11011/multimodal-research`。本地已有正确的两个 remote。
 
-本地远端引用在本轮检查时显示 `main` 与 `upstream/main` 各有 1 个独有提交：
+本地远端引用在 2026-07-23 检查时显示 `main` 与 `upstream/main` 已明显分叉：
 
-- fork 独有：`89e8ef0 123`
-- upstream 独有：`cb00787 docs: summarize depth physics experiments and RGB-D route`
+- fork 独有：3 个提交，当前 `main` 为 `0b0907e 123`；
+- upstream 独有：14 个提交，当前 `upstream/main` 为 `0a95b3d feat: train SGNet branch router pilot`；
+- 本地快照分支：`sync/upstream-main-20260723`；
+- `upstream` push URL 已设为 `no_push`。
 
-因此当前不是可直接 `--ff-only` 合并的状态。`git fetch upstream --prune` 本轮遇到一次网络连接重置；在真正同步或提 PR 前，必须重新 fetch 并复核差异。
+因此当前不是可直接 `--ff-only` 合并的状态。上游变化审计见 `docs/upstream-change-audit-2026-07-23.md`。合并预检显示直接 merge 会删除当前 fork 的治理文档、文献索引和 `material_response_probe_v0` 资产；不建议在 `main` 上直接 merge。
+
+当前推荐的同步策略是：
+
+```powershell
+git switch -c research/sgnet-rgbdd-migration main
+git cherry-pick <reviewed-upstream-commit>
+```
+
+或手工迁移上游 SGNet/RGB-D-D 的配置、脚本、计划和聚合摘要，同时保留本 fork 的 `AGENTS.md`、`rules.md`、`docs/` 治理文档和文献索引。
 
 ## 2. 推荐贡献方式
 
@@ -83,4 +94,3 @@ git status --short
 ```
 
 确认 PR 只包含允许公开、来源清楚且能由上游复核的成果。
-

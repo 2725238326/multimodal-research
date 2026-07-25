@@ -1,0 +1,17 @@
+{
+  "collision_notes": "",
+  "design_patterns": [
+    "RP-09",
+    "RP-10"
+  ],
+  "detail": "纲领级叙事，把 fork 与 upstream 拧成一个故事；一页统一形式化即可指导后续预注册。",
+  "experiment_ids": [],
+  "id": "idea-unified-reliability-gate",
+  "links": [
+    "idea-identifiability-aware-division-of-labor"
+  ],
+  "slot": "pool",
+  "status": "proposed",
+  "thesis": "材质翻转率与 SGNet spatial reliability gate 用同一形式化，同时服务材质分工与深度超分。",
+  "title": "⑤ 统一 reliability-gate 纲领"
+}

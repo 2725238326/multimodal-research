@@ -1,0 +1,21 @@
+{
+  "collision_notes": "",
+  "design_patterns": [
+    "RP-06",
+    "RP-08",
+    "RP-02",
+    "RP-03"
+  ],
+  "detail": "material_response_probe_v0 是它的 frozen-feature gate；通过后才谈蒸馏。这是首个值得动 GPU 的实验。",
+  "experiment_ids": [
+    "exp-material-response-probe-v0"
+  ],
+  "id": "idea-privileged-response-probe",
+  "links": [
+    "idea-identifiability-aware-division-of-labor"
+  ],
+  "slot": "mainline",
+  "status": "active",
+  "thesis": "多光响应相对不变均值是否含额外材质判别信息？哪些物理线索能蒸进单目 RGB 学生、哪些有信息论上限？",
+  "title": "④ 特权物理教师的可蒸馏性 / 响应探针"
+}

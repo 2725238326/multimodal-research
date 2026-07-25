@@ -1,0 +1,19 @@
+{
+  "collision_notes": "",
+  "design_patterns": [
+    "RP-09",
+    "RP-05"
+  ],
+  "detail": "模态无关原语：受控扰动下的输出方差当特征/不确定性。数据已落盘，0 训练可验证。",
+  "experiment_ids": [
+    "exp-flip-identifiability-v0"
+  ],
+  "id": "idea-flip-as-uncertainty",
+  "links": [
+    "idea-identifiability-aware-division-of-labor"
+  ],
+  "slot": "adjacent",
+  "status": "active",
+  "thesis": "冻结 VLM 在受控光照扰动下的答案分布本身是材质指纹与可靠性信号；漫反射稳定、镜面/透明剧烈翻转。",
+  "title": "② 翻转即不确定性（训练无关判别器）"
+}

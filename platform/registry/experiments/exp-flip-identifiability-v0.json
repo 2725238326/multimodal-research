@@ -1,0 +1,42 @@
+{
+  "bootstrap_unit": "scene",
+  "conditions": [
+    {
+      "changed_var": "按翻转熵拒答高熵区域",
+      "name": "entropy_ranked_selective",
+      "purpose": "② 选择性预测"
+    },
+    {
+      "changed_var": "材质可识别性分层",
+      "name": "identifiability_partition",
+      "purpose": "① 分区对照"
+    }
+  ],
+  "config_path": "",
+  "controls": {
+    "correct": "",
+    "equal_param": "",
+    "irrelevant": "",
+    "shuffled": "",
+    "wrong": ""
+  },
+  "go_threshold": "每个模型 AUROC CI 下界 > 0.5 且选择性增益 @50% CI 下界 > 0",
+  "guardrail_metrics": [
+    "selective_gain_at_50pct",
+    "partition accuracy gap"
+  ],
+  "hypothesis": "低翻转熵区域显著更准（AUROC>0.5，选择性拒答提升准确率）；under-identified 分区准确率更低、翻转更高。",
+  "id": "exp-flip-identifiability-v0",
+  "idea_id": "idea-flip-as-uncertainty",
+  "no_go_threshold": "不稳定性不能超随机预测正确性（CI 跨 0.5）",
+  "plan_md_path": "",
+  "primary_metric": "AUROC(-flip_entropy -> per-sample correct)",
+  "question": "冻结 VLM 的光照翻转不稳定性能否训练无关地预测其错误，且欠定材质是否更不稳定更不准？",
+  "run_ids": [
+    "run-flip-identifiability-v0"
+  ],
+  "statistical_unit": "region",
+  "status": "completed",
+  "title": "Flip-as-uncertainty + identifiability partition (RGB-only)",
+  "track": "exploratory"
+}

@@ -1,0 +1,2156 @@
+{
+  "artifacts": [
+    {
+      "name": "per_region",
+      "path": "runs_local/run-flip-identifiability-v0/per_region.json",
+      "tracked": false
+    }
+  ],
+  "charts": [
+    {
+      "dataset": "partition_accuracy",
+      "encodings": {
+        "ciHi": {
+          "field": "ci_hi"
+        },
+        "ciLo": {
+          "field": "ci_lo"
+        },
+        "series": {
+          "field": "model",
+          "type": "nominal"
+        },
+        "x": {
+          "field": "partition",
+          "type": "nominal"
+        },
+        "y": {
+          "field": "accuracy",
+          "format": "percent",
+          "type": "quantitative"
+        }
+      },
+      "id": "partition_accuracy",
+      "subtitle": "under-identified (glass/clear plastic/metal) vs identifiable diffuse",
+      "title": "① 可识别性分区准确率",
+      "type": "grouped_bar",
+      "valueFormat": "percent"
+    },
+    {
+      "dataset": "entropy_vs_accuracy",
+      "encodings": {
+        "color": {
+          "field": "partition",
+          "type": "nominal"
+        },
+        "series": {
+          "field": "model",
+          "type": "nominal"
+        },
+        "x": {
+          "field": "flip_entropy_bits",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "accuracy",
+          "format": "percent",
+          "type": "quantitative"
+        }
+      },
+      "id": "entropy_vs_accuracy",
+      "subtitle": "each point = one region; higher entropy should track lower accuracy",
+      "title": "② 翻转熵 vs 区域准确率",
+      "type": "scatter"
+    },
+    {
+      "dataset": "selective_prediction",
+      "encodings": {
+        "series": {
+          "field": "model",
+          "type": "nominal"
+        },
+        "x": {
+          "field": "coverage",
+          "format": "percent",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "accuracy",
+          "format": "percent",
+          "type": "quantitative"
+        }
+      },
+      "id": "selective_prediction",
+      "subtitle": "abstaining on the highest-entropy regions should raise accuracy",
+      "title": "② 选择性预测曲线（按翻转熵升序纳入）",
+      "type": "line",
+      "valueFormat": "percent"
+    }
+  ],
+  "command": "python -m labkit.cli analyze flip-identifiability",
+  "commit": "",
+  "conditions_metrics": [
+    {
+      "auroc": 0.7144,
+      "auroc_ci95": [
+        0.6334,
+        0.7958
+      ],
+      "model": "Qwen3-VL-2B-Instruct",
+      "overall_region_accuracy": 0.603,
+      "partitions": {
+        "identifiable": {
+          "accuracy": 0.7944,
+          "accuracy_ci95": [
+            0.7056,
+            0.8722
+          ],
+          "flip_rate": 0.5,
+          "mean_entropy_bits": 0.5136,
+          "mean_illumination_sensitivity": 0.2055,
+          "regions": 36
+        },
+        "mixed": {
+          "accuracy": 0.1625,
+          "accuracy_ci95": [
+            0.05,
+            0.3125
+          ],
+          "flip_rate": 0.6875,
+          "mean_entropy_bits": 0.6241,
+          "mean_illumination_sensitivity": 0.1523,
+          "regions": 16
+        },
+        "under_identified": {
+          "accuracy": 0.6143,
+          "accuracy_ci95": [
+            0.4286,
+            0.7857
+          ],
+          "flip_rate": 0.6429,
+          "mean_entropy_bits": 0.6673,
+          "mean_illumination_sensitivity": 0.1631,
+          "regions": 14
+        }
+      },
+      "selective_gain_at_50pct": 0.1606,
+      "selective_gain_ci95": [
+        0.0812,
+        0.2313
+      ]
+    },
+    {
+      "auroc": 0.7939,
+      "auroc_ci95": [
+        0.7201,
+        0.8577
+      ],
+      "model": "InternVL3.5-2B-HF",
+      "overall_region_accuracy": 0.5303,
+      "partitions": {
+        "identifiable": {
+          "accuracy": 0.6444,
+          "accuracy_ci95": [
+            0.5167,
+            0.7667
+          ],
+          "flip_rate": 0.5833,
+          "mean_entropy_bits": 0.6542,
+          "mean_illumination_sensitivity": 0.2055,
+          "regions": 36
+        },
+        "mixed": {
+          "accuracy": 0.225,
+          "accuracy_ci95": [
+            0.1,
+            0.3625
+          ],
+          "flip_rate": 0.875,
+          "mean_entropy_bits": 0.9751,
+          "mean_illumination_sensitivity": 0.1523,
+          "regions": 16
+        },
+        "under_identified": {
+          "accuracy": 0.5857,
+          "accuracy_ci95": [
+            0.3714,
+            0.7857
+          ],
+          "flip_rate": 0.6429,
+          "mean_entropy_bits": 0.7638,
+          "mean_illumination_sensitivity": 0.1631,
+          "regions": 14
+        }
+      },
+      "selective_gain_at_50pct": 0.203,
+      "selective_gain_ci95": [
+        0.1474,
+        0.2912
+      ]
+    }
+  ],
+  "config_hash": "",
+  "datasets": {
+    "entropy_vs_accuracy": [
+      {
+        "accuracy": 0.0,
+        "flip_entropy_bits": 0.7219,
+        "illumination_sensitivity": 0.1857,
+        "material_label": "opaque plastic",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "mixed",
+        "region_id": "14n_office11_r008_23"
+      },
+      {
+        "accuracy": 0.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.0938,
+        "material_label": "opaque plastic",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "mixed",
+        "region_id": "14n_office11_r029_23"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.2674,
+        "material_label": "wood",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "region_id": "14n_office11_r040_32"
+      },
+      {
+        "accuracy": 0.2,
+        "flip_entropy_bits": 1.5219,
+        "illumination_sensitivity": 0.2433,
+        "material_label": "paper/tissue",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "region_id": "14n_office1_r006_21"
+      },
+      {
+        "accuracy": 0.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.1523,
+        "material_label": "opaque plastic",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "mixed",
+        "region_id": "14n_office1_r047_23"
+      },
+      {
+        "accuracy": 0.6,
+        "flip_entropy_bits": 1.371,
+        "illumination_sensitivity": 0.1133,
+        "material_label": "metal",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "under_identified",
+        "region_id": "14n_office7_r005_17"
+      },
+      {
+        "accuracy": 0.2,
+        "flip_entropy_bits": 1.371,
+        "illumination_sensitivity": 0.2831,
+        "material_label": "paper/tissue",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "region_id": "14n_office7_r037_21"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.2717,
+        "material_label": "paper/tissue",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "region_id": "14n_office7_r054_21"
+      },
+      {
+        "accuracy": 0.8,
+        "flip_entropy_bits": 0.7219,
+        "illumination_sensitivity": 0.1433,
+        "material_label": "granite/marble",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "mixed",
+        "region_id": "elm_revis_kitchen14_r014_13"
+      },
+      {
+        "accuracy": 0.0,
+        "flip_entropy_bits": 1.371,
+        "illumination_sensitivity": 0.2155,
+        "material_label": "opaque plastic",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "mixed",
+        "region_id": "fulkerson_revis_dining5_r019_23"
+      },
+      {
+        "accuracy": 0.8,
+        "flip_entropy_bits": 0.7219,
+        "illumination_sensitivity": 0.3288,
+        "material_label": "glass",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "under_identified",
+        "region_id": "fulkerson_revis_dining5_r043_12"
+      },
+      {
+        "accuracy": 0.4,
+        "flip_entropy_bits": 0.971,
+        "illumination_sensitivity": 0.1546,
+        "material_label": "granite/marble",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "mixed",
+        "region_id": "fulkerson_revis_kitchen11_r003_13"
+      },
+      {
+        "accuracy": 0.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.1036,
+        "material_label": "metal",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "under_identified",
+        "region_id": "fulkerson_revis_kitchen11_r027_17"
+      },
+      {
+        "accuracy": 0.4,
+        "flip_entropy_bits": 0.971,
+        "illumination_sensitivity": 0.247,
+        "material_label": "glass",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "under_identified",
+        "region_id": "joy_bathroom6_r002_12"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.249,
+        "material_label": "tile",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "region_id": "joy_bathroom6_r020_27"
+      },
+      {
+        "accuracy": 0.4,
+        "flip_entropy_bits": 0.971,
+        "illumination_sensitivity": 0.118,
+        "material_label": "ceramic",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "mixed",
+        "region_id": "joy_bathroom9_r022_4"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.1645,
+        "material_label": "tile",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "region_id": "joy_bathroom9_r048_27"
+      },
+      {
+        "accuracy": 0.4,
+        "flip_entropy_bits": 1.5219,
+        "illumination_sensitivity": 0.1902,
+        "material_label": "fabric/cloth",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "region_id": "joy_bedroom14_r001_8"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.2285,
+        "material_label": "leather",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "region_id": "joy_bedroom14_r026_15"
+      },
+      {
+        "accuracy": 0.6,
+        "flip_entropy_bits": 1.371,
+        "illumination_sensitivity": 0.3284,
+        "material_label": "fabric/cloth",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "region_id": "joy_bedroom14_r064_8"
+      },
+      {
+        "accuracy": 0.2,
+        "flip_entropy_bits": 1.5219,
+        "illumination_sensitivity": 0.2612,
+        "material_label": "glass",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "under_identified",
+        "region_id": "joy_bedroom16_r034_12"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.1363,
+        "material_label": "fabric/cloth",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "region_id": "joy_bedroom16_r063_8"
+      },
+      {
+        "accuracy": 0.8,
+        "flip_entropy_bits": 0.7219,
+        "illumination_sensitivity": 0.1345,
+        "material_label": "glass",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "under_identified",
+        "region_id": "joy_living12_r013_12"
+      },
+      {
+        "accuracy": 0.2,
+        "flip_entropy_bits": 1.5219,
+        "illumination_sensitivity": 0.284,
+        "material_label": "fabric/cloth",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "region_id": "joy_living12_r058_8"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.1627,
+        "material_label": "tile",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "region_id": "kingston_bigbathroom6_r009_27"
+      },
+      {
+        "accuracy": 0.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.063,
+        "material_label": "ceramic",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "mixed",
+        "region_id": "kingston_bigbathroom6_r050_4"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.0986,
+        "material_label": "glass",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "under_identified",
+        "region_id": "kingston_dining7_r024_12"
+      },
+      {
+        "accuracy": 0.6,
+        "flip_entropy_bits": 0.971,
+        "illumination_sensitivity": 0.1993,
+        "material_label": "wood",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "region_id": "kingston_dining7_r061_32"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.1328,
+        "material_label": "wood",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "region_id": "kingston_floor1bath5_r021_32"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.0902,
+        "material_label": "metal",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "under_identified",
+        "region_id": "kingston_floor1bath5_r059_17"
+      },
+      {
+        "accuracy": 0.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.1286,
+        "material_label": "opaque plastic",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "mixed",
+        "region_id": "kingston_floor1bath5_r060_23"
+      },
+      {
+        "accuracy": 0.8,
+        "flip_entropy_bits": 0.7219,
+        "illumination_sensitivity": 0.121,
+        "material_label": "paper/tissue",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "region_id": "kingston_living5_r028_21"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.2186,
+        "material_label": "wood",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "region_id": "kingston_living5_r057_32"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.2105,
+        "material_label": "wood",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "region_id": "kingston_living7_r010_32"
+      },
+      {
+        "accuracy": 0.6,
+        "flip_entropy_bits": 0.971,
+        "illumination_sensitivity": 0.1764,
+        "material_label": "paper/tissue",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "region_id": "kingston_living7_r046_21"
+      },
+      {
+        "accuracy": 0.4,
+        "flip_entropy_bits": 0.971,
+        "illumination_sensitivity": 0.2838,
+        "material_label": "fabric/cloth",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "region_id": "state_bigbathroom2_r012_8"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.2017,
+        "material_label": "tile",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "region_id": "state_bigbathroom2_r039_27"
+      },
+      {
+        "accuracy": 0.0,
+        "flip_entropy_bits": 0.7219,
+        "illumination_sensitivity": 0.1054,
+        "material_label": "ceramic",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "mixed",
+        "region_id": "state_bigbathroom2_r041_4"
+      },
+      {
+        "accuracy": 0.8,
+        "flip_entropy_bits": 0.7219,
+        "illumination_sensitivity": 0.0967,
+        "material_label": "granite/marble",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "mixed",
+        "region_id": "state_kitchen2_r025_13"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.0536,
+        "material_label": "metal",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "under_identified",
+        "region_id": "state_kitchen2_r053_17"
+      },
+      {
+        "accuracy": 0.8,
+        "flip_entropy_bits": 0.7219,
+        "illumination_sensitivity": 0.1743,
+        "material_label": "metal",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "under_identified",
+        "region_id": "state_kitchen5_r016_17"
+      },
+      {
+        "accuracy": 0.8,
+        "flip_entropy_bits": 0.7219,
+        "illumination_sensitivity": 0.2322,
+        "material_label": "wood",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "region_id": "state_kitchen5_r049_32"
+      },
+      {
+        "accuracy": 0.0,
+        "flip_entropy_bits": 0.7219,
+        "illumination_sensitivity": 0.0631,
+        "material_label": "ceramic",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "mixed",
+        "region_id": "state_smallbathroom3_r000_4"
+      },
+      {
+        "accuracy": 0.4,
+        "flip_entropy_bits": 1.5219,
+        "illumination_sensitivity": 0.2449,
+        "material_label": "fabric/cloth",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "region_id": "state_smallbathroom3_r033_8"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.2284,
+        "material_label": "tile",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "region_id": "state_smallbathroom3_r056_27"
+      },
+      {
+        "accuracy": 0.2,
+        "flip_entropy_bits": 0.7219,
+        "illumination_sensitivity": 0.1963,
+        "material_label": "ceramic",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "mixed",
+        "region_id": "summer_bathroom8_r032_4"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.1343,
+        "material_label": "fabric/cloth",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "region_id": "summer_bathroom8_r042_8"
+      },
+      {
+        "accuracy": 0.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.1472,
+        "material_label": "ceramic",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "mixed",
+        "region_id": "west_bathroom4_r011_4"
+      },
+      {
+        "accuracy": 0.8,
+        "flip_entropy_bits": 0.7219,
+        "illumination_sensitivity": 0.2038,
+        "material_label": "tile",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "region_id": "west_bathroom4_r030_27"
+      },
+      {
+        "accuracy": 0.8,
+        "flip_entropy_bits": 0.7219,
+        "illumination_sensitivity": 0.0773,
+        "material_label": "fabric/cloth",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "region_id": "willow_dining11_r023_8"
+      },
+      {
+        "accuracy": 0.8,
+        "flip_entropy_bits": 0.7219,
+        "illumination_sensitivity": 0.1378,
+        "material_label": "leather",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "region_id": "willow_dining11_r044_15"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.2588,
+        "material_label": "fabric/cloth",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "region_id": "willow_dining11_r051_8"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.206,
+        "material_label": "leather",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "region_id": "willow_dining12_r004_15"
+      },
+      {
+        "accuracy": 0.6,
+        "flip_entropy_bits": 0.971,
+        "illumination_sensitivity": 0.2618,
+        "material_label": "fabric/cloth",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "region_id": "willow_dining12_r062_8"
+      },
+      {
+        "accuracy": 0.8,
+        "flip_entropy_bits": 0.7219,
+        "illumination_sensitivity": 0.1936,
+        "material_label": "leather",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "region_id": "willow_dining14_r035_15"
+      },
+      {
+        "accuracy": 0.8,
+        "flip_entropy_bits": 0.7219,
+        "illumination_sensitivity": 0.0705,
+        "material_label": "leather",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "region_id": "willow_dining14_r052_15"
+      },
+      {
+        "accuracy": 0.0,
+        "flip_entropy_bits": 0.971,
+        "illumination_sensitivity": 0.27,
+        "material_label": "opaque plastic",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "mixed",
+        "region_id": "willow_dining14_r055_23"
+      },
+      {
+        "accuracy": 0.6,
+        "flip_entropy_bits": 1.371,
+        "illumination_sensitivity": 0.2749,
+        "material_label": "clear plastic",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "under_identified",
+        "region_id": "willow_dining8_r007_22"
+      },
+      {
+        "accuracy": 0.8,
+        "flip_entropy_bits": 0.7219,
+        "illumination_sensitivity": 0.2581,
+        "material_label": "fabric/cloth",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "region_id": "willow_dining8_r065_8"
+      },
+      {
+        "accuracy": 0.0,
+        "flip_entropy_bits": 1.371,
+        "illumination_sensitivity": 0.3032,
+        "material_label": "opaque plastic",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "mixed",
+        "region_id": "willow_kitchen15_r038_23"
+      },
+      {
+        "accuracy": 0.4,
+        "flip_entropy_bits": 0.971,
+        "illumination_sensitivity": 0.0863,
+        "material_label": "metal",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "under_identified",
+        "region_id": "willow_kitchen15_r045_17"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.2307,
+        "material_label": "wood",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "region_id": "willow_kitchen18_r031_32"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.1526,
+        "material_label": "metal",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "under_identified",
+        "region_id": "willow_kitchen18_r036_17"
+      },
+      {
+        "accuracy": 0.0,
+        "flip_entropy_bits": 0.971,
+        "illumination_sensitivity": 0.1649,
+        "material_label": "clear plastic",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "under_identified",
+        "region_id": "willow_living18_r018_22"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.0905,
+        "material_label": "leather",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "region_id": "willow_living19_r015_15"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.2169,
+        "material_label": "paper/tissue",
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "region_id": "willow_living19_r017_21"
+      },
+      {
+        "accuracy": 0.8,
+        "flip_entropy_bits": 0.7219,
+        "illumination_sensitivity": 0.1857,
+        "material_label": "opaque plastic",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "mixed",
+        "region_id": "14n_office11_r008_23"
+      },
+      {
+        "accuracy": 0.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.0938,
+        "material_label": "opaque plastic",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "mixed",
+        "region_id": "14n_office11_r029_23"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.2674,
+        "material_label": "wood",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "region_id": "14n_office11_r040_32"
+      },
+      {
+        "accuracy": 0.0,
+        "flip_entropy_bits": 1.371,
+        "illumination_sensitivity": 0.2433,
+        "material_label": "paper/tissue",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "region_id": "14n_office1_r006_21"
+      },
+      {
+        "accuracy": 0.2,
+        "flip_entropy_bits": 0.7219,
+        "illumination_sensitivity": 0.1523,
+        "material_label": "opaque plastic",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "mixed",
+        "region_id": "14n_office1_r047_23"
+      },
+      {
+        "accuracy": 0.2,
+        "flip_entropy_bits": 1.371,
+        "illumination_sensitivity": 0.1133,
+        "material_label": "metal",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "under_identified",
+        "region_id": "14n_office7_r005_17"
+      },
+      {
+        "accuracy": 0.2,
+        "flip_entropy_bits": 1.371,
+        "illumination_sensitivity": 0.2831,
+        "material_label": "paper/tissue",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "region_id": "14n_office7_r037_21"
+      },
+      {
+        "accuracy": 0.0,
+        "flip_entropy_bits": 1.5219,
+        "illumination_sensitivity": 0.2717,
+        "material_label": "paper/tissue",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "region_id": "14n_office7_r054_21"
+      },
+      {
+        "accuracy": 0.4,
+        "flip_entropy_bits": 0.971,
+        "illumination_sensitivity": 0.1433,
+        "material_label": "granite/marble",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "mixed",
+        "region_id": "elm_revis_kitchen14_r014_13"
+      },
+      {
+        "accuracy": 0.2,
+        "flip_entropy_bits": 1.9219,
+        "illumination_sensitivity": 0.2155,
+        "material_label": "opaque plastic",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "mixed",
+        "region_id": "fulkerson_revis_dining5_r019_23"
+      },
+      {
+        "accuracy": 0.6,
+        "flip_entropy_bits": 0.971,
+        "illumination_sensitivity": 0.3288,
+        "material_label": "glass",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "under_identified",
+        "region_id": "fulkerson_revis_dining5_r043_12"
+      },
+      {
+        "accuracy": 0.4,
+        "flip_entropy_bits": 0.971,
+        "illumination_sensitivity": 0.1546,
+        "material_label": "granite/marble",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "mixed",
+        "region_id": "fulkerson_revis_kitchen11_r003_13"
+      },
+      {
+        "accuracy": 0.8,
+        "flip_entropy_bits": 0.7219,
+        "illumination_sensitivity": 0.1036,
+        "material_label": "metal",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "under_identified",
+        "region_id": "fulkerson_revis_kitchen11_r027_17"
+      },
+      {
+        "accuracy": 0.0,
+        "flip_entropy_bits": 1.371,
+        "illumination_sensitivity": 0.247,
+        "material_label": "glass",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "under_identified",
+        "region_id": "joy_bathroom6_r002_12"
+      },
+      {
+        "accuracy": 0.6,
+        "flip_entropy_bits": 0.971,
+        "illumination_sensitivity": 0.249,
+        "material_label": "tile",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "region_id": "joy_bathroom6_r020_27"
+      },
+      {
+        "accuracy": 0.8,
+        "flip_entropy_bits": 0.7219,
+        "illumination_sensitivity": 0.118,
+        "material_label": "ceramic",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "mixed",
+        "region_id": "joy_bathroom9_r022_4"
+      },
+      {
+        "accuracy": 0.8,
+        "flip_entropy_bits": 0.7219,
+        "illumination_sensitivity": 0.1645,
+        "material_label": "tile",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "region_id": "joy_bathroom9_r048_27"
+      },
+      {
+        "accuracy": 0.4,
+        "flip_entropy_bits": 1.5219,
+        "illumination_sensitivity": 0.1902,
+        "material_label": "fabric/cloth",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "region_id": "joy_bedroom14_r001_8"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.2285,
+        "material_label": "leather",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "region_id": "joy_bedroom14_r026_15"
+      },
+      {
+        "accuracy": 0.2,
+        "flip_entropy_bits": 1.371,
+        "illumination_sensitivity": 0.3284,
+        "material_label": "fabric/cloth",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "region_id": "joy_bedroom14_r064_8"
+      },
+      {
+        "accuracy": 0.0,
+        "flip_entropy_bits": 0.7219,
+        "illumination_sensitivity": 0.2612,
+        "material_label": "glass",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "under_identified",
+        "region_id": "joy_bedroom16_r034_12"
+      },
+      {
+        "accuracy": 0.6,
+        "flip_entropy_bits": 1.371,
+        "illumination_sensitivity": 0.1363,
+        "material_label": "fabric/cloth",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "region_id": "joy_bedroom16_r063_8"
+      },
+      {
+        "accuracy": 0.2,
+        "flip_entropy_bits": 1.5219,
+        "illumination_sensitivity": 0.1345,
+        "material_label": "glass",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "under_identified",
+        "region_id": "joy_living12_r013_12"
+      },
+      {
+        "accuracy": 0.0,
+        "flip_entropy_bits": 1.371,
+        "illumination_sensitivity": 0.284,
+        "material_label": "fabric/cloth",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "region_id": "joy_living12_r058_8"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.1627,
+        "material_label": "tile",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "region_id": "kingston_bigbathroom6_r009_27"
+      },
+      {
+        "accuracy": 0.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.063,
+        "material_label": "ceramic",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "mixed",
+        "region_id": "kingston_bigbathroom6_r050_4"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.0986,
+        "material_label": "glass",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "under_identified",
+        "region_id": "kingston_dining7_r024_12"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.1993,
+        "material_label": "wood",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "region_id": "kingston_dining7_r061_32"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.1328,
+        "material_label": "wood",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "region_id": "kingston_floor1bath5_r021_32"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.0902,
+        "material_label": "metal",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "under_identified",
+        "region_id": "kingston_floor1bath5_r059_17"
+      },
+      {
+        "accuracy": 0.0,
+        "flip_entropy_bits": 0.7219,
+        "illumination_sensitivity": 0.1286,
+        "material_label": "opaque plastic",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "mixed",
+        "region_id": "kingston_floor1bath5_r060_23"
+      },
+      {
+        "accuracy": 0.8,
+        "flip_entropy_bits": 0.7219,
+        "illumination_sensitivity": 0.121,
+        "material_label": "paper/tissue",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "region_id": "kingston_living5_r028_21"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.2186,
+        "material_label": "wood",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "region_id": "kingston_living5_r057_32"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.2105,
+        "material_label": "wood",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "region_id": "kingston_living7_r010_32"
+      },
+      {
+        "accuracy": 0.2,
+        "flip_entropy_bits": 0.7219,
+        "illumination_sensitivity": 0.1764,
+        "material_label": "paper/tissue",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "region_id": "kingston_living7_r046_21"
+      },
+      {
+        "accuracy": 0.0,
+        "flip_entropy_bits": 0.7219,
+        "illumination_sensitivity": 0.2838,
+        "material_label": "fabric/cloth",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "region_id": "state_bigbathroom2_r012_8"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.2017,
+        "material_label": "tile",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "region_id": "state_bigbathroom2_r039_27"
+      },
+      {
+        "accuracy": 0.0,
+        "flip_entropy_bits": 1.9219,
+        "illumination_sensitivity": 0.1054,
+        "material_label": "ceramic",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "mixed",
+        "region_id": "state_bigbathroom2_r041_4"
+      },
+      {
+        "accuracy": 0.6,
+        "flip_entropy_bits": 1.371,
+        "illumination_sensitivity": 0.0967,
+        "material_label": "granite/marble",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "mixed",
+        "region_id": "state_kitchen2_r025_13"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.0536,
+        "material_label": "metal",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "under_identified",
+        "region_id": "state_kitchen2_r053_17"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.1743,
+        "material_label": "metal",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "under_identified",
+        "region_id": "state_kitchen5_r016_17"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.2322,
+        "material_label": "wood",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "region_id": "state_kitchen5_r049_32"
+      },
+      {
+        "accuracy": 0.0,
+        "flip_entropy_bits": 1.371,
+        "illumination_sensitivity": 0.0631,
+        "material_label": "ceramic",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "mixed",
+        "region_id": "state_smallbathroom3_r000_4"
+      },
+      {
+        "accuracy": 0.2,
+        "flip_entropy_bits": 2.3219,
+        "illumination_sensitivity": 0.2449,
+        "material_label": "fabric/cloth",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "region_id": "state_smallbathroom3_r033_8"
+      },
+      {
+        "accuracy": 0.8,
+        "flip_entropy_bits": 0.7219,
+        "illumination_sensitivity": 0.2284,
+        "material_label": "tile",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "region_id": "state_smallbathroom3_r056_27"
+      },
+      {
+        "accuracy": 0.0,
+        "flip_entropy_bits": 0.7219,
+        "illumination_sensitivity": 0.1963,
+        "material_label": "ceramic",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "mixed",
+        "region_id": "summer_bathroom8_r032_4"
+      },
+      {
+        "accuracy": 0.6,
+        "flip_entropy_bits": 1.371,
+        "illumination_sensitivity": 0.1343,
+        "material_label": "fabric/cloth",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "region_id": "summer_bathroom8_r042_8"
+      },
+      {
+        "accuracy": 0.0,
+        "flip_entropy_bits": 1.371,
+        "illumination_sensitivity": 0.1472,
+        "material_label": "ceramic",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "mixed",
+        "region_id": "west_bathroom4_r011_4"
+      },
+      {
+        "accuracy": 0.8,
+        "flip_entropy_bits": 0.7219,
+        "illumination_sensitivity": 0.2038,
+        "material_label": "tile",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "region_id": "west_bathroom4_r030_27"
+      },
+      {
+        "accuracy": 0.6,
+        "flip_entropy_bits": 0.971,
+        "illumination_sensitivity": 0.0773,
+        "material_label": "fabric/cloth",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "region_id": "willow_dining11_r023_8"
+      },
+      {
+        "accuracy": 0.8,
+        "flip_entropy_bits": 0.7219,
+        "illumination_sensitivity": 0.1378,
+        "material_label": "leather",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "region_id": "willow_dining11_r044_15"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.2588,
+        "material_label": "fabric/cloth",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "region_id": "willow_dining11_r051_8"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.206,
+        "material_label": "leather",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "region_id": "willow_dining12_r004_15"
+      },
+      {
+        "accuracy": 0.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.2618,
+        "material_label": "fabric/cloth",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "region_id": "willow_dining12_r062_8"
+      },
+      {
+        "accuracy": 0.8,
+        "flip_entropy_bits": 0.7219,
+        "illumination_sensitivity": 0.1936,
+        "material_label": "leather",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "region_id": "willow_dining14_r035_15"
+      },
+      {
+        "accuracy": 0.0,
+        "flip_entropy_bits": 1.5219,
+        "illumination_sensitivity": 0.0705,
+        "material_label": "leather",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "region_id": "willow_dining14_r052_15"
+      },
+      {
+        "accuracy": 0.0,
+        "flip_entropy_bits": 0.7219,
+        "illumination_sensitivity": 0.27,
+        "material_label": "opaque plastic",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "mixed",
+        "region_id": "willow_dining14_r055_23"
+      },
+      {
+        "accuracy": 0.4,
+        "flip_entropy_bits": 1.9219,
+        "illumination_sensitivity": 0.2749,
+        "material_label": "clear plastic",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "under_identified",
+        "region_id": "willow_dining8_r007_22"
+      },
+      {
+        "accuracy": 0.8,
+        "flip_entropy_bits": 0.7219,
+        "illumination_sensitivity": 0.2581,
+        "material_label": "fabric/cloth",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "region_id": "willow_dining8_r065_8"
+      },
+      {
+        "accuracy": 0.2,
+        "flip_entropy_bits": 1.371,
+        "illumination_sensitivity": 0.3032,
+        "material_label": "opaque plastic",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "mixed",
+        "region_id": "willow_kitchen15_r038_23"
+      },
+      {
+        "accuracy": 0.8,
+        "flip_entropy_bits": 0.7219,
+        "illumination_sensitivity": 0.0863,
+        "material_label": "metal",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "under_identified",
+        "region_id": "willow_kitchen15_r045_17"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.2307,
+        "material_label": "wood",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "region_id": "willow_kitchen18_r031_32"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.1526,
+        "material_label": "metal",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "under_identified",
+        "region_id": "willow_kitchen18_r036_17"
+      },
+      {
+        "accuracy": 0.2,
+        "flip_entropy_bits": 1.371,
+        "illumination_sensitivity": 0.1649,
+        "material_label": "clear plastic",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "under_identified",
+        "region_id": "willow_living18_r018_22"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.0905,
+        "material_label": "leather",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "region_id": "willow_living19_r015_15"
+      },
+      {
+        "accuracy": 1.0,
+        "flip_entropy_bits": 0.0,
+        "illumination_sensitivity": 0.2169,
+        "material_label": "paper/tissue",
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "region_id": "willow_living19_r017_21"
+      }
+    ],
+    "partition_accuracy": [
+      {
+        "accuracy": 0.7944,
+        "ci_hi": 0.8722,
+        "ci_lo": 0.7056,
+        "flip_rate": 0.5,
+        "mean_entropy_bits": 0.5136,
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "identifiable",
+        "regions": 36
+      },
+      {
+        "accuracy": 0.1625,
+        "ci_hi": 0.3125,
+        "ci_lo": 0.05,
+        "flip_rate": 0.6875,
+        "mean_entropy_bits": 0.6241,
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "mixed",
+        "regions": 16
+      },
+      {
+        "accuracy": 0.6143,
+        "ci_hi": 0.7857,
+        "ci_lo": 0.4286,
+        "flip_rate": 0.6429,
+        "mean_entropy_bits": 0.6673,
+        "model": "Qwen3-VL-2B-Instruct",
+        "partition": "under_identified",
+        "regions": 14
+      },
+      {
+        "accuracy": 0.6444,
+        "ci_hi": 0.7667,
+        "ci_lo": 0.5167,
+        "flip_rate": 0.5833,
+        "mean_entropy_bits": 0.6542,
+        "model": "InternVL3.5-2B-HF",
+        "partition": "identifiable",
+        "regions": 36
+      },
+      {
+        "accuracy": 0.225,
+        "ci_hi": 0.3625,
+        "ci_lo": 0.1,
+        "flip_rate": 0.875,
+        "mean_entropy_bits": 0.9751,
+        "model": "InternVL3.5-2B-HF",
+        "partition": "mixed",
+        "regions": 16
+      },
+      {
+        "accuracy": 0.5857,
+        "ci_hi": 0.7857,
+        "ci_lo": 0.3714,
+        "flip_rate": 0.6429,
+        "mean_entropy_bits": 0.7638,
+        "model": "InternVL3.5-2B-HF",
+        "partition": "under_identified",
+        "regions": 14
+      }
+    ],
+    "selective_prediction": [
+      {
+        "accuracy": 0.0,
+        "coverage": 0.0152,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.5,
+        "coverage": 0.0303,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.3333,
+        "coverage": 0.0455,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.5,
+        "coverage": 0.0606,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.4,
+        "coverage": 0.0758,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.5,
+        "coverage": 0.0909,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.5714,
+        "coverage": 0.1061,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.625,
+        "coverage": 0.1212,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.6667,
+        "coverage": 0.1364,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.7,
+        "coverage": 0.1515,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.6364,
+        "coverage": 0.1667,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.6667,
+        "coverage": 0.1818,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.6923,
+        "coverage": 0.197,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.7143,
+        "coverage": 0.2121,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.6667,
+        "coverage": 0.2273,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.6875,
+        "coverage": 0.2424,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.7059,
+        "coverage": 0.2576,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.7222,
+        "coverage": 0.2727,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.7368,
+        "coverage": 0.2879,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.75,
+        "coverage": 0.303,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.7619,
+        "coverage": 0.3182,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.7273,
+        "coverage": 0.3333,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.7391,
+        "coverage": 0.3485,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.75,
+        "coverage": 0.3636,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.76,
+        "coverage": 0.3788,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.7692,
+        "coverage": 0.3939,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.7778,
+        "coverage": 0.4091,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.7857,
+        "coverage": 0.4242,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.7586,
+        "coverage": 0.4394,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.76,
+        "coverage": 0.4545,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.7613,
+        "coverage": 0.4697,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.7625,
+        "coverage": 0.4848,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.7636,
+        "coverage": 0.5,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.7412,
+        "coverage": 0.5152,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.7429,
+        "coverage": 0.5303,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.7444,
+        "coverage": 0.5455,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.7459,
+        "coverage": 0.5606,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.7263,
+        "coverage": 0.5758,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.7128,
+        "coverage": 0.5909,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.715,
+        "coverage": 0.6061,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.7171,
+        "coverage": 0.6212,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.719,
+        "coverage": 0.6364,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.7209,
+        "coverage": 0.6515,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.7227,
+        "coverage": 0.6667,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.7244,
+        "coverage": 0.6818,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.7174,
+        "coverage": 0.697,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.7106,
+        "coverage": 0.7121,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.7042,
+        "coverage": 0.7273,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.702,
+        "coverage": 0.7424,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.7,
+        "coverage": 0.7576,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.6941,
+        "coverage": 0.7727,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.6923,
+        "coverage": 0.7879,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.6792,
+        "coverage": 0.803,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.6741,
+        "coverage": 0.8182,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.6618,
+        "coverage": 0.8333,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.6607,
+        "coverage": 0.8485,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.6526,
+        "coverage": 0.8636,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.6414,
+        "coverage": 0.8788,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.6407,
+        "coverage": 0.8939,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.64,
+        "coverage": 0.9091,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.6295,
+        "coverage": 0.9242,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.6226,
+        "coverage": 0.9394,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.619,
+        "coverage": 0.9545,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.6125,
+        "coverage": 0.9697,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.6062,
+        "coverage": 0.9848,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.603,
+        "coverage": 1.0,
+        "model": "Qwen3-VL-2B-Instruct"
+      },
+      {
+        "accuracy": 0.0,
+        "coverage": 0.0152,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.5,
+        "coverage": 0.0303,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.6667,
+        "coverage": 0.0455,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.75,
+        "coverage": 0.0606,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.6,
+        "coverage": 0.0758,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.6667,
+        "coverage": 0.0909,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.7143,
+        "coverage": 0.1061,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.75,
+        "coverage": 0.1212,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.7778,
+        "coverage": 0.1364,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.8,
+        "coverage": 0.1515,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.8182,
+        "coverage": 0.1667,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.8333,
+        "coverage": 0.1818,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.8462,
+        "coverage": 0.197,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.8571,
+        "coverage": 0.2121,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.8667,
+        "coverage": 0.2273,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.875,
+        "coverage": 0.2424,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.8824,
+        "coverage": 0.2576,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.8333,
+        "coverage": 0.2727,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.8421,
+        "coverage": 0.2879,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.85,
+        "coverage": 0.303,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.8571,
+        "coverage": 0.3182,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.8636,
+        "coverage": 0.3333,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.8609,
+        "coverage": 0.3485,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.8333,
+        "coverage": 0.3636,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.832,
+        "coverage": 0.3788,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.8308,
+        "coverage": 0.3939,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.8296,
+        "coverage": 0.4091,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.8,
+        "coverage": 0.4242,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.7724,
+        "coverage": 0.4394,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.7733,
+        "coverage": 0.4545,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.7548,
+        "coverage": 0.4697,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.7312,
+        "coverage": 0.4848,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.7333,
+        "coverage": 0.5,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.7118,
+        "coverage": 0.5152,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.7143,
+        "coverage": 0.5303,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.7167,
+        "coverage": 0.5455,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.7189,
+        "coverage": 0.5606,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.7,
+        "coverage": 0.5758,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.7026,
+        "coverage": 0.5909,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.705,
+        "coverage": 0.6061,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.6976,
+        "coverage": 0.6212,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.6952,
+        "coverage": 0.6364,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.6884,
+        "coverage": 0.6515,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.6864,
+        "coverage": 0.6667,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.6844,
+        "coverage": 0.6818,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.6696,
+        "coverage": 0.697,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.6596,
+        "coverage": 0.7121,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.65,
+        "coverage": 0.7273,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.6367,
+        "coverage": 0.7424,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.628,
+        "coverage": 0.7576,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.6275,
+        "coverage": 0.7727,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.6154,
+        "coverage": 0.7879,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.6151,
+        "coverage": 0.803,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.6037,
+        "coverage": 0.8182,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.6036,
+        "coverage": 0.8333,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.5929,
+        "coverage": 0.8485,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.586,
+        "coverage": 0.8636,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.5793,
+        "coverage": 0.8788,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.5695,
+        "coverage": 0.8939,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.5667,
+        "coverage": 0.9091,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.5607,
+        "coverage": 0.9242,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.5516,
+        "coverage": 0.9394,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.546,
+        "coverage": 0.9545,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.5375,
+        "coverage": 0.9697,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.5354,
+        "coverage": 0.9848,
+        "model": "InternVL3.5-2B-HF"
+      },
+      {
+        "accuracy": 0.5303,
+        "coverage": 1.0,
+        "model": "InternVL3.5-2B-HF"
+      }
+    ]
+  },
+  "device": "",
+  "ended": "",
+  "exit_status": "ok",
+  "experiment_id": "exp-flip-identifiability-v0",
+  "id": "run-flip-identifiability-v0",
+  "manifest_hash": "",
+  "metrics": {
+    "auroc_internvl3.5": {
+      "ci95": [
+        0.7201,
+        0.8577
+      ],
+      "unit": "auroc",
+      "value": 0.7939
+    },
+    "auroc_qwen3": {
+      "ci95": [
+        0.6334,
+        0.7958
+      ],
+      "unit": "auroc",
+      "value": 0.7144
+    },
+    "selective_gain_internvl3.5": {
+      "ci95": [
+        0.1474,
+        0.2912
+      ],
+      "unit": "accuracy_delta",
+      "value": 0.203
+    },
+    "selective_gain_qwen3": {
+      "ci95": [
+        0.0812,
+        0.2313
+      ],
+      "unit": "accuracy_delta",
+      "value": 0.1606
+    }
+  },
+  "model_revision": "",
+  "notes": "No training. Reuses scripts/compare_material_conditions.region_metrics and scripts/analyze_material_gate.bootstrap_ci (seed 20260719, region unit). ① partition test is descriptive; the semantic-prior arm is the next step.",
+  "seed": 20260719,
+  "started": "",
+  "title": "Flip-as-uncertainty + identifiability partition (RGB-only, no training)",
+  "verdict": "go",
+  "verdict_reason": "Both models: AUROC(-entropy->correct) CI lower bound > 0.5 and selective-accuracy gain @50% coverage CI lower bound > 0. Illumination instability is a usable, training-free error/uncertainty signal."
+}

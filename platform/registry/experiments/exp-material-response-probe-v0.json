@@ -1,0 +1,61 @@
+{
+  "bootstrap_unit": "scene",
+  "conditions": [
+    {
+      "changed_var": "单光 crop",
+      "name": "single_rgb_frozen",
+      "purpose": "强简单基线"
+    },
+    {
+      "changed_var": "同区多光特征均值",
+      "name": "multi_light_mean",
+      "purpose": "不变均值"
+    },
+    {
+      "changed_var": "加光致方差",
+      "name": "mean_plus_variance",
+      "purpose": "简单响应"
+    },
+    {
+      "changed_var": "同区多光有向差",
+      "name": "pairwise_response",
+      "purpose": "主干预"
+    },
+    {
+      "changed_var": "经浅层头重测",
+      "name": "rgb_plus_albedo",
+      "purpose": "旧 No-Go 桥"
+    },
+    {
+      "changed_var": "RGB/albedo 残差",
+      "name": "rgb_plus_residual",
+      "purpose": "物理响应代理"
+    }
+  ],
+  "config_path": "configs/material_response_probe_v0.json",
+  "controls": {
+    "correct": "同区多光响应 + 对齐 albedo/残差",
+    "equal_param": "等参数量 MLP 分支但无响应输入",
+    "irrelevant": "同维随机残差 / 无关区域特征",
+    "shuffled": "跨区域打乱光照配对",
+    "wrong": "错区域 albedo / 反向响应"
+  },
+  "go_threshold": "相对最强单 RGB 基线 +≥5pp（scene-aware CI 下界>0），翻转 −≥10pp（CI 上界<0），每个控制 +≥3pp",
+  "guardrail_metrics": [
+    "macro class accuracy",
+    "region flip rate",
+    "worst-light accuracy"
+  ],
+  "hypothesis": "多光响应浅层头相对最强单 RGB frozen-feature 基线提升区域准确率并降低翻转，而打乱/错区域控制不会。",
+  "id": "exp-material-response-probe-v0",
+  "idea_id": "idea-privileged-response-probe",
+  "no_go_threshold": "不超单 RGB 基线，或 CI 跨 0，或打乱/错控制追平增益，或 macro 掉 >2pp",
+  "plan_md_path": "experiments/plans/material_response_probe_v0.md",
+  "primary_metric": "mean region accuracy on held-out scenes",
+  "question": "对现有材质区域，受控光照响应是否比单 RGB 或不变均值提供额外材质判别信息？",
+  "run_ids": [],
+  "statistical_unit": "region",
+  "status": "planned",
+  "title": "material_response_probe_v0 — frozen-feature response gate",
+  "track": "confirmatory"
+}

@@ -8,6 +8,7 @@
 | `taskshot.md` | 适合交接的短快照 |
 | `collaboration-workflow.md` | 分支、实验、审查和交接流程 |
 | `fork-upstream-collaboration.md` | fork、upstream 同步与向原仓库提交成果 |
+| `upstream-change-audit-2026-07-23.md` | 已 fetch 的 upstream 新提交审计、SGNet/RGB-D-D 结果摘要和合并风险 |
 | `experiment-log-template.md` | 新实验统一模板 |
 | `research-paradigm-transfer-audit.md` | 旧工作范式的可迁移项、隔离边界与本项目适配 |
 | `research-design-patterns.md` | 科研模式、反模式、机制迁移卡和多方向 WIP 门禁 |

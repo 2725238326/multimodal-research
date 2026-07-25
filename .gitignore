@@ -59,6 +59,13 @@ reports/assets/
 *.safetensors
 *.onnx
 
+# labkit experiment platform — track schema + aggregate registry, ignore artifacts
+platform/runs_local/
+platform/web/node_modules/
+platform/web/dist/
+platform/**/__pycache__/
+platform/registry.export.json
+
 # OS and editor state
 .DS_Store
 Thumbs.db

@@ -1,0 +1,7 @@
+{
+  "id": "mod-flip-identifiability",
+  "kind_": "analysis",
+  "name": "flip_identifiability analysis",
+  "notes": "Reuses scripts/compare_material_conditions + analyze_material_gate for CI parity.",
+  "path": "platform/labkit/analyses/flip_identifiability.py"
+}

@@ -1,0 +1,17 @@
+{
+  "collision_notes": "",
+  "design_patterns": [
+    "RP-07",
+    "RP-05"
+  ],
+  "detail": "能把项目全部负结果翻译成一条正向分工法则。第一枪：按翻转率/材质大类切分区，比较 RGB-only 与 RGB+语义。",
+  "experiment_ids": [],
+  "id": "idea-identifiability-partition",
+  "links": [
+    "idea-identifiability-aware-division-of-labor"
+  ],
+  "slot": "mainline",
+  "status": "active",
+  "thesis": "语义先验只在物理欠识别的分区（镜面/透明/暗光/小尺度）提升准确率，在可识别分区中性或有害。",
+  "title": "① 欠定分区里语义才有用"
+}

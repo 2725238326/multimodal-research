@@ -17,6 +17,7 @@
 | 科研设计模式库 | 12 个核心模式、反模式、机制迁移卡、探索/确认分轨与组合上限 | Completed | 新方向须引用模式并预注册角色、控制与门槛 |
 | 语义—物理路线审计 | 本仓库负结果与 2024–2026 相邻工作碰撞矩阵 | Completed | 直接语义替代物理和冻结 VLM 拼图保持 No-Go；三类受控路线进入候选 |
 | Material response probe v0 | 预注册计划、相对路径配置、smoke manifest 准备脚本和 unittest 存在；本地 smoke 生成 18 样本/6 区域/6 场景 | Smoke test | 下一主线 gate 已部署到预备资产；尚未抽取 frozen features、未训练、未形成研究结论 |
+| Upstream SGNet/RGB-D-D updates | 已 fetch `upstream/main` 14 个独有提交；审计见 `docs/upstream-change-audit-2026-07-23.md` | Needs verification | 上游 synthetic RGB-D-D 16x adaptive frequency gate 是强候选，但未合并、未在本 fork 复核；real RGB-D-D 4x transfer/calibration 为 No-Go |
 
 ## 工程与复现
 
@@ -29,5 +30,5 @@
 | 数据/模型 provenance | Needs verification | 模型 ID/revision 部分存在；数据许可、哈希和完整下载来源未统一登记 |
 | Git 忽略边界 | Completed | 已新增 `.gitignore` 防止后续新增本地资产 |
 | 已跟踪资产治理 | Blocked | 1,237 个文件中含 781 个 data、249 个 results、117 个 Office/QA 临时项；清理方式待协作者决策 |
-| fork/upstream 协作 | Needs verification | 已确认 origin 为个人 fork、upstream 为原仓库；远端引用显示双方各 1 个独有提交，正式同步前需在网络恢复后重新 fetch |
+| fork/upstream 协作 | Needs verification | `upstream` 已 fetch 且 push URL 设为 `no_push`；当前 `upstream/main` 独有 14 提交、本 fork `main` 独有 3 提交，直接 merge 会删除治理文档并冲突 |
 | 项目任务技术报告 | Completed | 已依据代码、配置、manifest、聚合结果和治理文档形成自包含 HTML 与可审计 artifact；自动浏览器 QA 受阅读器顶部栏约 8 px 横向溢出限制，结构校验通过 |

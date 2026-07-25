@@ -45,6 +45,8 @@
 
 当前已部署的下一步预备资产为 `material_response_probe_v0`：先用固定 smoke manifest、相对路径配置和 unittest 验证输入链路，再进入 frozen-feature/oracle gate。该阶段不授权训练、LoRA、VLM 提示扩展或新数据下载。
 
+2026-07-23 已审计 `upstream/main` 的 SGNet/RGB-D-D 深度超分更新。该路线是上游新增方向，不自动替换当前 fork 的材质恒常性主线；若要采用，必须作为新的候选主线重新预注册，并优先迁移可复核的配置、脚本、计划和聚合摘要，不直接合并上游对治理文档的删除。
+
 任何候选在 Phase 0/1 完成前只允许数据审计、离线分析和不启动训练的计划工作。
 
 ## Phase 3 — 受控实验

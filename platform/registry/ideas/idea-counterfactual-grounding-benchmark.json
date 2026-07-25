@@ -1,0 +1,17 @@
+{
+  "collision_notes": "",
+  "design_patterns": [
+    "RP-05",
+    "RP-07"
+  ],
+  "detail": "可独立发表的诊断/benchmark；多光照成对图能给出『同表面不同光被判不同材质』的铁证。",
+  "experiment_ids": [],
+  "id": "idea-counterfactual-grounding-benchmark",
+  "links": [
+    "idea-identifiability-aware-division-of-labor"
+  ],
+  "slot": "adjacent",
+  "status": "proposed",
+  "thesis": "VLM 是看像素还是背物体—材质共现？造反常配对测它默认先验还是读测量。",
+  "title": "③ VLM 物理接地反事实诊断基准"
+}

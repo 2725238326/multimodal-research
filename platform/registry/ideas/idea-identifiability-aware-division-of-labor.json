@@ -1,0 +1,17 @@
+{
+  "collision_notes": "",
+  "design_patterns": [
+    "RP-07",
+    "RP-08",
+    "RP-09",
+    "RP-10"
+  ],
+  "detail": "统一 fork 的材质翻转率与 upstream 的 SGNet spatial reliability gate：两者是同一对象——语义/外观引导的空间可信度场。项目全部 No-Go 的共因是做了全局无差别融合、缺这张地图。",
+  "experiment_ids": [],
+  "id": "idea-identifiability-aware-division-of-labor",
+  "links": [],
+  "slot": "mainline",
+  "status": "active",
+  "thesis": "RGB/语义给出高分辨率但物理欠定的猜测；物理测量给出稀疏但可作真值的约束。真正的贡献单元是一张逐实例/逐位置的『信任地图』——判断哪里信语义、哪里让物理否决。",
+  "title": "识别度感知的语义—测量分工 (identifiability-aware division of labor)"
+}

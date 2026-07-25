@@ -1,0 +1,14 @@
+{
+  "id": "ds-material-constancy-rgb-gate-v2",
+  "independent_units": {
+    "regions": 66,
+    "samples": 330,
+    "scenes": 30
+  },
+  "license_status": "needs_verification",
+  "manifest_hash": "0651737375c61300bd60055e70e155c627a855e09bf1cfcf11ffcb13112f9828",
+  "name": "Material constancy RGB gate v2 (MIT Multi-Illumination-derived)",
+  "notes": "Source: https://data.csail.mit.edu/multilum . License/allowed-use pending record.",
+  "path": "data/processed/material_constancy_rgb_gate_v2/",
+  "version": "v2"
+}

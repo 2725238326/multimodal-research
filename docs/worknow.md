@@ -1,6 +1,29 @@
 # 当前工作
 
-**更新时间：2026-07-22**
+**更新时间：2026-07-23**
+
+## 当前任务：审计 upstream 新变化并更新记录
+
+- **目标**：读取已 fetch 的 `upstream/main` 新提交，记录 fork 与 upstream 的分叉状态、上游新增研究路线、关键聚合结果、No-Go 项和合并风险。
+- **范围**：只读审计 `upstream/main` 的 README、报告、实验计划、配置、聚合结果和脚本清单；在本仓库文档中新增审计记录并同步状态/决策。
+- **不在范围**：不合并 `upstream/main` 到当前 `main`；不删除本地治理文档；不运行上游训练或评估；不把上游结果直接升级为本 fork 的已复现实验结论。
+- **证据**：`git rev-list --left-right --count upstream/main...main`、`git diff --stat main..upstream/main`、`upstream/main` 中的 `reports/2026-07-19_depth_physics_and_rgbd_route_summary.md`、`experiments/plans/2026-07-22_sgnet_rgbdd_x16_gate.md`、`results/quantitative/sgnet_rgbdd_x16_gate/` 聚合 JSON。
+- **预期产出**：`docs/upstream-change-audit-2026-07-23.md`，并更新 `docs/worknow.md`、`docs/project-status.md`、`docs/project-plan.md`、`docs/decision-log.md`、`docs/fork-upstream-collaboration.md` 和 `docs/README.md`。
+- **下一步**：完成审计后，决定是否从 `upstream/main` 新建迁移分支，逐项 cherry-pick SGNet 相关资产，而不是直接 merge。
+
+### 本轮完成
+
+- 已确认当前 `main` 对 `origin/main` 为 up to date，工作区干净；`upstream` 已 fetch，且 push URL 已设为 `no_push`。
+- 已确认分叉状态为 `upstream/main` 独有 14 个提交、当前 `main` 独有 3 个提交；本地上游快照分支为 `sync/upstream-main-20260723`。
+- 已读取上游新增 RGB-D-D/SGNet 路线报告、计划、配置、结果 README 和聚合 JSON；上游主线从单帧 RGB-D 物理关系 gate 转向 RGB 引导深度超分辨率。
+- 已确认直接合并存在高风险：`upstream/main` 会删除本 fork 的 `AGENTS.md`、`rules.md`、`docs/` 多数治理文档、`material_response_probe_v0` 计划/脚本/测试和文献索引，同时新增 SGNet/RGB-D-D 代码与结果。
+- 已新增 `docs/upstream-change-audit-2026-07-23.md`，并同步状态、计划、决策日志、fork 协作说明和文档索引。
+
+### 当前判断与下一条可执行检查
+
+- 不应直接 merge `upstream/main` 到当前 `main`；应先保留本 fork 治理文档，再在单独分支迁移 SGNet/RGB-D-D 资产。
+- 上游 SGNet adaptive frequency gate 对 synthetic RGB-D-D 16x 协议是强候选，但 real RGB-D-D 4x direct transfer 和 real-domain calibration 均为 No-Go；不能把 synthetic 结论外推到真实传感器输入。
+- **下一条检查**：新建 `sync/merge-upstream-sgnet-audit` 或 `research/sgnet-rgbdd-migration`，先只 cherry-pick 上游 SGNet 配置、脚本、计划和聚合摘要，再运行静态检查，不带入上游对治理文档的删除。
 
 ## 当前任务：部署 material response probe 阶段预备工作
 
