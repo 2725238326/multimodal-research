@@ -1,0 +1,43 @@
+{
+  "experiment_id": "20260723_sgnet_spatial_reliability_gate_pilot_200",
+  "task": "rgb_guided_depth_super_resolution",
+  "base_method": "SGNet",
+  "insertion_point": "before_bridge1_on_rgb2",
+  "gate": {
+    "inputs": ["rgb_luminance_gradient", "upsampled_lr_depth_gradient", "absolute_gradient_disagreement"],
+    "hidden_channels": 8,
+    "output_channels": 1,
+    "activation": "sigmoid",
+    "initial_bias": 4.0,
+    "trainable_parameters": "gate_only"
+  },
+  "training": {
+    "dataset": "NYU_v2_train",
+    "selected_samples": 200,
+    "crop_size": 256,
+    "epochs": 1,
+    "batch_size": 1,
+    "learning_rate": 0.001,
+    "random_horizontal_shift_range": [-4, 4],
+    "consistency_weight": 0.5,
+    "identity_weight": 0.0,
+    "gate_supervision_weight": 1.0,
+    "minimum_reliability": 0.2,
+    "gate_target": "soft suppression where shifted RGB edge lacks GT-depth edge support; GT used during training only",
+    "seed": 20260723
+  },
+  "evaluation": {
+    "dataset": "RGB-D-D/test2",
+    "sample_count": 405,
+    "horizontal_shifts": [0, 1, 2, 4],
+    "gate_modes": ["learned", "identity", "shuffled", "constant_mean"],
+    "crop_border": 6,
+    "metrics_unit": "8-bit depth levels",
+    "bootstrap_samples": 10000
+  },
+  "artifact_policy": {
+    "commit_scripts_config_and_aggregate_summary": true,
+    "commit_gate_checkpoint": false,
+    "commit_per_sample_outputs": false
+  }
+}

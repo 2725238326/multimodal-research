@@ -1,0 +1,90 @@
+{
+  "status": "completed",
+  "completion_level": "real_input_protocol_reproduction",
+  "task": "rgb_guided_depth_super_resolution",
+  "dataset": "RGB-D-D_real_test",
+  "sample_count": 405,
+  "scale": 4,
+  "metrics_unit": "centimeters",
+  "base_method": "SGNet_Real_R",
+  "baseline": {
+    "rmse": 5.420637615521749,
+    "mae": 3.209151927630107,
+    "boundary_rmse": 12.585248454411824,
+    "flat_rmse": 3.6822651265579975,
+    "false_edge_rate": 0.08298675038541611
+  },
+  "direct_nyu_x16_gate_transfer": {
+    "seeds": [20260723, 20260724, 20260725],
+    "candidate_seed_mean": {
+      "rmse": 5.470567895,
+      "mae": 3.26757801,
+      "boundary_rmse": 12.634611443,
+      "flat_rmse": 3.740693009,
+      "false_edge_rate": 0.085011009
+    },
+    "mean_relative_change_percent": {
+      "rmse": 0.921115,
+      "mae": 1.820608,
+      "boundary_rmse": 0.392229,
+      "flat_rmse": 1.586738,
+      "false_edge_rate": 2.439255
+    },
+    "significantly_worse_seed_count": {
+      "rmse": 3,
+      "mae": 3,
+      "boundary_rmse": 3,
+      "flat_rmse": 3,
+      "false_edge_rate": 3
+    },
+    "decision": "no_go"
+  },
+  "real_domain_calibration_pilot": {
+    "training_samples": 200,
+    "epochs": 1,
+    "learning_rate": 0.0001,
+    "trainable_parameters": 881,
+    "frozen_sgnet_parameters": 9215821,
+    "candidate": {
+      "rmse": 5.461855043010947,
+      "mae": 3.257588009186733,
+      "boundary_rmse": 12.625280972469,
+      "flat_rmse": 3.7302209665745867,
+      "false_edge_rate": 0.08452677767553374
+    },
+    "relative_change_percent": {
+      "rmse": 0.76038,
+      "mae": 1.509311,
+      "boundary_rmse": 0.318091,
+      "flat_rmse": 1.302346,
+      "false_edge_rate": 1.855751
+    },
+    "all_paired_95_ci_strictly_worse": true,
+    "decision": "no_go"
+  },
+  "real_domain_native_gate_pilot": {
+    "initialization": "identity",
+    "training_samples": 200,
+    "epochs": 1,
+    "learning_rate": 0.001,
+    "trainable_parameters": 881,
+    "frozen_sgnet_parameters": 9215821,
+    "candidate": {
+      "rmse": 5.437678186981766,
+      "mae": 3.226446078147417,
+      "boundary_rmse": 12.607645189614944,
+      "flat_rmse": 3.69877370522346,
+      "false_edge_rate": 0.08445316571435216
+    },
+    "relative_change_percent": {
+      "rmse": 0.314,
+      "mae": 0.539,
+      "boundary_rmse": 0.178,
+      "flat_rmse": 0.448,
+      "false_edge_rate": 1.767
+    },
+    "all_paired_95_ci_strictly_worse": true,
+    "decision": "no_go"
+  },
+  "interpretation": "The adaptive frequency gate is confirmed for the cross-dataset synthetic 16x protocol, but direct transfer, migrated calibration, and identity-initialized native training do not improve the SGNet real-input 4x baseline."
+}

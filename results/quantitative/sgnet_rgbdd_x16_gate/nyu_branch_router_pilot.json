@@ -1,0 +1,165 @@
+{
+  "status": "completed",
+  "task": "rgb_guided_depth_super_resolution",
+  "phase": "nyu_branch_router_pilot",
+  "dataset": "NYU_v2_train",
+  "scale": 16,
+  "train_samples": 200,
+  "validation_samples": 100,
+  "conditions": [
+    "clean",
+    "checker8"
+  ],
+  "trainable_module": "three_feature_logistic_branch_router",
+  "reference_mean": 0.8003384029865265,
+  "features": [
+    "clean_reference_minus_gate_mean",
+    "gate_spatial_std",
+    "gate_suppressed_fraction"
+  ],
+  "objectives": {
+    "rmse": {
+      "train_high_frequency_fraction": 0.77,
+      "validation": {
+        "clean": {
+          "high_frequency_fraction": 0.6,
+          "metrics": {
+            "rmse": {
+              "candidate_mean": 13.198386464118958,
+              "hard_mean": 13.232468276023864,
+              "candidate_vs_hard_percent": -0.2575620148408734
+            },
+            "mae": {
+              "candidate_mean": 5.524594719409943,
+              "hard_mean": 5.533792645931244,
+              "candidate_vs_hard_percent": -0.16621379061002128
+            },
+            "boundary_rmse": {
+              "candidate_mean": 24.498289375305177,
+              "hard_mean": 24.56384443283081,
+              "candidate_vs_hard_percent": -0.266876211925583
+            },
+            "flat_rmse": {
+              "candidate_mean": 7.3512733983993535,
+              "hard_mean": 7.364273250102997,
+              "candidate_vs_hard_percent": -0.17652592811465212
+            },
+            "false_edge_rate": {
+              "candidate_mean": 0.10530958260706771,
+              "hard_mean": 0.1007272525926057,
+              "candidate_vs_hard_percent": 4.549245508557031
+            }
+          }
+        },
+        "checker8": {
+          "high_frequency_fraction": 0.35,
+          "metrics": {
+            "rmse": {
+              "candidate_mean": 13.429407291412353,
+              "hard_mean": 13.452980213165283,
+              "candidate_vs_hard_percent": -0.17522453299872456
+            },
+            "mae": {
+              "candidate_mean": 5.554223387241364,
+              "hard_mean": 5.567616037130356,
+              "candidate_vs_hard_percent": -0.24054550097701827
+            },
+            "boundary_rmse": {
+              "candidate_mean": 24.87540862083435,
+              "hard_mean": 24.911373653411864,
+              "candidate_vs_hard_percent": -0.1443719366016942
+            },
+            "flat_rmse": {
+              "candidate_mean": 7.522311847209931,
+              "hard_mean": 7.536596882343292,
+              "candidate_vs_hard_percent": -0.18954224773290096
+            },
+            "false_edge_rate": {
+              "candidate_mean": 0.19809717877999833,
+              "hard_mean": 0.19837429465161424,
+              "candidate_vs_hard_percent": -0.1396934376515792
+            }
+          }
+        }
+      },
+      "all_metrics_non_degrading_vs_hard": false,
+      "mae_flat_improves_vs_hard": true,
+      "go": false,
+      "checkpoint": "router_rmse.pth"
+    },
+    "balanced_five_metric": {
+      "train_high_frequency_fraction": 0.4875,
+      "validation": {
+        "clean": {
+          "high_frequency_fraction": 0.21,
+          "metrics": {
+            "rmse": {
+              "candidate_mean": 13.22435251235962,
+              "hard_mean": 13.232468276023864,
+              "candidate_vs_hard_percent": -0.06133219815799532
+            },
+            "mae": {
+              "candidate_mean": 5.533004927635193,
+              "hard_mean": 5.533792645931244,
+              "candidate_vs_hard_percent": -0.014234691222666776
+            },
+            "boundary_rmse": {
+              "candidate_mean": 24.543124666213988,
+              "hard_mean": 24.56384443283081,
+              "candidate_vs_hard_percent": -0.08435066698732338
+            },
+            "flat_rmse": {
+              "candidate_mean": 7.364168360233307,
+              "hard_mean": 7.364273250102997,
+              "candidate_vs_hard_percent": -0.001424307139727524
+            },
+            "false_edge_rate": {
+              "candidate_mean": 0.10189282885045654,
+              "hard_mean": 0.1007272525926057,
+              "candidate_vs_hard_percent": 1.1571607761059923
+            }
+          }
+        },
+        "checker8": {
+          "high_frequency_fraction": 1.0,
+          "metrics": {
+            "rmse": {
+              "candidate_mean": 13.384452500343322,
+              "hard_mean": 13.452980213165283,
+              "candidate_vs_hard_percent": -0.5093868550769055
+            },
+            "mae": {
+              "candidate_mean": 5.542711042165756,
+              "hard_mean": 5.567616037130356,
+              "candidate_vs_hard_percent": -0.44731883086959995
+            },
+            "boundary_rmse": {
+              "candidate_mean": 24.79335075378418,
+              "hard_mean": 24.911373653411864,
+              "candidate_vs_hard_percent": -0.47377114273070825
+            },
+            "flat_rmse": {
+              "candidate_mean": 7.494883613586426,
+              "hard_mean": 7.536596882343292,
+              "candidate_vs_hard_percent": -0.5534761830580575
+            },
+            "false_edge_rate": {
+              "candidate_mean": 0.19847354846154566,
+              "hard_mean": 0.19837429465161424,
+              "candidate_vs_hard_percent": 0.05003360445753873
+            }
+          }
+        }
+      },
+      "all_metrics_non_degrading_vs_hard": false,
+      "mae_flat_improves_vs_hard": true,
+      "go": false,
+      "checkpoint": "router_balanced_five_metric.pth"
+    }
+  },
+  "elapsed_seconds": 135.5226058959961,
+  "decision": {
+    "go": false,
+    "interpretation": "No-Go; do not expand this router pilot"
+  }
+}

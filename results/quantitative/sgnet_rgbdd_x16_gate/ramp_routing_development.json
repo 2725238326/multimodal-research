@@ -1,0 +1,299 @@
+{
+  "status": "completed",
+  "phase": "development",
+  "dataset": "RGB-D-D/test2 first 100 sorted samples",
+  "scale": 16,
+  "seed": 20260723,
+  "conditions": [
+    "clean",
+    "checker8"
+  ],
+  "temperatures": [
+    "0.01",
+    "0.02",
+    "0.04"
+  ],
+  "selection_rule": {
+    "baseline_all_metrics_non_degrading": true,
+    "core_vs_hard_tolerance_percent": 0.05,
+    "preservation_score_definition": "mean MAE/flat relative change versus hard adaptive across clean and checker8",
+    "preservation_score_must_be_below_zero": true
+  },
+  "candidates": {
+    "0.01": {
+      "conditions": {
+        "clean": {
+          "sample_count": 100,
+          "metrics": {
+            "rmse": {
+              "baseline_mean": 2.9662854218482972,
+              "hard_adaptive_mean": 2.933948827981949,
+              "candidate_mean": 2.933952136039734,
+              "relative_change_vs_baseline_percent": -1.0900261171905874,
+              "relative_change_vs_hard_percent": 0.0001127510389235232
+            },
+            "mae": {
+              "baseline_mean": 1.1056516286730766,
+              "hard_adaptive_mean": 1.0984588211774826,
+              "candidate_mean": 1.0984611916542053,
+              "relative_change_vs_baseline_percent": -0.6503347738474177,
+              "relative_change_vs_hard_percent": 0.00021580023547442857
+            },
+            "boundary_rmse": {
+              "baseline_mean": 7.784888660907745,
+              "hard_adaptive_mean": 7.687276751995086,
+              "candidate_mean": 7.68728191614151,
+              "relative_change_vs_baseline_percent": -1.253797568825524,
+              "relative_change_vs_hard_percent": 6.717783930486326e-05
+            },
+            "flat_rmse": {
+              "baseline_mean": 1.091311651468277,
+              "hard_adaptive_mean": 1.088833202123642,
+              "candidate_mean": 1.088836596608162,
+              "relative_change_vs_baseline_percent": -0.22679633785501363,
+              "relative_change_vs_hard_percent": 0.00031175431767634765
+            },
+            "false_edge_rate": {
+              "baseline_mean": 0.0441325718486147,
+              "hard_adaptive_mean": 0.03234521889533028,
+              "candidate_mean": 0.03234382028615032,
+              "relative_change_vs_baseline_percent": -26.712133620724902,
+              "relative_change_vs_hard_percent": -0.00432400592026315
+            }
+          },
+          "high_frequency_weight_mean": 0.0
+        },
+        "checker8": {
+          "sample_count": 100,
+          "metrics": {
+            "rmse": {
+              "baseline_mean": 3.0089210045337675,
+              "hard_adaptive_mean": 3.003343139886856,
+              "candidate_mean": 3.0065295588970185,
+              "relative_change_vs_baseline_percent": -0.0794785118368252,
+              "relative_change_vs_hard_percent": 0.1060957360430856
+            },
+            "mae": {
+              "baseline_mean": 1.1322001412510871,
+              "hard_adaptive_mean": 1.1327429208159447,
+              "candidate_mean": 1.134332713186741,
+              "relative_change_vs_baseline_percent": 0.18835644493889972,
+              "relative_change_vs_hard_percent": 0.14034891250090362
+            },
+            "boundary_rmse": {
+              "baseline_mean": 7.864684915542602,
+              "hard_adaptive_mean": 7.842092077732087,
+              "candidate_mean": 7.847549278736114,
+              "relative_change_vs_baseline_percent": -0.2178807795926289,
+              "relative_change_vs_hard_percent": 0.06958858618254934
+            },
+            "flat_rmse": {
+              "baseline_mean": 1.133758390545845,
+              "hard_adaptive_mean": 1.138049983382225,
+              "candidate_mean": 1.1410115665197373,
+              "relative_change_vs_baseline_percent": 0.6397461782311731,
+              "relative_change_vs_hard_percent": 0.26023313393587505
+            },
+            "false_edge_rate": {
+              "baseline_mean": 0.04961589534280587,
+              "hard_adaptive_mean": 0.04625868656443851,
+              "candidate_mean": 0.046355420901799976,
+              "relative_change_vs_baseline_percent": -6.5714312288000425,
+              "relative_change_vs_hard_percent": 0.2091160483484869
+            }
+          },
+          "high_frequency_weight_mean": 0.2815131306648254
+        }
+      },
+      "baseline_all_metrics_non_degrading": false,
+      "core_vs_hard_within_tolerance": false,
+      "preservation_score_vs_hard_percent": 0.10027740024748236,
+      "feasible": false
+    },
+    "0.02": {
+      "conditions": {
+        "clean": {
+          "sample_count": 100,
+          "metrics": {
+            "rmse": {
+              "baseline_mean": 2.9662854218482972,
+              "hard_adaptive_mean": 2.933948827981949,
+              "candidate_mean": 2.9339446246623995,
+              "relative_change_vs_baseline_percent": -1.0902793422268235,
+              "relative_change_vs_hard_percent": -0.00014326492368317876
+            },
+            "mae": {
+              "baseline_mean": 1.1056516286730766,
+              "hard_adaptive_mean": 1.0984588211774826,
+              "candidate_mean": 1.098459537923336,
+              "relative_change_vs_baseline_percent": -0.6504843445464036,
+              "relative_change_vs_hard_percent": 6.525013405299485e-05
+            },
+            "boundary_rmse": {
+              "baseline_mean": 7.784888660907745,
+              "hard_adaptive_mean": 7.687276751995086,
+              "candidate_mean": 7.687263746261596,
+              "relative_change_vs_baseline_percent": -1.2540309681804152,
+              "relative_change_vs_hard_percent": -0.00016918518624677432
+            },
+            "flat_rmse": {
+              "baseline_mean": 1.091311651468277,
+              "hard_adaptive_mean": 1.088833202123642,
+              "candidate_mean": 1.0888323611021042,
+              "relative_change_vs_baseline_percent": -0.2271844493584472,
+              "relative_change_vs_hard_percent": -7.724062198920095e-05
+            },
+            "false_edge_rate": {
+              "baseline_mean": 0.0441325718486147,
+              "hard_adaptive_mean": 0.03234521889533028,
+              "candidate_mean": 0.03234432676011774,
+              "relative_change_vs_baseline_percent": -26.710986001299602,
+              "relative_change_vs_hard_percent": -0.0027581671820645698
+            }
+          },
+          "high_frequency_weight_mean": 0.0
+        },
+        "checker8": {
+          "sample_count": 100,
+          "metrics": {
+            "rmse": {
+              "baseline_mean": 3.0089210045337675,
+              "hard_adaptive_mean": 3.003343139886856,
+              "candidate_mean": 3.007411216497421,
+              "relative_change_vs_baseline_percent": -0.05017705795770215,
+              "relative_change_vs_hard_percent": 0.1354516091264364
+            },
+            "mae": {
+              "baseline_mean": 1.1322001412510871,
+              "hard_adaptive_mean": 1.1327429208159447,
+              "candidate_mean": 1.135024051964283,
+              "relative_change_vs_baseline_percent": 0.2494179792342482,
+              "relative_change_vs_hard_percent": 0.20138118777162675
+            },
+            "boundary_rmse": {
+              "baseline_mean": 7.864684915542602,
+              "hard_adaptive_mean": 7.842092077732087,
+              "candidate_mean": 7.84907485961914,
+              "relative_change_vs_baseline_percent": -0.19848291560431844,
+              "relative_change_vs_hard_percent": 0.08904233484941423
+            },
+            "flat_rmse": {
+              "baseline_mean": 1.133758390545845,
+              "hard_adaptive_mean": 1.138049983382225,
+              "candidate_mean": 1.1416679567098618,
+              "relative_change_vs_baseline_percent": 0.6976412461396369,
+              "relative_change_vs_hard_percent": 0.31790987922026626
+            },
+            "false_edge_rate": {
+              "baseline_mean": 0.04961589534280587,
+              "hard_adaptive_mean": 0.04625868656443851,
+              "candidate_mean": 0.04667075191068892,
+              "relative_change_vs_baseline_percent": -5.935886900293509,
+              "relative_change_vs_hard_percent": 0.8907847949301327
+            }
+          },
+          "high_frequency_weight_mean": 0.16438003301620482
+        }
+      },
+      "baseline_all_metrics_non_degrading": false,
+      "core_vs_hard_within_tolerance": false,
+      "preservation_score_vs_hard_percent": 0.1298197691259892,
+      "feasible": false
+    },
+    "0.04": {
+      "conditions": {
+        "clean": {
+          "sample_count": 100,
+          "metrics": {
+            "rmse": {
+              "baseline_mean": 2.9662854218482972,
+              "hard_adaptive_mean": 2.933948827981949,
+              "candidate_mean": 2.9339483785629272,
+              "relative_change_vs_baseline_percent": -1.0901527899908146,
+              "relative_change_vs_hard_percent": -1.5317888889775814e-05
+            },
+            "mae": {
+              "baseline_mean": 1.1056516286730766,
+              "hard_adaptive_mean": 1.0984588211774826,
+              "candidate_mean": 1.098460597395897,
+              "relative_change_vs_baseline_percent": -0.650388521184547,
+              "relative_change_vs_hard_percent": 0.0001617009559308786
+            },
+            "boundary_rmse": {
+              "baseline_mean": 7.784888660907745,
+              "hard_adaptive_mean": 7.687276751995086,
+              "candidate_mean": 7.687270834445953,
+              "relative_change_vs_baseline_percent": -1.2539399176250952,
+              "relative_change_vs_hard_percent": -7.697848437466556e-05
+            },
+            "flat_rmse": {
+              "baseline_mean": 1.091311651468277,
+              "hard_adaptive_mean": 1.088833202123642,
+              "candidate_mean": 1.088835021853447,
+              "relative_change_vs_baseline_percent": -0.22694063712211407,
+              "relative_change_vs_hard_percent": 0.00016712659032756897
+            },
+            "false_edge_rate": {
+              "baseline_mean": 0.0441325718486147,
+              "hard_adaptive_mean": 0.03234521889533028,
+              "candidate_mean": 0.03234425134575993,
+              "relative_change_vs_baseline_percent": -26.71115688270227,
+              "relative_change_vs_hard_percent": -0.002991321757555961
+            }
+          },
+          "high_frequency_weight_mean": 0.0
+        },
+        "checker8": {
+          "sample_count": 100,
+          "metrics": {
+            "rmse": {
+              "baseline_mean": 3.0089210045337675,
+              "hard_adaptive_mean": 3.003343139886856,
+              "candidate_mean": 3.0080640363693236,
+              "relative_change_vs_baseline_percent": -0.02848091269769655,
+              "relative_change_vs_hard_percent": 0.1571880488702833
+            },
+            "mae": {
+              "baseline_mean": 1.1322001412510871,
+              "hard_adaptive_mean": 1.1327429208159447,
+              "candidate_mean": 1.1356324779987335,
+              "relative_change_vs_baseline_percent": 0.30315636101701626,
+              "relative_change_vs_hard_percent": 0.2550938195850556
+            },
+            "boundary_rmse": {
+              "baseline_mean": 7.864684915542602,
+              "hard_adaptive_mean": 7.842092077732087,
+              "candidate_mean": 7.849958281517029,
+              "relative_change_vs_baseline_percent": -0.18725014649308333,
+              "relative_change_vs_hard_percent": 0.10030746523977965
+            },
+            "flat_rmse": {
+              "baseline_mean": 1.133758390545845,
+              "hard_adaptive_mean": 1.138049983382225,
+              "candidate_mean": 1.1423131877183914,
+              "relative_change_vs_baseline_percent": 0.754552049526856,
+              "relative_change_vs_hard_percent": 0.37460607165041354
+            },
+            "false_edge_rate": {
+              "baseline_mean": 0.04961589534280587,
+              "hard_adaptive_mean": 0.04625868656443851,
+              "candidate_mean": 0.04675340860685214,
+              "relative_change_vs_baseline_percent": -5.76929372366708,
+              "relative_change_vs_hard_percent": 1.0694684158930488
+            }
+          },
+          "high_frequency_weight_mean": 0.08341048657894135
+        }
+      },
+      "baseline_all_metrics_non_degrading": false,
+      "core_vs_hard_within_tolerance": false,
+      "preservation_score_vs_hard_percent": 0.1575071796954319,
+      "feasible": false
+    }
+  },
+  "decision": {
+    "go": false,
+    "selected_temperature": null,
+    "interpretation": "No candidate passes; retain hard adaptive routing"
+  }
+}

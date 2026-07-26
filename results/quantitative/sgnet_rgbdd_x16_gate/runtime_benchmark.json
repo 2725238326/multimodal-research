@@ -1,0 +1,52 @@
+{
+  "status": "completed",
+  "dataset": "RGB-D-D/test2",
+  "scale": 16,
+  "sample_count": 100,
+  "warmup_samples": 10,
+  "metrics_unit": "milliseconds per image",
+  "checkpoint_sha256": "ceda2db815c9c001a6ee92c4b794f119f7f082c36c1fe552ebb1d7bb3041a340",
+  "gate_checkpoint_sha256": "a5e4c516be4af7cce5d26c9e5fe21f86eb6c31719ff827a2a5743992338e95bf",
+  "adaptive_threshold": 0.75,
+  "environment": {
+    "python": "3.9.12",
+    "torch": "2.0.0+cu117",
+    "cuda_runtime": "11.7",
+    "device": "cuda:0",
+    "device_name": "NVIDIA GeForce RTX 4090"
+  },
+  "results": {
+    "baseline": {
+      "timed_samples": 90,
+      "mean_ms": 277.5303134901656,
+      "p50_ms": 277.4983337149024,
+      "p95_ms": 279.5579847879708,
+      "peak_cuda_memory_mb": 2206.78466796875,
+      "parameter_count": 86620109
+    },
+    "full": {
+      "timed_samples": 90,
+      "mean_ms": 277.26706311934527,
+      "p50_ms": 276.73353161662817,
+      "p95_ms": 280.4775280877948,
+      "peak_cuda_memory_mb": 2507.28369140625,
+      "parameter_count": 86620990
+    },
+    "high_frequency": {
+      "timed_samples": 90,
+      "mean_ms": 277.75040349612635,
+      "p50_ms": 277.1566864103079,
+      "p95_ms": 280.95262460410595,
+      "peak_cuda_memory_mb": 2507.04931640625,
+      "parameter_count": 86620990
+    },
+    "adaptive": {
+      "timed_samples": 90,
+      "mean_ms": 277.6296879475315,
+      "p50_ms": 277.25373953580856,
+      "p95_ms": 280.53966518491507,
+      "peak_cuda_memory_mb": 2507.04931640625,
+      "parameter_count": 86620990
+    }
+  }
+}

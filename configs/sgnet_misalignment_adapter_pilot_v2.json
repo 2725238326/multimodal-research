@@ -1,0 +1,41 @@
+{
+  "experiment_id": "20260722_sgnet_misalignment_adapter_pilot_v2_200",
+  "task": "rgb_guided_depth_super_resolution",
+  "base_method": "SGNet",
+  "scale": 16,
+  "training": {
+    "dataset": "NYU_v2_train",
+    "selected_samples": 200,
+    "crop_size": 256,
+    "epochs": 1,
+    "batch_size": 1,
+    "learning_rate": 0.00001,
+    "random_horizontal_shift_range": [-4, 4],
+    "consistency_weight": 0.5,
+    "clean_reconstruction_weight": 0.5,
+    "flat_reconstruction_weight": 0.5,
+    "flat_gradient_threshold": 0.00784313725490196,
+    "frozen_clean_teacher": true,
+    "trainable_prefixes": [
+      "conv_rgb1",
+      "rgb_rb2",
+      "rgb_rb3",
+      "rgb_rb4",
+      "bridge1"
+    ]
+  },
+  "evaluation": {
+    "dataset": "RGB-D-D/test2",
+    "sample_count": 405,
+    "horizontal_shifts": [0, 1, 2, 4],
+    "crop_border": 6,
+    "metrics_unit": "8-bit depth levels",
+    "bootstrap_samples": 10000,
+    "comparisons": ["SGNet", "adapter_v1"]
+  },
+  "artifact_policy": {
+    "commit_scripts_config_and_aggregate_summary": true,
+    "commit_adapter_checkpoint": false,
+    "commit_per_sample_outputs": false
+  }
+}

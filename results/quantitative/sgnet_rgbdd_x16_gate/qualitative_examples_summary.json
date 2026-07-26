@@ -1,0 +1,27 @@
+{
+  "status": "completed",
+  "dataset": "RGB-D-D/test2",
+  "condition": "clean and checkerboard texture amplitude 8",
+  "seed": 20260723,
+  "examples": [
+    {
+      "name": "001.png",
+      "role": "high_frequency_selected",
+      "gate_mean": 0.7414,
+      "observation": "The adaptive branch selects high-frequency residual gating; the panel shows dense RGB texture and the corresponding gate map."
+    },
+    {
+      "name": "275.png",
+      "role": "large_improvement",
+      "texture_rmse_reduction_8bit": 0.1924,
+      "observation": "Adaptive gating reduces the depth reconstruction error around the dominant foreground boundary."
+    },
+    {
+      "name": "327.png",
+      "role": "failure_example",
+      "texture_rmse_change_8bit": 0.1911,
+      "observation": "The adaptive output is worse on this foliage scene; the failure is retained to prevent cherry-picking."
+    }
+  ],
+  "visual_artifacts": "Stored in the ignored local server_sync qualitative directory; not committed because they are generated outputs."
+}

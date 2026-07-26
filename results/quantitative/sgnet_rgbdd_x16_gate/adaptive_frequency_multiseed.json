@@ -1,0 +1,699 @@
+{
+  "status": "completed",
+  "task": "rgb_guided_depth_super_resolution",
+  "method": "SGNet_adaptive_frequency_reliability_gate",
+  "dataset": "RGB-D-D/test2",
+  "scale": 16,
+  "sample_count": 405,
+  "training_dataset": "NYU_v2_train",
+  "training_samples_per_seed": 2000,
+  "epochs": 1,
+  "trainable_parameter_count": 881,
+  "seeds": [
+    20260723,
+    20260724,
+    20260725
+  ],
+  "gate_training_mean_by_seed": [
+    0.8103808064162731,
+    0.8117224443852902,
+    0.8080406899154187
+  ],
+  "conditions": {
+    "clean": {
+      "metrics": {
+        "rmse": {
+          "baseline_mean": 2.3355414656209357,
+          "candidate_seed_values": [
+            2.3144322937653388,
+            2.3161644293938153,
+            2.3155734997472646
+          ],
+          "candidate_seed_mean": 2.31539007430214,
+          "candidate_seed_sample_std": 0.0008805152635241025,
+          "mean_relative_change_percent": -0.8628145385309433,
+          "all_seed_means_improve": true,
+          "significant_seed_count": 3,
+          "all_seed_paired_95_ci_below_zero": true
+        },
+        "mae": {
+          "baseline_mean": 0.8919687368435624,
+          "candidate_seed_values": [
+            0.8879681566983093,
+            0.8881319909000103,
+            0.887811584384353
+          ],
+          "candidate_seed_mean": 0.8879705773275575,
+          "candidate_seed_sample_std": 0.00016021697289416762,
+          "mean_relative_change_percent": -0.44823987106916774,
+          "all_seed_means_improve": true,
+          "significant_seed_count": 3,
+          "all_seed_paired_95_ci_below_zero": true
+        },
+        "boundary_rmse": {
+          "baseline_mean": 6.852538357251956,
+          "candidate_seed_values": [
+            6.78406007554796,
+            6.789717430538602,
+            6.788982751634386
+          ],
+          "candidate_seed_mean": 6.787586752573649,
+          "candidate_seed_sample_std": 0.0030762032451899634,
+          "mean_relative_change_percent": -0.9478473711799013,
+          "all_seed_means_improve": true,
+          "significant_seed_count": 3,
+          "all_seed_paired_95_ci_below_zero": true
+        },
+        "flat_rmse": {
+          "baseline_mean": 0.9134676643359808,
+          "candidate_seed_values": [
+            0.9107119994398988,
+            0.910869010951784,
+            0.9099246383449178
+          ],
+          "candidate_seed_mean": 0.9105018829122002,
+          "candidate_seed_sample_std": 0.0005060351979446718,
+          "mean_relative_change_percent": -0.32467284169676036,
+          "all_seed_means_improve": true,
+          "significant_seed_count": 3,
+          "all_seed_paired_95_ci_below_zero": true
+        },
+        "false_edge_rate": {
+          "baseline_mean": 0.04331177516471771,
+          "candidate_seed_values": [
+            0.033761867908968304,
+            0.03383320589446891,
+            0.03455503088158794
+          ],
+          "candidate_seed_mean": 0.03405003489500839,
+          "candidate_seed_sample_std": 0.00043879150731288843,
+          "mean_relative_change_percent": -21.38388517784432,
+          "all_seed_means_improve": true,
+          "significant_seed_count": 3,
+          "all_seed_paired_95_ci_below_zero": true
+        }
+      },
+      "gate_statistics": {
+        "mean_by_seed": [
+          0.7957255157423608,
+          0.7797970684958093,
+          0.800801091282456
+        ],
+        "mean_across_seeds": 0.7921078918402088,
+        "spatial_std_mean_across_seeds": 0.15308268894997154,
+        "suppressed_fraction_across_seeds": 0.739912005682541,
+        "high_frequency_selection_fraction_by_seed": [
+          0.024691358024691357,
+          0.0691358024691358,
+          0.024691358024691357
+        ],
+        "high_frequency_selection_fraction_across_seeds": 0.03950617283950617
+      }
+    },
+    "shift_x_pos_4": {
+      "metrics": {
+        "rmse": {
+          "baseline_mean": 2.64531906026381,
+          "candidate_seed_values": [
+            2.5916192530113973,
+            2.5937314446325654,
+            2.59782149526808
+          ],
+          "candidate_seed_mean": 2.5943907309706806,
+          "candidate_seed_sample_std": 0.0031532437440458974,
+          "mean_relative_change_percent": -1.925224448654993,
+          "all_seed_means_improve": true,
+          "significant_seed_count": 3,
+          "all_seed_paired_95_ci_below_zero": true
+        },
+        "mae": {
+          "baseline_mean": 0.9914233345124457,
+          "candidate_seed_values": [
+            0.9731207207581143,
+            0.9736365438795384,
+            0.9749919112633776
+          ],
+          "candidate_seed_mean": 0.97391639196701,
+          "candidate_seed_sample_std": 0.000966475395854993,
+          "mean_relative_change_percent": -1.765839267243491,
+          "all_seed_means_improve": true,
+          "significant_seed_count": 3,
+          "all_seed_paired_95_ci_below_zero": true
+        },
+        "boundary_rmse": {
+          "baseline_mean": 7.785007512716599,
+          "candidate_seed_values": [
+            7.630476255770083,
+            7.63711927967307,
+            7.649404551659101
+          ],
+          "candidate_seed_mean": 7.639000029034084,
+          "candidate_seed_sample_std": 0.009603281206690371,
+          "mean_relative_change_percent": -1.8754957325861976,
+          "all_seed_means_improve": true,
+          "significant_seed_count": 3,
+          "all_seed_paired_95_ci_below_zero": true
+        },
+        "flat_rmse": {
+          "baseline_mean": 1.0381399484328282,
+          "candidate_seed_values": [
+            1.0129962764404439,
+            1.0137052853902182,
+            1.0153693250667901
+          ],
+          "candidate_seed_mean": 1.0140236289658173,
+          "candidate_seed_sample_std": 0.0012181325542997801,
+          "mean_relative_change_percent": -2.323031639753071,
+          "all_seed_means_improve": true,
+          "significant_seed_count": 3,
+          "all_seed_paired_95_ci_below_zero": true
+        },
+        "false_edge_rate": {
+          "baseline_mean": 0.07965037041764156,
+          "candidate_seed_values": [
+            0.06363616985525704,
+            0.06374941887036097,
+            0.06506752045351719
+          ],
+          "candidate_seed_mean": 0.06415103639304506,
+          "candidate_seed_sample_std": 0.0007957157844859585,
+          "mean_relative_change_percent": -19.459211480532662,
+          "all_seed_means_improve": true,
+          "significant_seed_count": 3,
+          "all_seed_paired_95_ci_below_zero": true
+        }
+      },
+      "gate_statistics": {
+        "mean_by_seed": [
+          0.7957524689627282,
+          0.7797979549125389,
+          0.8008740305900574
+        ],
+        "mean_across_seeds": 0.7921414848217748,
+        "spatial_std_mean_across_seeds": 0.15321218347475854,
+        "suppressed_fraction_across_seeds": 0.7393482961281829,
+        "high_frequency_selection_fraction_by_seed": [
+          0.024691358024691357,
+          0.06666666666666667,
+          0.024691358024691357
+        ],
+        "high_frequency_selection_fraction_across_seeds": 0.03868312757201646
+      }
+    },
+    "shift_y_pos_4": {
+      "metrics": {
+        "rmse": {
+          "baseline_mean": 2.684471371659526,
+          "candidate_seed_values": [
+            2.6274922597555466,
+            2.628569262410388,
+            2.6339372871834557
+          ],
+          "candidate_seed_mean": 2.629999603116463,
+          "candidate_seed_sample_std": 0.0034523905541258833,
+          "mean_relative_change_percent": -2.0291432092788053,
+          "all_seed_means_improve": true,
+          "significant_seed_count": 3,
+          "all_seed_paired_95_ci_below_zero": true
+        },
+        "mae": {
+          "baseline_mean": 0.9862760733491108,
+          "candidate_seed_values": [
+            0.9701318047480819,
+            0.9699301680664957,
+            0.971590378365399
+          ],
+          "candidate_seed_mean": 0.9705507837266589,
+          "candidate_seed_sample_std": 0.000905942656857025,
+          "mean_relative_change_percent": -1.594410535485613,
+          "all_seed_means_improve": true,
+          "significant_seed_count": 3,
+          "all_seed_paired_95_ci_below_zero": true
+        },
+        "boundary_rmse": {
+          "baseline_mean": 7.924294117350637,
+          "candidate_seed_values": [
+            7.7565540931842945,
+            7.761044255598092,
+            7.776345044006536
+          ],
+          "candidate_seed_mean": 7.764647797596307,
+          "candidate_seed_sample_std": 0.010375912962808414,
+          "mean_relative_change_percent": -2.014644047660676,
+          "all_seed_means_improve": true,
+          "significant_seed_count": 3,
+          "all_seed_paired_95_ci_below_zero": true
+        },
+        "flat_rmse": {
+          "baseline_mean": 1.0244922793205873,
+          "candidate_seed_values": [
+            1.003186086445679,
+            1.0027957229702562,
+            1.004859569116875
+          ],
+          "candidate_seed_mean": 1.00361379284427,
+          "candidate_seed_sample_std": 0.0010963871587058157,
+          "mean_relative_change_percent": -2.037934974987156,
+          "all_seed_means_improve": true,
+          "significant_seed_count": 3,
+          "all_seed_paired_95_ci_below_zero": true
+        },
+        "false_edge_rate": {
+          "baseline_mean": 0.0710938339730524,
+          "candidate_seed_values": [
+            0.056370897953749076,
+            0.056392972890150925,
+            0.057653627422569215
+          ],
+          "candidate_seed_mean": 0.056805832755489734,
+          "candidate_seed_sample_std": 0.0007342946778035276,
+          "mean_relative_change_percent": -20.097384567807136,
+          "all_seed_means_improve": true,
+          "significant_seed_count": 3,
+          "all_seed_paired_95_ci_below_zero": true
+        }
+      },
+      "gate_statistics": {
+        "mean_by_seed": [
+          0.7958484446560895,
+          0.779813450354117,
+          0.8009011721905367
+        ],
+        "mean_across_seeds": 0.7921876890669144,
+        "spatial_std_mean_across_seeds": 0.15344233076881478,
+        "suppressed_fraction_across_seeds": 0.7374185683550657,
+        "high_frequency_selection_fraction_by_seed": [
+          0.024691358024691357,
+          0.07160493827160494,
+          0.024691358024691357
+        ],
+        "high_frequency_selection_fraction_across_seeds": 0.040329218106995884
+      }
+    },
+    "scale_098": {
+      "metrics": {
+        "rmse": {
+          "baseline_mean": 2.4514524456159568,
+          "candidate_seed_values": [
+            2.4174467522421,
+            2.419689499154503,
+            2.4212363991472454
+          ],
+          "candidate_seed_mean": 2.4194575501812827,
+          "candidate_seed_sample_std": 0.0019054411985292812,
+          "mean_relative_change_percent": -1.3051403665566443,
+          "all_seed_means_improve": true,
+          "significant_seed_count": 3,
+          "all_seed_paired_95_ci_below_zero": true
+        },
+        "mae": {
+          "baseline_mean": 0.9155170229482062,
+          "candidate_seed_values": [
+            0.9074749610122339,
+            0.9077778946286367,
+            0.9081004272456522
+          ],
+          "candidate_seed_mean": 0.907784427628841,
+          "candidate_seed_sample_std": 0.0003127842904548941,
+          "mean_relative_change_percent": -0.844615132820172,
+          "all_seed_means_improve": true,
+          "significant_seed_count": 3,
+          "all_seed_paired_95_ci_below_zero": true
+        },
+        "boundary_rmse": {
+          "baseline_mean": 7.23288002897192,
+          "candidate_seed_values": [
+            7.1235243096763705,
+            7.1309815854202085,
+            7.136296031504502
+          ],
+          "candidate_seed_mean": 7.130267308867026,
+          "candidate_seed_sample_std": 0.00641575115318623,
+          "mean_relative_change_percent": -1.4186979418138908,
+          "all_seed_means_improve": true,
+          "significant_seed_count": 3,
+          "all_seed_paired_95_ci_below_zero": true
+        },
+        "flat_rmse": {
+          "baseline_mean": 0.9274964724793846,
+          "candidate_seed_values": [
+            0.9226011976047799,
+            0.9227825536404127,
+            0.9225553226323775
+          ],
+          "candidate_seed_mean": 0.92264635795919,
+          "candidate_seed_sample_std": 0.00012015854510194143,
+          "mean_relative_change_percent": -0.5229253872232277,
+          "all_seed_means_improve": true,
+          "significant_seed_count": 3,
+          "all_seed_paired_95_ci_below_zero": true
+        },
+        "false_edge_rate": {
+          "baseline_mean": 0.04970847360419964,
+          "candidate_seed_values": [
+            0.03909358788767779,
+            0.03908166403004032,
+            0.04000091011718642
+          ],
+          "candidate_seed_mean": 0.03939205401163484,
+          "candidate_seed_sample_std": 0.0005273185588861958,
+          "mean_relative_change_percent": -20.75384505810534,
+          "all_seed_means_improve": true,
+          "significant_seed_count": 3,
+          "all_seed_paired_95_ci_below_zero": true
+        }
+      },
+      "gate_statistics": {
+        "mean_by_seed": [
+          0.7960065345705292,
+          0.7801107999719219,
+          0.8010771093545137
+        ],
+        "mean_across_seeds": 0.7923981479656549,
+        "spatial_std_mean_across_seeds": 0.15318698745696144,
+        "suppressed_fraction_across_seeds": 0.7387761222236932,
+        "high_frequency_selection_fraction_by_seed": [
+          0.024691358024691357,
+          0.06666666666666667,
+          0.024691358024691357
+        ],
+        "high_frequency_selection_fraction_across_seeds": 0.03868312757201646
+      }
+    },
+    "scale_102": {
+      "metrics": {
+        "rmse": {
+          "baseline_mean": 2.6017651603545673,
+          "candidate_seed_values": [
+            2.5559400654133455,
+            2.558490181557926,
+            2.560815218495734
+          ],
+          "candidate_seed_mean": 2.5584151551556684,
+          "candidate_seed_sample_std": 0.0024384423542410795,
+          "mean_relative_change_percent": -1.6661767118516917,
+          "all_seed_means_improve": true,
+          "significant_seed_count": 3,
+          "all_seed_paired_95_ci_below_zero": true
+        },
+        "mae": {
+          "baseline_mean": 0.9760569721828273,
+          "candidate_seed_values": [
+            0.9632120204744515,
+            0.963552359206441,
+            0.9642542936551718
+          ],
+          "candidate_seed_mean": 0.9636728911120214,
+          "candidate_seed_sample_std": 0.0005314878183075493,
+          "mean_relative_change_percent": -1.268786702389959,
+          "all_seed_means_improve": true,
+          "significant_seed_count": 3,
+          "all_seed_paired_95_ci_below_zero": true
+        },
+        "boundary_rmse": {
+          "baseline_mean": 7.638242142288773,
+          "candidate_seed_values": [
+            7.5013087814236865,
+            7.509642901832675,
+            7.517041686140461
+          ],
+          "candidate_seed_mean": 7.509331123132275,
+          "candidate_seed_sample_std": 0.007871084879182283,
+          "mean_relative_change_percent": -1.6877053221812555,
+          "all_seed_means_improve": true,
+          "significant_seed_count": 3,
+          "all_seed_paired_95_ci_below_zero": true
+        },
+        "flat_rmse": {
+          "baseline_mean": 1.0166473909660623,
+          "candidate_seed_values": [
+            1.0000154264179277,
+            1.0003649990499754,
+            1.000904001571514
+          ],
+          "candidate_seed_mean": 1.0004281423464725,
+          "candidate_seed_sample_std": 0.0004476402102270443,
+          "mean_relative_change_percent": -1.595366177468626,
+          "all_seed_means_improve": true,
+          "significant_seed_count": 3,
+          "all_seed_paired_95_ci_below_zero": true
+        },
+        "false_edge_rate": {
+          "baseline_mean": 0.06581727876045171,
+          "candidate_seed_values": [
+            0.05240923224687156,
+            0.05272138389740594,
+            0.05357056398046494
+          ],
+          "candidate_seed_mean": 0.052900393374914145,
+          "candidate_seed_sample_std": 0.0006010042792202677,
+          "mean_relative_change_percent": -19.62537137481756,
+          "all_seed_means_improve": true,
+          "significant_seed_count": 3,
+          "all_seed_paired_95_ci_below_zero": true
+        }
+      },
+      "gate_statistics": {
+        "mean_by_seed": [
+          0.7957139079953417,
+          0.779828483970077,
+          0.8007909421567564
+        ],
+        "mean_across_seeds": 0.7921111113740583,
+        "spatial_std_mean_across_seeds": 0.1529100519332866,
+        "suppressed_fraction_across_seeds": 0.7414453308768724,
+        "high_frequency_selection_fraction_by_seed": [
+          0.024691358024691357,
+          0.07654320987654321,
+          0.024691358024691357
+        ],
+        "high_frequency_selection_fraction_across_seeds": 0.041975308641975316
+      }
+    },
+    "texture_amp_8_b4": {
+      "metrics": {
+        "rmse": {
+          "baseline_mean": 2.375596389947114,
+          "candidate_seed_values": [
+            2.3712382315117635,
+            2.369425219003065,
+            2.3708121359348295
+          ],
+          "candidate_seed_mean": 2.370491862149886,
+          "candidate_seed_sample_std": 0.0009479900116381507,
+          "mean_relative_change_percent": -0.21487352897272516,
+          "all_seed_means_improve": true,
+          "significant_seed_count": 3,
+          "all_seed_paired_95_ci_below_zero": true
+        },
+        "mae": {
+          "baseline_mean": 0.9164424965595022,
+          "candidate_seed_values": [
+            0.9153998592017609,
+            0.913888710534867,
+            0.9149055416569297
+          ],
+          "candidate_seed_mean": 0.9147313704645192,
+          "candidate_seed_sample_std": 0.0007704831448922898,
+          "mean_relative_change_percent": -0.18671396202236776,
+          "all_seed_means_improve": true,
+          "significant_seed_count": 2,
+          "all_seed_paired_95_ci_below_zero": false
+        },
+        "boundary_rmse": {
+          "baseline_mean": 6.940609888971588,
+          "candidate_seed_values": [
+            6.925502116591842,
+            6.923650625016954,
+            6.9251326537426605
+          ],
+          "candidate_seed_mean": 6.9247617984504855,
+          "candidate_seed_sample_std": 0.0009798752465343496,
+          "mean_relative_change_percent": -0.22833858658853898,
+          "all_seed_means_improve": true,
+          "significant_seed_count": 3,
+          "all_seed_paired_95_ci_below_zero": true
+        },
+        "flat_rmse": {
+          "baseline_mean": 0.9515317108896043,
+          "candidate_seed_values": [
+            0.951463684844382,
+            0.9482825611108615,
+            0.9505967377880473
+          ],
+          "candidate_seed_mean": 0.9501143279144303,
+          "candidate_seed_sample_std": 0.001644514067016241,
+          "mean_relative_change_percent": -0.14895803880765454,
+          "all_seed_means_improve": true,
+          "significant_seed_count": 1,
+          "all_seed_paired_95_ci_below_zero": false
+        },
+        "false_edge_rate": {
+          "baseline_mean": 0.048924700087528306,
+          "candidate_seed_values": [
+            0.04583872394092032,
+            0.046458181284800705,
+            0.045954166294892226
+          ],
+          "candidate_seed_mean": 0.04608369050687108,
+          "candidate_seed_sample_std": 0.0003294149986542715,
+          "mean_relative_change_percent": -5.806902394035195,
+          "all_seed_means_improve": true,
+          "significant_seed_count": 3,
+          "all_seed_paired_95_ci_below_zero": true
+        }
+      },
+      "gate_statistics": {
+        "mean_by_seed": [
+          0.7443855496100438,
+          0.7238961949760532,
+          0.7431112744190075
+        ],
+        "mean_across_seeds": 0.7371310063350348,
+        "spatial_std_mean_across_seeds": 0.11433308967101723,
+        "suppressed_fraction_across_seeds": 0.9880664868119323,
+        "high_frequency_selection_fraction_by_seed": [
+          0.6419753086419753,
+          0.980246913580247,
+          0.6419753086419753
+        ],
+        "high_frequency_selection_fraction_across_seeds": 0.7547325102880658
+      }
+    },
+    "texture_amp_16_b4": {
+      "metrics": {
+        "rmse": {
+          "baseline_mean": 2.455387654716586,
+          "candidate_seed_values": [
+            2.4454607989317103,
+            2.444126558156661,
+            2.4458821872870127
+          ],
+          "candidate_seed_mean": 2.445156514791795,
+          "candidate_seed_sample_std": 0.0009165151603699001,
+          "mean_relative_change_percent": -0.41668124807657136,
+          "all_seed_means_improve": true,
+          "significant_seed_count": 3,
+          "all_seed_paired_95_ci_below_zero": true
+        },
+        "mae": {
+          "baseline_mean": 0.9578462725436246,
+          "candidate_seed_values": [
+            0.9518709211989685,
+            0.9509686253688954,
+            0.9521138206492236
+          ],
+          "candidate_seed_mean": 0.9516511224056958,
+          "candidate_seed_sample_std": 0.000603408393763792,
+          "mean_relative_change_percent": -0.6467791665020676,
+          "all_seed_means_improve": true,
+          "significant_seed_count": 3,
+          "all_seed_paired_95_ci_below_zero": true
+        },
+        "boundary_rmse": {
+          "baseline_mean": 7.130755346792715,
+          "candidate_seed_values": [
+            7.108312077581147,
+            7.10584086606532,
+            7.109240352371593
+          ],
+          "candidate_seed_mean": 7.107797765339353,
+          "candidate_seed_sample_std": 0.0017571324930633703,
+          "mean_relative_change_percent": -0.32195160732430006,
+          "all_seed_means_improve": true,
+          "significant_seed_count": 3,
+          "all_seed_paired_95_ci_below_zero": true
+        },
+        "flat_rmse": {
+          "baseline_mean": 1.0128861963748932,
+          "candidate_seed_values": [
+            1.0041208538744184,
+            1.0027410668355448,
+            1.0043319905981605
+          ],
+          "candidate_seed_mean": 1.0037313037693745,
+          "candidate_seed_sample_std": 0.0008640437302987608,
+          "mean_relative_change_percent": -0.9038421728209795,
+          "all_seed_means_improve": true,
+          "significant_seed_count": 3,
+          "all_seed_paired_95_ci_below_zero": true
+        },
+        "false_edge_rate": {
+          "baseline_mean": 0.06066031377408582,
+          "candidate_seed_values": [
+            0.058553829238670085,
+            0.058467767551978966,
+            0.058702698042140344
+          ],
+          "candidate_seed_mean": 0.058574764944263134,
+          "candidate_seed_sample_std": 0.00011885626457354015,
+          "mean_relative_change_percent": -3.438077880028441,
+          "all_seed_means_improve": true,
+          "significant_seed_count": 3,
+          "all_seed_paired_95_ci_below_zero": true
+        }
+      },
+      "gate_statistics": {
+        "mean_by_seed": [
+          0.7147906148875202,
+          0.6922157177218684,
+          0.715571364502848
+        ],
+        "mean_across_seeds": 0.7075258990374121,
+        "spatial_std_mean_across_seeds": 0.10662015672819114,
+        "suppressed_fraction_across_seeds": 0.9901763825259581,
+        "high_frequency_selection_fraction_by_seed": [
+          0.9975308641975309,
+          1.0,
+          0.9925925925925926
+        ],
+        "high_frequency_selection_fraction_across_seeds": 0.9967078189300412
+      }
+    }
+  },
+  "decision": {
+    "all_seed_means_improve_all_metrics": true,
+    "strict_all_seed_paired_significance_pass": false,
+    "strict_failure_count": 3,
+    "strict_failures": [
+      {
+        "seed": 20260723,
+        "condition": "texture_amp_8_b4",
+        "metric": "mae",
+        "paired_95_ci": [
+          -0.0022795051842192074,
+          0.00025357840329776575
+        ]
+      },
+      {
+        "seed": 20260723,
+        "condition": "texture_amp_8_b4",
+        "metric": "flat_rmse",
+        "paired_95_ci": [
+          -0.002129187124010957,
+          0.0021515910493002995
+        ]
+      },
+      {
+        "seed": 20260725,
+        "condition": "texture_amp_8_b4",
+        "metric": "flat_rmse",
+        "paired_95_ci": [
+          -0.002796014091114939,
+          0.0010210219945436642
+        ]
+      }
+    ],
+    "fully_improved_conditions": [
+      "clean",
+      "shift_x_pos_4",
+      "shift_y_pos_4",
+      "scale_098",
+      "scale_102",
+      "texture_amp_8_b4",
+      "texture_amp_16_b4"
+    ],
+    "mixed_conditions": [],
+    "interpretation": "All selected conditions improve every seed mean metric."
+  }
+}

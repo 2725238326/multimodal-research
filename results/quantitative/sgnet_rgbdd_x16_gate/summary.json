@@ -1,0 +1,126 @@
+{
+  "status": "completed_pilot",
+  "task": "rgb_guided_depth_super_resolution",
+  "dataset": "RGB-D-D/test2",
+  "scale": 16,
+  "sample_count": 405,
+  "protocol": {
+    "training_domain": "NYU",
+    "evaluation_type": "cross_dataset_synthetic_x16_pilot",
+    "crop_border": 6,
+    "metrics_unit": "8-bit depth levels",
+    "bootstrap_samples": 10000
+  },
+  "checkpoints": {
+    "sgnet_sha256": "ceda2db815c9c001a6ee92c4b794f119f7f082c36c1fe552ebb1d7bb3041a340",
+    "c2pd_sha256": "e1de04e88e32d208fcbcaaae60837ae5033a14b042838df47cabd295d92c1385",
+    "sgnet_adapter_sha256": "0706c1cf997196fbe64861f58542c6eef3fbc95a3156f218cb915b57d7c58f9d",
+    "sgnet_adapter_v2_sha256": "77c94cf35ffc137f37cf8a7cd739099721bbc63cd8d5a338ed5a5fbf8084dc26",
+    "spatial_reliability_gate_sha256": "98a96d03eee4b7b3ca649bf5b2f1dcc4eda9f299c0e66f17796caadadab14e06"
+  },
+  "clean": {
+    "sgnet": {
+      "rmse": 2.335541,
+      "mae": 0.891969,
+      "boundary_rmse": 6.852538,
+      "flat_rmse": 0.913468,
+      "false_edge_rate": 0.043312
+    },
+    "c2pd": {
+      "rmse": 2.319672,
+      "mae": 0.902119,
+      "boundary_rmse": 6.807616,
+      "flat_rmse": 0.910009,
+      "false_edge_rate": 0.046412
+    },
+    "sgnet_c2pd_frozen_refiner": {
+      "rmse": 3.660533,
+      "mae": 1.433000,
+      "boundary_rmse": 10.345944,
+      "flat_rmse": 1.824227,
+      "false_edge_rate": 0.102372
+    },
+    "sgnet_misalignment_consistency_adapter": {
+      "rmse": 2.329957,
+      "mae": 0.905041,
+      "boundary_rmse": 6.809744,
+      "flat_rmse": 0.933652,
+      "false_edge_rate": 0.037142
+    },
+    "sgnet_misalignment_consistency_adapter_v2": {
+      "rmse": 2.332846,
+      "mae": 0.902912,
+      "boundary_rmse": 6.823302,
+      "flat_rmse": 0.930176,
+      "false_edge_rate": 0.041172
+    },
+    "sgnet_spatial_reliability_gate": {
+      "rmse": 2.311858,
+      "mae": 0.886515,
+      "boundary_rmse": 6.775887,
+      "flat_rmse": 0.908830,
+      "false_edge_rate": 0.033805,
+      "gate_mean": 0.788601,
+      "gate_spatial_std": 0.136100
+    }
+  },
+  "relative_shift_change_percent": {
+    "sgnet": {
+      "shift_x_1": {"rmse": 1.877, "boundary_rmse": 2.437, "false_edge_rate": 3.194},
+      "shift_x_2": {"rmse": 6.262, "boundary_rmse": 7.251, "false_edge_rate": 26.335},
+      "shift_x_4": {"rmse": 13.264, "boundary_rmse": 13.608, "false_edge_rate": 83.900}
+    },
+    "c2pd": {
+      "shift_x_1": {"rmse": 2.494, "boundary_rmse": 3.096, "false_edge_rate": 2.428},
+      "shift_x_2": {"rmse": 5.624, "boundary_rmse": 6.525, "false_edge_rate": 22.838},
+      "shift_x_4": {"rmse": 12.119, "boundary_rmse": 12.725, "false_edge_rate": 77.126}
+    },
+    "sgnet_misalignment_consistency_adapter": {
+      "shift_x_1": {"rmse": 1.635, "boundary_rmse": 2.136, "false_edge_rate": 4.545},
+      "shift_x_2": {"rmse": 5.542, "boundary_rmse": 6.473, "false_edge_rate": 29.807},
+      "shift_x_4": {"rmse": 12.168, "boundary_rmse": 12.692, "false_edge_rate": 91.590}
+    },
+    "sgnet_spatial_reliability_gate": {
+      "shift_x_1": {"rmse": 1.644, "boundary_rmse": 2.144, "false_edge_rate": 3.745},
+      "shift_x_2": {"rmse": 5.517, "boundary_rmse": 6.420, "false_edge_rate": 27.044},
+      "shift_x_4": {"rmse": 11.956, "boundary_rmse": 12.450, "false_edge_rate": 85.119}
+    }
+  },
+  "adapter_vs_sgnet_relative_change_percent": {
+    "clean": {"rmse": -0.239, "mae": 1.466, "boundary_rmse": -0.624, "flat_rmse": 2.210, "false_edge_rate": -14.245},
+    "shift_x_1": {"rmse": -0.477, "mae": 1.326, "boundary_rmse": -0.917, "flat_rmse": 2.179, "false_edge_rate": -13.122},
+    "shift_x_2": {"rmse": -0.915, "mae": 0.914, "boundary_rmse": -1.345, "flat_rmse": 1.751, "false_edge_rate": -11.888},
+    "shift_x_4": {"rmse": -1.204, "mae": 0.277, "boundary_rmse": -1.426, "flat_rmse": 0.261, "false_edge_rate": -10.658}
+  },
+  "adapter_v2_vs_sgnet_relative_change_percent": {
+    "clean": {"rmse": -0.115, "mae": 1.227, "boundary_rmse": -0.427, "flat_rmse": 1.829, "false_edge_rate": -4.939},
+    "shift_x_1": {"rmse": -0.177, "mae": 1.197, "boundary_rmse": -0.503, "flat_rmse": 1.858, "false_edge_rate": -4.582},
+    "shift_x_2": {"rmse": -0.329, "mae": 1.038, "boundary_rmse": -0.628, "flat_rmse": 1.641, "false_edge_rate": -3.436},
+    "shift_x_4": {"rmse": -0.451, "mae": 0.712, "boundary_rmse": -0.618, "flat_rmse": 0.784, "false_edge_rate": -2.488}
+  },
+  "reliability_gate_vs_sgnet_relative_change_percent": {
+    "clean": {"rmse": -1.014, "mae": -0.611, "boundary_rmse": -1.119, "flat_rmse": -0.508, "false_edge_rate": -21.949},
+    "shift_x_1": {"rmse": -1.241, "mae": -0.747, "boundary_rmse": -1.401, "flat_rmse": -0.606, "false_edge_rate": -21.531},
+    "shift_x_2": {"rmse": -1.708, "mae": -1.181, "boundary_rmse": -1.884, "flat_rmse": -1.024, "false_edge_rate": -21.511},
+    "shift_x_4": {"rmse": -2.157, "mae": -1.934, "boundary_rmse": -2.126, "flat_rmse": -2.639, "false_edge_rate": -21.431}
+  },
+  "reliability_gate_controls": {
+    "learned_vs_constant_clean": {"rmse": -0.504, "boundary_rmse": -0.625, "false_edge_rate": -15.790},
+    "learned_vs_constant_shift_x_4": {"rmse": -1.420, "boundary_rmse": -1.415, "false_edge_rate": -16.352},
+    "learned_vs_shuffled_shift_x_4": {"rmse": -1.762, "boundary_rmse": -1.723, "false_edge_rate": -17.428}
+  },
+  "decisions": {
+    "sgnet_shift_finding": "pass",
+    "c2pd_standalone_robustness": "modest_mixed_signal",
+    "sgnet_c2pd_frozen_stitch": "no_go",
+    "raw_gradient_alignment": "no_go_clean_bias",
+    "trained_shift_calibrator": "no_go_random_level_accuracy",
+    "sgnet_misalignment_consistency_adapter": "retain_mixed_gain",
+    "sgnet_adapter_v2_clean_flat_preservation": "no_go_dominated_by_v1_on_shifted_conditions",
+    "sgnet_spatial_reliability_gate": "retain_positive_pilot_all_metrics",
+    "spatial_gate_controls": "pass_learned_beats_constant_and_shuffled",
+    "pilot_training_completed": true,
+    "full_training_started": false,
+    "next_step": "expand_gate_to_full_nyu_multi_seed_and_vertical_scale_texture_tests"
+  }
+}

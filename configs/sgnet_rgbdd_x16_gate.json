@@ -1,0 +1,24 @@
+{
+  "experiment_family": "sgnet_rgbdd_x16_robustness_gate",
+  "task": "rgb_guided_depth_super_resolution",
+  "dataset": "RGB-D-D/test2",
+  "scale": 16,
+  "num_feats": 40,
+  "crop_border": 6,
+  "depth_edge_threshold": 2.0,
+  "rgb_edge_threshold": 8.0,
+  "conditions": [
+    {"name": "clean", "shift_x": 0, "shift_y": 0},
+    {"name": "shift_x_pos_1", "shift_x": 1, "shift_y": 0},
+    {"name": "shift_x_pos_2", "shift_x": 2, "shift_y": 0},
+    {"name": "shift_x_pos_4", "shift_x": 4, "shift_y": 0},
+    {"name": "shift_y_pos_1", "shift_x": 0, "shift_y": 1},
+    {"name": "shift_y_pos_2", "shift_x": 0, "shift_y": 2},
+    {"name": "shift_y_pos_4", "shift_x": 0, "shift_y": 4}
+  ],
+  "decision_gate": {
+    "minimum_affected_shift_levels": 2,
+    "paired_bootstrap_confidence": 0.95,
+    "required_metrics": ["rmse", "boundary_rmse", "false_edge_rate"]
+  }
+}
