@@ -1,0 +1,66 @@
+{
+  "experiment_id": "material_photometric_external_confirmation_v0",
+  "status": "Completed",
+  "decision": "No-Go",
+  "track": "confirmatory_external_stress_test",
+  "train": {
+    "samples": 330,
+    "regions": 66,
+    "scenes": 30
+  },
+  "test": {
+    "samples": 400,
+    "regions": 80,
+    "scenes": 30,
+    "classes": 10,
+    "scene_overlap": 0,
+    "crop_size": 64
+  },
+  "seeds": [20260801, 20260802, 20260803],
+  "bootstrap_draws": 10000,
+  "source": {
+    "project_url": "https://projects.csail.mit.edu/illumination/",
+    "license": "CC-BY-4.0",
+    "archive_sha256": "7a142f0f4dcf8c6b038f91a32eee5962a12aa68e5c4ee43adf0d3059ea0f0ce0",
+    "sdk_revision": "a85aa9253065ff836ea97ba1a04b14259a06b3e0",
+    "manifest_sha256": "871a577e29f2463385efa05ff1a1473ad9c5ea94a5fc4b2620108d7e70d9f6ed"
+  },
+  "input_sha256": {
+    "train_descriptors": "040c52941f1c7fb8f9cfee8937fa18d5437ad02b3b852230f40925d0cbdaef96",
+    "train_sample_features": "0673a2a660e29d77699b0a74d3db55b7f56648b03bab2c7ce334fce43420c0fd",
+    "test_descriptors": "7ee8638b111424af83a14d78823094a42e0967db15207330826f66a9eaec0763",
+    "test_sample_features": "be70519f7735dc3f85a627baa107a3a7f7f260b8f9fdf1a44db1de3a6f94ce14"
+  },
+  "full_remote_summary_sha256": "3ff457fdcdbdbcb3d609182540d0cc32b5ab065162a3a9d2cda08e3e395e224c",
+  "mean_region_accuracy": {
+    "siglip_sample_majority": 0.4333333333,
+    "siglip_region_mean": 0.3875,
+    "photometric_censored_only": 0.1625,
+    "siglip_plus_censored": 0.3083333333,
+    "siglip_plus_exposure_only": 0.3625,
+    "siglip_plus_shuffled": 0.3958333333
+  },
+  "primary_vs_sample_majority": [
+    {
+      "seed": 20260801,
+      "region_accuracy_delta": -0.1125,
+      "scene_bootstrap_ci": [-0.2188888889, -0.0383333333]
+    },
+    {
+      "seed": 20260802,
+      "region_accuracy_delta": -0.125,
+      "scene_bootstrap_ci": [-0.2411111111, -0.0566666667]
+    },
+    {
+      "seed": 20260803,
+      "region_accuracy_delta": -0.1375,
+      "scene_bootstrap_ci": [-0.2494444444, -0.0605555556]
+    }
+  ],
+  "decision_reasons": [
+    "The primary method lost 11.25 to 13.75 percentage points against the strong RGB baseline in every seed.",
+    "All paired test-scene bootstrap intervals excluded zero in the harmful direction.",
+    "Exposure-only and shuffled-trajectory controls both exceeded the primary mean accuracy.",
+    "The development-scene gain did not transfer; conflict-verifier and deep training are not authorized."
+  ]
+}

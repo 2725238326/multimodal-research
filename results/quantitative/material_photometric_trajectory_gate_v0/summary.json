@@ -1,0 +1,46 @@
+{
+  "experiment_id": "material_photometric_trajectory_gate_v0",
+  "status": "Completed",
+  "decision": "No-Go",
+  "track": "exploratory_oracle_gate",
+  "sample_count": 330,
+  "region_count": 66,
+  "scene_count": 30,
+  "class_count": 11,
+  "seeds": [20260729, 20260730, 20260731],
+  "bootstrap_draws": 10000,
+  "manifest_sha256": "c3b52b82589e22b2fc8b02cdd7b2b0b89c1b8ec716bf465ef69f9c853cd297d2",
+  "siglip_feature_cache_sha256": "0673a2a660e29d77699b0a74d3db55b7f56648b03bab2c7ce334fce43420c0fd",
+  "descriptor_cache_sha256": "040c52941f1c7fb8f9cfee8937fa18d5437ad02b3b852230f40925d0cbdaef96",
+  "full_remote_summary_sha256": "7dab129c1fed0a80895ce5bcf967ca390e052213df60997548be58a37e35992f",
+  "mean_region_accuracy": {
+    "siglip_region_mean": 0.6313131313,
+    "photometric_censored_only": 0.3636363636,
+    "siglip_plus_censored": 0.6868686869,
+    "siglip_plus_uncensored": 0.6767676768,
+    "siglip_plus_exposure_only": 0.6363636364,
+    "siglip_plus_shuffled": 0.5454545455
+  },
+  "primary_vs_region_mean": [
+    {
+      "seed": 20260729,
+      "region_accuracy_delta": 0.0606060606,
+      "scene_bootstrap_ci": [0.0, 0.1166666667]
+    },
+    {
+      "seed": 20260730,
+      "region_accuracy_delta": 0.0606060606,
+      "scene_bootstrap_ci": [0.0, 0.1222222222]
+    },
+    {
+      "seed": 20260731,
+      "region_accuracy_delta": 0.0454545455,
+      "scene_bootstrap_ci": [-0.0166666667, 0.1111111111]
+    }
+  ],
+  "decision_reasons": [
+    "All three point estimates improved by 4.55 to 6.06 percentage points, but no scene-bootstrap interval had a lower bound above zero.",
+    "The mean primary accuracy of 68.69% did not exceed the prior sample-majority RGB mean of 69.70%.",
+    "The result generated an external confirmation hypothesis but did not authorize verifier or deep-model training."
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "experiment_id": "material_response_selective_gate_v0",
+  "status": "planned_exploratory",
+  "source_experiment_id": "material_response_probe_v0",
+  "seeds": [20260726, 20260727, 20260728],
+  "split": {
+    "strategy": "nested_scene_grouped",
+    "outer_folds": 5,
+    "inner_folds": 4,
+    "unit": "scene",
+    "forbid_scene_overlap": true
+  },
+  "rgb_head": {
+    "pca_components_max": 32,
+    "C": 1.0,
+    "max_iter": 5000,
+    "class_weight": "balanced"
+  },
+  "router": {
+    "type": "logistic_error_detector",
+    "C": 1.0,
+    "max_iter": 5000,
+    "class_weight": "balanced",
+    "rgb_uncertainty_features": ["one_minus_confidence", "one_minus_margin", "normalized_entropy"],
+    "response_features": ["region_variance_energy", "mean_residual_magnitude", "cross_light_cosine_dispersion"]
+  },
+  "conditions": [
+    "rgb_confidence_only",
+    "response_router",
+    "shuffled_response_router",
+    "random_score"
+  ],
+  "metrics": {
+    "fixed_coverages": [0.8, 0.9],
+    "risk_coverage_min": 0.5,
+    "risk_coverage_step": 0.05,
+    "bootstrap_unit": "scene",
+    "bootstrap_draws": 10000,
+    "ci_level": 0.95,
+    "error_detection": ["auroc", "average_precision"]
+  },
+  "thresholds": {
+    "primary_baseline": "rgb_confidence_only",
+    "primary_candidate": "response_router",
+    "require_accuracy_ci_low_above": 0.0,
+    "require_lower_risk_coverage_auc": true,
+    "macro_selective_accuracy_drop_no_more_than": 0.01,
+    "require_candidate_above_shuffled_ci": true
+  },
+  "outputs": {
+    "results_dir": "results/quantitative/material_response_selective_gate_v0",
+    "logs_dir": "experiments/logs/material_response_selective_gate_v0"
+  },
+  "notes": [
+    "This is exploratory because material_response_probe_v0 on the same dataset generated the hypothesis.",
+    "RGB predictions are preserved; response features may only rank or reject uncertain regions.",
+    "Fixed-coverage masks are selected without labels by score rank; inner-fold score quantiles are also reported as deployment-style thresholds.",
+    "A Go result requires an independent held-out confirmation before any stable claim."
+  ]
+}

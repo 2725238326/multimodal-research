@@ -5,10 +5,10 @@
   "resolved_feature_extractors": [
     {
       "id": "siglip_base_patch16_224",
-      "model_id": "google/siglip-base-patch16-224",
-      "local_dir": "models/checkpoints/siglip-base-patch16-224",
-      "revision": "RECORD_EXACT_REVISION_BEFORE_RUN",
-      "license": "RECORD_LICENSE_BEFORE_RUN"
+      "model_id": "google/siglip2-base-patch16-224",
+      "local_dir": "models/checkpoints/siglip2-base-patch16-224",
+      "revision": "75de2d55ec2d0b4efc50b3e9ad70dba96a7b2fa2",
+      "license": "Apache-2.0"
     },
     {
       "id": "dinov2_base_patch14",

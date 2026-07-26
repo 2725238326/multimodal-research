@@ -61,10 +61,15 @@ def main() -> None:
                 completed[item["sample_id"]] = item
 
     processor = AutoProcessor.from_pretrained(str(args.model), local_files_only=True)
+    torch_dtype = (
+        torch.bfloat16
+        if torch.cuda.get_device_capability(0)[0] >= 8
+        else torch.float16
+    )
     model = Qwen3VLForConditionalGeneration.from_pretrained(
         str(args.model),
         local_files_only=True,
-        torch_dtype=torch.bfloat16,
+        torch_dtype=torch_dtype,
         device_map={"": 0},
         attn_implementation="sdpa",
     ).eval()
@@ -113,6 +118,7 @@ def main() -> None:
             record = {
                 **sample,
                 "model": args.model.name,
+                "torch_dtype": str(torch_dtype),
                 "condition": args.condition_name,
                 "image_key": args.image_key,
                 "secondary_image_key": args.secondary_image_key,

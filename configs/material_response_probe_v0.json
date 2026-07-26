@@ -2,6 +2,7 @@
   "experiment_id": "material_response_probe_v0",
   "status": "planned",
   "seed": 20260722,
+  "seeds": [20260722, 20260723, 20260724],
   "workspace_root": ".",
   "source_manifests": {
     "rgb_gate_v2": "experiments/manifests/material_constancy_rgb_gate_v2/material_constancy_rgb_manifest.jsonl",
@@ -37,10 +38,12 @@
   "candidate_feature_extractors": [
     {
       "id": "siglip_base_patch16_224",
-      "family": "SigLIP",
-      "model_id": "google/siglip-base-patch16-224",
+      "family": "SigLIP2",
+      "model_id": "google/siglip2-base-patch16-224",
       "role": "semantic_visual_measurement",
-      "revision": "TBD before run"
+      "revision": "75de2d55ec2d0b4efc50b3e9ad70dba96a7b2fa2",
+      "license": "Apache-2.0",
+      "selected": true
     },
     {
       "id": "dinov2_base_patch14",
@@ -119,6 +122,15 @@
     "statistical_unit": "region",
     "bootstrap_unit": "scene",
     "bootstrap_draws": 10000
+  },
+  "shallow_head": {
+    "type": "logistic_regression",
+    "penalty": "l2",
+    "C": 1.0,
+    "max_iter": 5000,
+    "class_weight": "balanced",
+    "pca_components_max": 32,
+    "hyperparameter_search": false
   },
   "thresholds": {
     "go_accuracy_delta_min": 0.05,

@@ -1,0 +1,100 @@
+{
+  "experiment_id": "material_response_selective_gate_v0",
+  "status": "Completed",
+  "decision": "No-Go",
+  "track": "exploratory_gate",
+  "same_data_hypothesis_warning": true,
+  "feature_cache_sha256": "0673a2a660e29d77699b0a74d3db55b7f56648b03bab2c7ce334fce43420c0fd",
+  "full_remote_summary_sha256": "2d2fd696652d3ea15b215350068a95b8b2e3b4d2d8b38b0f6e0cf411dd1cc557",
+  "sample_count": 330,
+  "region_count": 66,
+  "scene_count": 30,
+  "class_count": 11,
+  "seeds": [20260726, 20260727, 20260728],
+  "outer_scene_folds": 5,
+  "inner_scene_folds": 4,
+  "bootstrap_draws": 10000,
+  "fixed_coverage_accepted_regions": {
+    "0.8": 53,
+    "0.9": 59
+  },
+  "mean_metrics": {
+    "rgb_confidence_only": {
+      "risk_coverage_auc": 0.2577259416,
+      "error_detection_auroc": 0.6616191243,
+      "error_detection_auprc": 0.4712520179,
+      "selective_accuracy_at_0.8": 0.7295597484,
+      "selective_accuracy_at_0.9": 0.7005649718,
+      "macro_selective_accuracy_at_0.8": 0.6878787879,
+      "macro_selective_accuracy_at_0.9": 0.6813131313
+    },
+    "response_router": {
+      "risk_coverage_auc": 0.2575026444,
+      "error_detection_auroc": 0.6554021931,
+      "error_detection_auprc": 0.4651701679,
+      "selective_accuracy_at_0.8": 0.7421383648,
+      "selective_accuracy_at_0.9": 0.7005649718,
+      "macro_selective_accuracy_at_0.8": 0.6919191919,
+      "macro_selective_accuracy_at_0.9": 0.6914141414
+    },
+    "shuffled_response_router": {
+      "risk_coverage_auc": 0.2662303276,
+      "error_detection_auroc": 0.6372881681,
+      "error_detection_auprc": 0.4522376772,
+      "selective_accuracy_at_0.8": 0.7295597484,
+      "selective_accuracy_at_0.9": 0.7062146893
+    },
+    "random_score": {
+      "risk_coverage_auc": 0.3041647336,
+      "error_detection_auroc": 0.5295510314,
+      "error_detection_auprc": 0.3417390174,
+      "selective_accuracy_at_0.8": 0.7044025157,
+      "selective_accuracy_at_0.9": 0.6779661017
+    }
+  },
+  "response_vs_rgb_confidence": [
+    {
+      "seed": 20260726,
+      "coverage": 0.8,
+      "accuracy_delta": 0.0,
+      "scene_bootstrap_ci": [-0.0409425005, 0.0407547170]
+    },
+    {
+      "seed": 20260727,
+      "coverage": 0.8,
+      "accuracy_delta": 0.0188679245,
+      "scene_bootstrap_ci": [0.0, 0.0531674208]
+    },
+    {
+      "seed": 20260728,
+      "coverage": 0.8,
+      "accuracy_delta": 0.0188679245,
+      "scene_bootstrap_ci": [0.0, 0.0562969917]
+    },
+    {
+      "seed": 20260726,
+      "coverage": 0.9,
+      "accuracy_delta": 0.0,
+      "scene_bootstrap_ci": [-0.0368421053, 0.0303040658]
+    },
+    {
+      "seed": 20260727,
+      "coverage": 0.9,
+      "accuracy_delta": 0.0,
+      "scene_bootstrap_ci": [0.0, 0.0]
+    },
+    {
+      "seed": 20260728,
+      "coverage": 0.9,
+      "accuracy_delta": 0.0,
+      "scene_bootstrap_ci": [-0.0368421053, 0.0307377049]
+    }
+  ],
+  "decision_reasons": [
+    "No seed had a strictly positive 95% scene-bootstrap CI lower bound at both fixed coverages.",
+    "At 90% coverage the response router changed no aggregate selective accuracy in any seed.",
+    "Risk-coverage AUC improved in only one of three seeds and the mean improvement was negligible.",
+    "Mean error-detection AUROC and AUPRC were lower than the RGB-confidence-only baseline.",
+    "Shuffled-response controls could not be excluded by the pre-registered paired intervals."
+  ]
+}
