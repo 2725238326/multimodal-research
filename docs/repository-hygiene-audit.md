@@ -62,8 +62,22 @@ README 声明数据、权重、运行输出和未公开资料应由 `.gitignore`
 | 文献索引和自有报告 Markdown | DOCX、PDF、QA 页面、Office profile |
 | 项目规则和文档 | caches、临时文件、压缩包 |
 
+## 2026-07-26 新发现：声明边界与已跟踪事实不一致
+
+`.gitignore` 对 `results/quantitative/` 只放行每个实验目录的 `README.md` 与 `summary.json`。已用未跟踪探针文件实测，该白名单对**新增文件**生效正确。
+
+但 `results/quantitative/sgnet_rgbdd_x16_gate/` 中另有 11 个 JSON 处于跟踪状态（`adaptive_frequency_multiseed.json`、`adaptive_threshold_sensitivity.json`、`confirmatory_multiseed.json`、`learned_router_pilot.json`、`nyu_branch_router_pilot.json`、`qualitative_examples_summary.json`、`ramp_routing_development.json`、`relative_hard_confirmation.json`、`rgbdd_real_protocol_summary.json`、`runtime_benchmark.json`、`soft_routing_development.json`、`unseen_texture_generalization.json`）。它们来自上游迁移时的强制添加；已跟踪文件不受 `.gitignore` 约束，因此规则收紧没有回溯生效。
+
+按内容判断，这些文件是聚合摘要（1.5 KB–122 KB 的多 seed 汇总、阈值敏感性扫描与运行时基准），属于 `rules.md` 允许提交的"聚合结果摘要"，不是逐样本预测。因此矛盾出在**白名单过窄**，而不是文件不该存在。
+
+两个可选修法，需与已跟踪资产治理一并决策，本轮不擅自执行：
+
+1. 放宽白名单，允许 `results/quantitative/*/` 下的聚合 JSON，使声明与事实一致；
+2. 保持白名单，把这 11 个文件合并进各自的 `summary.json` 或停止跟踪。
+
 ## 决策前需要回答
 
+0. `results/quantitative/` 白名单采用上述哪一种修法？
 1. `62100d7` 是否已经被学姐或其他协作者拉取或基于它提交？
 2. `origin` 与 `upstream` 中哪个是团队正式合并目标？
 3. 当前数据、裁剪图和 NYUv2 审核图是否具有公开再分发许可？

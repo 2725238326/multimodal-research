@@ -2,6 +2,27 @@
 
 **更新时间：2026-07-26**
 
+## 当前任务：闭合 SGNet/RGB-D-D execution gate（不依赖数据授权的部分）
+
+- **状态**：`In progress`；5 项 gate 无一闭合，其中 2 项为需要用户决策的外部阻塞。
+- **目标**：在不取得 RGB-D-D 授权、不下载数据与权重、不训练的前提下，把 execution gate 中可由公开来源核实的项目推进到可判定状态。
+- **范围**：官方仓库 revision/许可的 API 复核；checkpoint 托管方式与文件名对应关系；NYU v2 官方页面授权文本全文扫描；获取路径可行性实测。
+- **不在范围**：不下载 checkpoint 或数据；不代替用户签署或登记任何授权；不在服务器执行下载；不训练。
+
+### 本轮完成
+
+- 已用 GitHub API 复核两个官方仓库：`yanzq95/SGNet` = `a0935c1d`（最后 push 2024-04-05）、`amhamster/C2PD` = `28690461`（最后 push 2025-01-13），均为 Apache-2.0，与 2026-07-25 记录一致。因两仓库长期无新 push，upstream 在 2026-07 的 clone 只能落在这两个 commit 上——gate 第 1 项由"完全未知"收窄为高置信推断，仍需执行者确认未使用 fork 或旧 checkout。
+- 已查清 checkpoint 托管方式：官方 README 指向 Google Drive folder `17mCRfsNj0f_BNY3viHcR6M1camCVoAb8`；README 说明作者因变量名不一致而重传了 `xxx_R.pth`，与 upstream 脚本中的 `cpts/SGNet_X16_R.pth` 完全对应，可确认 upstream 用的是官方重传权重而非自训练权重。`cpts/` 不在仓库内，故 Apache-2.0 覆盖代码但不自动覆盖权重，且作者未发布官方哈希。
+- **已发现新的硬阻塞**：本机无法访问 Google。实测 `drive.google.com` 与 `www.google.com` 均在 21 秒后连接超时，而 `raw.githubusercontent.com`、`data.csail.mit.edu` 正常，属网络层阻断。由于官方 checkpoint 与 SGNet 版 NYU-v2 只在 Drive 上，而项目规定"本地下载→哈希→上传、服务器不得下载"，**该获取路径对这两类资产当前不可执行**。
+- 已完成 NYU v2 官方页面全文扫描（7,593 字符）：只有引用要求，**无 license/copyright/terms/permission/commercial 任何授权文本**；且 SGNet README 给出的 NYU-v2 实际指向作者自建 Drive 副本，即使用的是**再分发版本**，需另行确认再分发依据。
+- 已同步 `docs/sgnet-rgbdd-provenance.md`，把 execution gate 改为逐项状态表。
+
+### 当前判断与下一条可执行检查
+
+- 5 项 gate 状态：第 1 项 `Needs verification`（已收窄）、第 2 项 `Blocked`（Drive 不可达 + 无官方哈希）、第 3 项 `Blocked`（授权待核查）、第 4 项 `Needs verification`（无授权文本 + 再分发来源）、第 5 项 `Not started`。
+- 关键结论：**即使 RGB-D-D 授权到位，checkpoint 仍然拿不到**。第 2 项和第 3 项是相互独立的阻塞，必须分别解决，不能假定解决其一即可推进。
+- **下一条检查**：需要用户就 Drive 获取路径作决策（换可达网络的机器本地下载后上传 / 为官方资产放宽服务器下载限制 / 放弃预训练权重）；同时并行核查 RGB-D-D 授权。两者未决前，SGNet 路线只能停留在静态审计，不进入环境锁与单样本 smoke。
+
 ## 当前任务：标定 HDR + light-probe 候选审计（不训练）
 
 - **状态**：`Completed training-free audit gate`；light-probe normalization 判为 `No-Go`，calibrated HDR 判为 `Partially supported`，回退分支生效。

@@ -22,6 +22,7 @@
 | Photometric external confirmation v0 | 官方 CC BY 4.0 test split；80 区域、30 untouched `everett` scenes、10 类、三 seed、10,000 次 test-scene bootstrap；见 `reports/material_photometric_trajectory_external_confirmation_v0.md` | No-Go | Primary 平均 30.83%，强 RGB 43.33%，下降 12.50 pp；三 seed CI 全部在负区间，exposure/shuffled controls 均更高，关闭当前 multi-light response 路线 |
 | HDR + light-probe oracle audit v0 | 6 train-pool scenes、25 光照、90 个官方 mask 区域、0 个训练参数；见 `docs/hdr-light-probe-candidate-audit-2026-07-26.md` | No-Go（light-probe）/ Partially supported（HDR） | Gray probe 动态范围中位 1.72 倍对场景 17.35 倍、相关系数中位 -0.019、判别力中位增益 0.977，归一化不可用；线性 HDR 实测找回中位 5.8% 被截断像素（最差单方向 69.4%，clip 之上延伸中位 35 倍），真实但不足以解释 -12.50 pp，且非新观测量 |
 | Upstream SGNet/RGB-D-D updates | 14 个上游提交已选择性迁移到 `research/sgnet-rgbdd-migration`；18 个 JSON、22 个 Python CLI 和 4 个 shell 脚本完成静态检查；见 `docs/sgnet-rgbdd-migration-audit-2026-07-25.md` | Smoke test | 治理资产均保留，但未完成第三方 provenance、环境锁、数据/权重核验或单样本模型执行；上游结果仍为 Needs verification，real 4x transfer/calibration 保持 No-Go |
+| SGNet/RGB-D-D execution gate | 5 项逐项状态表见 `docs/sgnet-rgbdd-provenance.md`；GitHub API 复核、README 溯源、NYU 页面全文扫描与网络可达性实测 | Blocked | 无一项闭合。代码 revision 已收窄为 `a0935c1d`/`28690461`（两仓库长期无 push）；官方 checkpoint 仅托管于 Google Drive 且本机对 Google 连接超时，作者未发布权重哈希；RGB-D-D 需机构登记；NYU v2 官方页面无授权文本且实际使用作者再分发副本。checkpoint 与数据授权是两个独立阻塞 |
 
 ## 工程与复现
 
@@ -32,7 +33,7 @@
 | 环境锁定 | Smoke test | 远端 Conda `summer` 已建立并导出 environment/explicit/pip freeze；本地忽略区保留回传副本，尚未形成跨机器容器复现 |
 | kykt 远端研究目录 | Completed | `ssh kykt` 已可用；`/hdd3/kykt26/{training,experiments,results}` 权限 `775`；`summer` 环境、固定模型、实验代码和隔离结果目录已实际用于 smoke/full gate |
 | 自动化测试 | Smoke test | Material response 与 photometric gate 的单元、CLI、真实缓存 dry-run 和计算 smoke 均通过；最终全量数量见 `docs/worknow.md` |
-| 数据/模型 provenance | Needs verification | Multi-Illumination 数据来源、CC BY 4.0、archive/SDK hash 和 split 已闭合；SigLIP/Qwen revision 已闭合。其他旧数据、SGNet/NYUv2 checkpoint 与许可仍待统一登记 |
+| 数据/模型 provenance | Needs verification | Multi-Illumination 数据来源、CC BY 4.0、archive/SDK hash 和 split 已闭合；SigLIP/Qwen revision 已闭合。SGNet/C2PD 代码 revision 与 Apache-2.0 已复核，但权重、RGB-D-D 与 NYU v2 的授权和哈希仍未闭合 |
 | Git 忽略边界 | Completed | 已新增 `.gitignore` 防止后续新增本地资产 |
 | 已跟踪资产治理 | Blocked | 1,237 个文件中含 781 个 data、249 个 results、117 个 Office/QA 临时项；清理方式待协作者决策 |
 | fork/upstream 协作 | Needs verification | `upstream` 已 fetch 且 push URL 设为 `no_push`；当前 `upstream/main` 独有 14 提交、本 fork `main` 独有 3 提交，直接 merge 会删除治理文档并冲突 |
