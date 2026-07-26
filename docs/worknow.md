@@ -1,6 +1,183 @@
 # 当前工作
 
-**更新时间：2026-07-23**
+**更新时间：2026-07-26**
+
+## 当前任务：标定 HDR + light-probe 候选审计（不训练）
+
+- **状态**：`Completed training-free audit gate`；light-probe normalization 判为 `No-Go`，calibrated HDR 判为 `Partially supported`，回退分支生效。
+- **目标**：判定“标定 HDR + light-probe normalization”这一优先候选是否具备新的可观测测量资源；若具备，闭合来源/许可/体积/本地可读性，并冻结机制迁移卡与预注册计划；若不具备，按既定规则转向 SGNet/RGB-D-D provenance。
+- **范围**：官方 URL 元数据核验；已下载 test archive 的条目结构清点；单场景 EXR/probe 的最小下载与弧度尺度一致性 smoke；审计文档、机制迁移卡、预注册计划与可移植配置。
+- **不在范围**：不训练任何模型；不做完整特征抽取或 gate 运行；不在服务器执行下载；不改动既有 staged 研究资产；不提交或推送。
+- **证据（本轮已核验）**：
+  - 已下载并 CRC 通过的官方 test archive 内含 **每场景 25 个 chrome256 与 25 个 gray256 光探针 JPG**（750 + 750），即 LDR 光探针已在本地，从未被任何已关闭路线使用。
+  - 官方 SDK `a85aa925` 的 `query_images(hdr=True)` / `query_probes(hdr=True)` 走 `*_mip{m}_exr.zip` 与 `*_probes_256px_exr.zip`，即官方发布线性 HDR。
+  - HTTP HEAD 实测：`multi_illumination_test_mip2_exr.zip` = 1,648,079,881 B；dev 场景 mip2 EXR 约 53.6–72.2 MB/场景；HDR probes 约 3.86–4.68 MB/场景。三个 dev 场景与 test 场景均返回 200。
+  - 本地 `E:` 剩余 1.5 TB；本机 `cv2 4.13.0` 可在 `OPENCV_IO_ENABLE_OPENEXR=1` 下读 EXR，无需新增依赖。
+- **判定规则**：测量资源存在，因此“若无新测量资源”分支不成立，本轮继续检验机制本身而不是直接回退。
+- **多重比较边界**：官方 30 个 `everett` test scenes 已在 `material_photometric_external_confirmation_v0` 用过一次；本审计未消耗该 split，保留为将来最终一次性确认。
+- **完整记录**：`docs/hdr-light-probe-candidate-audit-2026-07-26.md`、`results/quantitative/hdr_light_probe_oracle_audit_v0/`。
+
+### 本轮完成
+
+- 已闭合测量资源可得性：单场景 `{scene}_mip2_exr.zip` 自足包含 25 张场景 EXR、25 张 chrome EXR、25 张 gray EXR、`materials_mip2.png` 与 `meta.json`，无需单独下 probes 包；dev 场景 49.7–81.5 MB/场景，官方 test bulk EXR 为 1,648,079,881 B。
+- 已新增 `scripts/fetch_ranged_asset.py`：单流仅 33 KB/s，16 路 HTTP range 并行后达到 8.1–9.7 MB/s，并强制输出 SHA-256 与 ETag/Last-Modified 侧车；6 个场景 EXR + 6 个场景 JPG 全部 ZIP CRC 通过。
+- 已新增 `scripts/audit_hdr_probe_radiometry.py` 与 `scripts/summarize_hdr_probe_audit.py`，在 6 场景 × 25 光照 × 90 个官方 mask 区域上完成**零训练参数**的 oracle 检验。
+- **light-probe normalization 判为 `No-Go`**：gray probe 跨光照动态范围中位 1.72 倍，而它要归一化的场景亮度中位 17.35 倍；中位相关系数 -0.019（6 场景中 3 个为负）；归一化后 within-region 跨光照方差中位不降反升 2.5%，判别力中位增益 0.977，仅 1/6 场景增益超过 10%。物理原因是 gray ball 处的辐照度对闪光方向近似不变，不携带逐表面辐照度信息。
+- **calibrated HDR 判为 `Partially supported`**：以 JPEG 最后未截断码值定位 clip point（实测均值 1.14），逐像素实测每场景平均截断比例中位 5.8%、跨场景 2.2%–45.0%、最差单方向 69.4%，线性数据在 clip point 之上延伸中位 35 倍。信号真实但幅度不足以解释官方 test split 上的 -12.50 pp，且属同一观测量去截断而非新观测量。
+- 已确认 polarization 与几何 verifier 在本数据集不可得：Multi-Illumination 无偏振通道，也无深度/法向真值。
+- 新增 12 项单测全部通过；聚合摘要 SHA-256 `14332b9f18fc6b251fefa13851b74a614e79113593a5d6ad65fd36fe53c1093c`；所有下载与派生资产留在忽略目录，服务器未执行任何下载。
+
+### 当前判断与下一条可执行检查
+
+- 优先候选在其审计门禁处关闭，且失败原因是可解释的测量学事实而非调参不足；不进入描述符设计、不训练、不上传服务器。
+- 次优先候选（polarization/flash、几何 verifier）在当前数据集不可得，因此**回退分支正式生效**。
+- **下一条检查**：转向 SGNet/RGB-D-D，按 `docs/sgnet-rgbdd-provenance.md` 的 execution gate 逐项闭合——upstream 实际 SGNet/C2PD commit、checkpoint 官方 URL/许可/SHA-256、RGB-D-D Release Agreement 与 split 哈希、NYU v2 许可与 split、锁定环境；全部闭合前只做 provenance 与单样本 smoke，不训练，不把上游聚合结果称为本 fork 复现。
+
+## 当前可执行入口：下一主线候选审计
+
+- **状态**：`Superseded`，已由上述审计解决；保留原始边界供追溯。
+- **已关闭边界**：五光照 LDR crop 的直接分类、拒判、像素光度轨迹及 conflict verifier 全部为 `No-Go`；不得在当前 30 development + 30 official test scenes 上继续优化同类 descriptor、crop、阈值、LoRA、BRDF deep head 或蒸馏。
+- **仅允许的候选**：改变可观测证据的最小 oracle，例如标定 HDR + light-probe normalization、polarization/flash，或由深度/几何程序执行可证伪 verifier。
+- **若无新测量资源**：转向已迁移 SGNet/RGB-D-D 资产的 provenance、数据许可、checkpoint/hash 和单样本 smoke；不把上游聚合结果写为本 fork 复现。
+- **开始前要求**：填写机制迁移卡和实验计划，声明模态角色、独立单元、强基线、四件套控制、Go/No-Go、来源/许可/哈希以及资源上限。
+- **权威证据**：`reports/material_photometric_trajectory_external_confirmation_v0.md`、`results/quantitative/material_photometric_external_confirmation_v0/summary.json`、`docs/multi-illumination-provenance.md`。
+
+## 已完成任务：曝光审查的像素光度轨迹 oracle gate
+
+- **实验 ID**：`material_photometric_trajectory_gate_v0`；状态 `Completed exploratory gate; No-Go`。
+- **目标**：检验直接从多光照 RGB 像素测得的亮度、色度、高光、饱和和纹理响应轨迹，是否包含 frozen semantic embedding 未捕获的材料辨识信息。
+- **新证据**：330 张 96x96 RGB crop 中，46 张有超过 20% 像素达到近白饱和；66 个区域虽各有 5 个光照，但按 20% 饱和阈值只有 32 个区域保留 5 个可靠曝光，另有 2 个区域仅保留 1–2 个。旧 embedding response 很可能混合了材质响应与曝光失真。
+- **方法**：从像素提取稳健亮度分位数、RGB 色度、绝对/相对高光、裁剪比例、梯度与纹理能量；在 region 内形成曝光审查、未审查和 exposure-only 轨迹统计；用 scene-disjoint shallow oracle 比较 SigLIP region mean、物理轨迹、二者融合和 shuffled trajectory。
+- **模式与角色**：采用 RP-01、RP-02、RP-03、RP-04、RP-05、RP-08、RP-12；RGB pixel photometry 为 `Measurement`，SigLIP embedding 为语义视觉基线，不使用 VLM 生成标签。反模式是继续对失败的 embedding response 调阈值，或把饱和伪影直接当材料真值。
+- **范围边界**：只用服务器已有 crop 和 feature cache；不下载新模型/数据，不训练深网，不修改标签，不公开逐样本结果；运行后已核验官方 CC BY 4.0 来源，见 `docs/multi-illumination-provenance.md`。
+- **主指标**：region accuracy 与 macro class accuracy；以 scene 为 bootstrap 单元，三 seed、10,000 draws。主候选为 SigLIP region mean + censor-aware photometric trajectory，强基线为 SigLIP region mean。
+- **Go 条件**：三 seed 的候选相对基线 region-accuracy 增量均至少 +3 pp 且 95% CI 下界大于 0；平均 macro accuracy 不下降；候选至少领先 shuffled trajectory 3 pp；exposure-only 不得解释同等收益。
+- **停止条件**：路径/像素/分组 smoke 失败，可靠曝光不足导致描述符不可定义，任一主 CI 不排除 0，或 shuffled/exposure controls 解释收益，则标记 `No-Go`，不进入学习式 BRDF、LoRA 或蒸馏。
+- **结果**：虽有 development directionality，但预注册 CI 未通过，且官方外部确认显著反转；该机制关闭。
+
+### 阶段结果
+
+- `material_photometric_trajectory_gate_v0` 已完成 66 region、30 scene、三 seed 的 exploratory full gate。Primary 相对 SigLIP region-mean 每 seed 提升 4.55–6.06 pp，平均达到 68.69%；censor-aware 比 uncensored 平均高 1.01 pp，exposure-only 接近基线，shuffled trajectory 明显更差。
+- 严格 Go 门槛未通过：三个 scene-bootstrap CI 下界为 0、0 和 -1.67 pp，因此当前状态仍为 `No-Go`，不在同一 30-scene 数据上继续训练 verifier。
+- 与旧 sample-majority RGB 逐 region 配对后，新分支平均略低，但二者 oracle 三次均为 77.27%，存在 4–7 个纠错与 5–6 个破坏，支持“独立数据上的冲突验证器”新假设。
+
+## 已完成任务：官方独立 test split 光度轨迹确认
+
+- **实验 ID**：`material_photometric_external_confirmation_v0`；状态 `Completed confirmatory stress test; No-Go`。
+- **来源与许可**：官方项目页 `https://projects.csail.mit.edu/illumination/` 明确数据为 CC BY 4.0；SDK `lmurmann/multi_illumination` 固定 commit `a85aa9253065ff836ea97ba1a04b14259a06b3e0`、代码 MIT。官方 test JPG ZIP 已在本地下载并通过全 ZIP CRC，SHA-256 为 `7a142f0f4dcf8c6b038f91a32eee5962a12aa68e5c4ee43adf0d3059ea0f0ce0`。
+- **独立性**：SDK 定义 30 个 `everett*` 场景为 test；当前开发用 30 场景全部属于 985-scene train pool，与 test overlap 为 0。
+- **固定数据协议**：官方 mip2 图与 mask 下采样到 mip4；使用 64x64 crop、纯度至少 0.82、component area 至少 1024、每 scene/class 最多 2 region、最多 80 region、每 region 选择 5 个外观差异最大的光照。64x64 是尺度域移 stress test；选择依据是严格 96x96 仅产生 35 region，而 64x64 在未看模型结果时可覆盖 80 region/30 scenes。
+- **强基线**：用开发集 330 sample 训练 SigLIP sample head，在外部 test 的每个 region 做五光照 majority；另报 SigLIP region-mean。Primary 为 SigLIP region mean + censor-aware pixel trajectory。
+- **Go 条件**：三 seed 下 primary 必须同时比 sample-majority RGB 和 region-mean RGB 至少高 3 pp且 scene-bootstrap CI 下界大于 0；宏准确率不下降；exposure-only 与 independently shuffled trajectory 均不能解释收益。
+- **停止条件**：外部 mask/crop/标签协议不闭合、有效类别少于 8、region 少于 60，或任一 Go 条件失败，则不训练 conflict verifier、深层 BRDF、LoRA 或蒸馏。
+- **结果**：Primary 在官方 test 上显著低于强 RGB baseline；不训练 conflict verifier、deep BRDF、LoRA 或蒸馏。
+
+### 本轮完成
+
+- 已本地下载官方 test JPG archive，按 16 个 byte ranges 合并为 214,841,949 bytes，SHA-256 `7a142f0f4dcf8c6b038f91a32eee5962a12aa68e5c4ee43adf0d3059ea0f0ce0`；2,400 entries 全 ZIP CRC 通过。官方页面明确 CC BY 4.0，SDK commit 与 train/test 规则已固定。
+- 已在看模型结果前完成 crop feasibility：严格 96x96 仅 35 regions；预注册 64x64 scale stress protocol 后，本地构建 80 regions、30 scenes、400 crops、10 classes，400/400 解码与尺寸检查通过，manifest SHA-256 `871a577e29f2463385efa05ff1a1473ad9c5ea94a5fc4b2620108d7e70d9f6ed`。
+- 412 文件 confirmation bundle 在本地生成哈希清单并压缩上传，远端逐文件验证 0 mismatch；服务器未下载任何外部资产。
+- 远端 SigLIP2 提取 400 samples 成功，test feature cache SHA-256 `be70519f7735dc3f85a627baa107a3a7f7f260b8f9fdf1a44db1de3a6f94ce14`；photometric descriptor SHA-256 `7ee8638b111424af83a14d78823094a42e0967db15207330826f66a9eaec0763`。
+- External full gate 三 seed 完成：strong RGB 43.33%，primary 30.83%，平均 -12.50 pp；三 seed 差值 CI 分别为 `[-21.89, -3.83]`、`[-24.11, -5.67]`、`[-24.94, -6.06]` pp，均显著有害。完整摘要 SHA-256 `3ff457fdcdbdbcb3d609182540d0cc32b5ab065162a3a9d2cda08e3e395e224c`。
+- 已完成最终验证：项目测试 30/30、平台测试 14/14、59 个 JSON 解析、新增 Python 编译/CLI、`git diff --check`、逐文件 trailing-whitespace 与敏感路径扫描均通过；测试产生的已跟踪 pyc 变化已单文件恢复，未改动其他工作资产。
+
+### 当前判断与下一条可执行检查
+
+- `material_photometric_external_confirmation_v0` 为明确 `No-Go`。Development gain 属于不可迁移的 scene/scale appearance statistics；不训练 verifier、deep BRDF、LoRA 或 privileged student。
+- 当前五光照 LDR response 家族已经完成三类反证：直接分类、选择性拒判、像素物理轨迹/外部确认均失败。继续在同一观测上换 head 或阈值属于反模式。
+- **下一条检查**：从候选池重新选择改变可观测性的路线。优先级为标定 HDR + light-probe normalization 的最小 oracle，其次是 polarization/flash verifier；若资源不允许获取标定测量，则转向已有 SGNet/RGB-D-D 迁移的 provenance/单样本复现，而不是继续材质 response 调参。
+
+## 当前任务：material response 选择性拒判探索 gate
+
+- **目标**：检验已观察到的跨光照响应不一致是否能作为 RGB 材质分类器的错误检测与选择性拒判信号，而不改变 RGB 分类预测。
+- **证据**：`material_response_probe_v0` 中 pairwise response 将区域 flip rate 降低 31.31 pp，但区域准确率降低 5.05 pp；远端缓存保留 330 个样本、66 个区域、30 个场景的 SigLIP2 frozen features，足以离线重建 RGB 概率与响应离散度。
+- **范围**：新建独立探索实验 `material_response_selective_gate_v0`；使用 outer/inner scene-grouped 嵌套评估；比较 RGB confidence only、RGB confidence + response router、shuffled response、random score 和等覆盖随机拒判；报告固定 80%/90% coverage、risk-coverage AUC、错误检测 AUROC/AUPRC、宏选择性准确率和 scene bootstrap CI。
+- **不在范围**：不修改 RGB 分类器的最终预测；不继续直接特征拼接、LoRA 或全模型训练；不将同一数据生成并检验的结果称为确认性证据；不公开或再分发许可未闭合的数据和逐样本输出。
+- **模式与角色**：采用 RP-01、RP-03、RP-05、RP-09、RP-12；RGB 为 `Measurement`，跨光照响应仅为 `Router`，标签只作监督与离线评估；反模式为用响应分支替代 RGB 决策或在测试标签上调阈值。
+- **预期产出**：可移植配置、预注册计划、nested selective-risk 评估脚本与测试、远端 smoke/full 聚合摘要、严肃学术风格图表、状态和决策记录。
+- **Go 条件**：在 80% 与 90% 固定覆盖率下，response router 相对 RGB-confidence-only 的 scene-bootstrap 选择性准确率差值均为正且 95% CI 下界大于 0；risk-coverage AUC 更低；shuffled/random 对照不能解释收益；宏选择性准确率不下降超过 1 pp。
+- **停止条件**：smoke 的分组、概率、接受掩码或指标链失败即停止；任一固定覆盖率主 CI 不排除 0、risk-coverage AUC 不改善、控制条件出现同等收益，或资源/许可边界失守则标记 `No-Go` 或 `Blocked`，不进入训练扩展。
+- **下一步**：冻结独立计划和配置，随后实现 region-level nested OOF 路由、负对照与单元测试；smoke 通过后才运行完整探索 gate。
+
+### 本轮完成
+
+- 已冻结独立实验计划和可移植配置；实现 outer-5/inner-4 scene-grouped RGB OOF、region-level error router、80%/90% 精确覆盖率、inner-quantile 阈值、AURC、AUROC/AUPRC、scene bootstrap 和三类控制。
+- 本地 14 项相关单测、远端 7 项新单测、真实缓存 dry-run 和一 seed/200-bootstrap 计算 smoke 均通过；4 个上传文件的远端 SHA-256 全部一致，服务器未执行下载。
+- 已在远端 `summer` 环境完成 3 seeds、每比较 10,000 次 scene bootstrap 的 full gate；运行 27.37 秒、峰值 RSS 163,736 KiB，完整聚合摘要 SHA-256 为 `2d2fd696652d3ea15b215350068a95b8b2e3b4d2d8b38b0f6e0cf411dd1cc557`。
+- 已回传聚合结果并生成 PNG/PDF 科研图；逐 region 预测和错误分数仍留在远端/忽略目录，没有进入 Git。
+- 已完成全量验证：项目单测 17/17、平台单测 14/14、55 个 JSON 解析、Python 编译/CLI、`git diff --check` 均通过；Git 仅放行实验目录中的 `README.md` 和 `summary.json` 聚合资产。
+
+### 当前判断与下一条可执行检查
+
+- `material_response_selective_gate_v0` 为 `No-Go`：80% 覆盖率下 response router 平均仅提高 1.26 pp，三个 seed 的 CI 下界均不大于 0；90% 覆盖率下三 seed 的准确率增量均为 0。
+- Response router 的平均错误检测 AUROC/AUPRC 低于 RGB confidence；AURC 只在一个 seed 改善，且 shuffled response 对照无法排除。
+- 不继续该 frozen response summary 的阈值调优、LoRA、选择性蒸馏或全模型训练。**下一条检查**：关闭当前响应路线；先解决数据许可，随后从候选池选择具有新物理测量或独立数据的机制，重新做 provenance、碰撞审计和 oracle gate。
+
+## 当前任务：部署并执行 material response frozen-feature gate
+
+- **目标**：在本地准备所有需联网获取的代码、模型与依赖资产，经哈希校验后上传到 `kykt`；创建 Conda 环境 `summer`，执行预注册的 material response smoke、受控浅层训练与评估，回传聚合结果并形成科研图表和结论。
+- **范围**：盘点远端已有 GPU/Conda/数据/权重；联网核验同量级最新视觉编码器；补齐实验计划、特征抽取、浅层头评估和控制条件；创建 Git 忽略的本地传输暂存区；本地下载后上传；远端只使用已上传资产安装/运行；回传脱敏聚合结果和图表。
+- **不在范围**：不在服务器运行下载命令；不上传密钥、原始 Git 历史或无关本地文件；不把 smoke/单 seed 结果写成稳定结论；未过门禁不做 LoRA、全量微调或扩大数据；不提交或推送。
+- **研究问题**：跨光照响应特征能否在 scene-disjoint split 上提供超出 RGB-only frozen feature 的材料辨识信息，并在错误、打乱和无关响应控制下保持可归因收益？
+- **预期产出**：忽略目录中的可审计传输包和 SHA-256 manifest；远端 `summer` 环境；固定 smoke manifest；RGB-only/response/oracle/control 的聚合指标与置信区间；回传的 CSV/JSON 和严肃学术风格图表。
+- **停止条件**：单样本输入/模型/指标链失败即停止；响应条件相对 RGB-only 的 scene-bootstrap 主指标 CI 不排除 0，或错误/打乱控制解释同等收益时标记 `No-Go`；资源超出预估或许可/来源不闭合时标记 `Blocked`。
+- **下一步**：先完成只读资产与硬件盘点，再冻结模型 revision、数据 split、指标、seed、命令和上传清单；计划闭合前不启动训练。
+
+### 本轮完成
+
+- 已创建并验证 Git 忽略的 `transfer_staging/`；本地下载 SigLIP2 与 Qwen3-VL-2B 官方固定 revision，权重 SHA-256 与官方 LFS 元数据一致；677 文件传输包在远端逐文件校验 0 mismatch。
+- 已创建 Conda 环境 `summer`，复用服务器 CUDA/PyTorch 并通过阿里云 PyPI 补齐 Transformers/Qwen 依赖；已导出 environment、explicit 与 pip freeze。
+- 已新增 frozen feature 抽取、scene-grouped 浅层评估、四类负对照、运行脚本、7 项单元测试和科研绘图脚本；本地/远端测试与 18 样本 GPU smoke 通过。
+- 已完成 330 样本、66 区域、30 场景、五 folds、三 seed 的探索性 gate；全命令 99 秒，结果回传并生成 PNG/PDF 图。
+- 已完成 Qwen3-VL-2B FP16 单图部署 smoke；推理成功但样例分类错误，未升级为性能结论。
+
+### 当前判断与下一条可执行检查
+
+- `material_response_probe_v0` 为 `No-Go`：pairwise response 降低 flip rate 31.31 pp，但区域准确率降低 5.05 pp、宏准确率降低 7.87 pp，准确率 CI 不满足 Go 门槛。
+- 不继续直接响应拼接、LoRA 或全模型训练。结果只支持生成“响应作为不确定性/拒答信号”的新假设。
+- **下一条检查**：如继续该方向，先写独立的 selective-rejection 预注册计划，使用 nested threshold、固定覆盖率指标和 held-out confirmation；数据允许用途未核验前不做公开/确认性 claim。
+
+## 当前任务：初始化 kykt 远端研究工作目录
+
+- **目标**：核验本机 SSH 入口和远端身份，在 `/hdd3/kykt26` 下建立训练、实验与结果收集目录，为后续 SGNet/RGB-D-D 环境和 smoke test 提供隔离工作区。
+- **范围**：修复本机 `kykt` SSH 别名；只在用户自有目录 `/hdd3/kykt26` 下创建 `training/`、`experiments/`、`results/`；验证所有者、权限、磁盘空间和重复执行安全性。
+- **不在范围**：不上传仓库、数据或权重；不安装环境；不启动训练/评估；不修改远端现有目录内容；不提交或推送。
+- **证据**：两个既有 SSH 入口均已验证可登录同一远端，身份为 `kykt26`；`/hdd3/kykt26` 属于 `kykt26:kykt26` 且访问权限为 `rwx`，目标挂载点可用空间约 3.0 TB。
+- **预期产出**：可直接执行的 `ssh kykt` 别名，以及 `/hdd3/kykt26/{training,experiments,results}` 三个用户目录。
+- **下一步**：创建后用 `stat`、`test -w` 和第二次 `mkdir -p` 验证目录身份、可写性和幂等性。
+
+### 本轮完成
+
+- 已将本机既有 SSH 条目扩展为等价别名 `kykt`；`ssh kykt` 已通过批处理登录验证，主机地址和密钥信息仅保留在本机 SSH 配置中。
+- 已在 `/hdd3/kykt26` 创建 `training/`、`experiments/`、`results/`；三者所有者均为 `kykt26:kykt26`、权限均为 `775`，写权限检查通过。
+- 已第二次执行相同 `mkdir -p` 并核对目录元数据哈希，幂等检查通过；未改动远端既有目录，也未上传代码、数据、权重或结果。
+
+### 当前判断与下一条可执行检查
+
+- 远端目录初始化状态为 `Completed`，但这只代表存储入口可用，不代表 SGNet/RGB-D-D 训练环境或数据授权已就绪。
+- **下一条检查**：取得 upstream 实际 SGNet/C2PD commit、checkpoint 来源、RGB-D-D 登记授权与 NYU v2 许可/split 后，在 `/hdd3/kykt26/envs` 建立锁定环境，并先执行不使用真实数据/权重的单元测试。
+
+## 当前任务：选择性迁移 upstream SGNet/RGB-D-D 资产
+
+- **目标**：在独立研究分支重放已审计的 14 个 upstream SGNet/RGB-D-D 提交，保留本 fork 的治理文档、材质主线、研究平台和文献索引，并形成可静态复核的迁移结果。
+- **范围**：从 `main` 新建 `research/sgnet-rgbdd-migration`；逐提交迁移 SGNet 配置、实验计划、报告、评估/分析脚本和脱敏聚合摘要；处理 README 或忽略规则冲突；运行不需要数据、权重或 GPU 的静态检查与测试。
+- **不在范围**：不直接 merge `upstream/main`；不删除本 fork 资产；不运行训练或完整评估；不下载数据或权重；不把 upstream 结果升级为本 fork 已复现结论；不提交或推送。
+- **证据**：`upstream/main=0a95b3d`，当前 `main=42b1ac9`，`git rev-list --left-right --count upstream/main...main` 为 `14 4`；`docs/upstream-change-audit-2026-07-23.md`；14 个 upstream 提交的文件级增量。
+- **预期产出**：`research/sgnet-rgbdd-migration` 工作分支；保留治理边界的 SGNet/RGB-D-D 代码与研究资产；迁移审计、测试结果和更新后的项目状态。
+- **下一步**：逐提交 cherry-pick；若某提交会覆盖治理文档、引入机器绝对路径/敏感信息或依赖未登记第三方资产，则停止并先记录为 `Blocked` 或 `Needs verification`。
+
+### 本轮完成
+
+- 已新建 `research/sgnet-rgbdd-migration`，选择性迁移 `upstream/main` 的 14 个 SGNet/RGB-D-D 提交增量；当前分支仍指向 `main=42b1ac9`，没有新增提交或推送。
+- 已迁移 5 个配置、实验计划、路线报告、22 个 Python 脚本、4 个 shell 脚本和 13 个聚合结果 JSON；未带入治理文档删除、数据、权重、逐样本输出、日志或生成图片。
+- 18 个 JSON 解析、22 个 Python AST/CLI、4 个 shell 语法检查通过；修复 router 脚本的 sklearn 惰性导入和 shell CRLF 兼容性。
+- 现有 `tests/` 3 项、`platform/tests/` 14 项单测均通过；迁移审计见 `docs/sgnet-rgbdd-migration-audit-2026-07-25.md`。
+
+### 当前判断与下一条可执行检查
+
+- 迁移状态为 `Smoke test`，上游实验结论仍为 `Needs verification`；当前材质恒常性主线不变。
+- 本机为 CPU-only PyTorch 且缺 `scikit-learn`；已在 `docs/sgnet-rgbdd-provenance.md` 登记官方来源、当前 revision 和已知许可边界，但 upstream 实际代码 commit、数据授权/split 和 checkpoint 来源仍未闭合。
+- **下一条检查**：向 upstream 执行者核对实际 SGNet/C2PD commit、checkpoint 来源、RGB-D-D 登记授权和 NYU v2 许可/split，并建立环境清单；未完成前不运行训练或完整评估。
 
 ## 当前任务：审计 upstream 新变化并更新记录
 

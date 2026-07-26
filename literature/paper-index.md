@@ -14,7 +14,7 @@
 
 | 论文 | 原始来源 | 本地文件 | 相关性 |
 | --- | --- | --- | --- |
-| A Dataset of Multi-Illumination Images in the Wild | [arXiv:1910.08131](https://arxiv.org/abs/1910.08131) | `1910.08131_multi_illumination_wild.pdf` | 当前多光照数据与 scene-level 独立单元审计 |
+| A Dataset of Multi-Illumination Images in the Wild | [arXiv:1910.08131](https://arxiv.org/abs/1910.08131) | `1910.08131_multi_illumination_wild.pdf` | 当前多光照数据与 scene-level 独立单元审计；官方项目页已核验数据为 CC BY 4.0、SDK 为 MIT，固定来源/哈希见 `docs/multi-illumination-provenance.md` |
 | One-shot Recognition of Any Material Anywhere / MatSim | [arXiv:2212.00648](https://arxiv.org/abs/2212.00648) | `2212.00648_matsim_material_recognition.pdf` | 跨环境材质表示与 physics-based rendering |
 | Eyes Wide Shut? | [arXiv:2401.06209](https://arxiv.org/abs/2401.06209) | `2401.06209_eyes_wide_shut_visual_shortcomings.pdf` | 区分视觉编码缺陷与语言推理缺陷；Mixture of Features |
 | C2KD | [CVPR 2024](https://openaccess.thecvf.com/content/CVPR2024/html/Huo_C2KD_Bridging_the_Modality_Gap_for_Cross-Modal_Knowledge_Distillation_CVPR_2024_paper.html) | `2024_cvpr_c2kd_cross_modal_distillation.pdf` | 跨模态负迁移、软标签错位与选择性蒸馏 |

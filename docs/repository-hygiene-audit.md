@@ -23,7 +23,7 @@ README 声明数据、权重、运行输出和未公开资料应由 `.gitignore`
 - `experiments/logs/`、逐样本 JSONL、处理后图片、PDF、DOCX、QA 渲染页和 LibreOffice profile 已进入历史；
 - 未发现环境锁定文件和自动化测试；
 - 文本扫描未发现明显的口令或 API 密钥，但个人服务器路径已经公开进入提交；
-- 数据与生成图片的再分发许可尚未形成清单。
+- Multi-Illumination 数据来源与 CC BY 4.0 许可已在 `docs/multi-illumination-provenance.md` 闭合；其他既有数据、生成图片和第三方资产的再分发许可仍未形成完整清单。
 
 ## 本轮已做
 

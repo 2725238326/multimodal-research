@@ -1,6 +1,6 @@
 # Fork 与上游协作说明
 
-**核验日期：2026-07-23**
+**核验日期：2026-07-25**
 
 ## 1. 当前关系
 
@@ -13,7 +13,7 @@ GitHub 页面确认 `2725238326/multimodal-research` fork 自 `aspera11011/multi
 
 本地远端引用在 2026-07-23 检查时显示 `main` 与 `upstream/main` 已明显分叉：
 
-- fork 独有：3 个提交，当前 `main` 为 `0b0907e 123`；
+- fork 独有：4 个提交，当前 `main` 为 `42b1ac9 t1`；
 - upstream 独有：14 个提交，当前 `upstream/main` 为 `0a95b3d feat: train SGNet branch router pilot`；
 - 本地快照分支：`sync/upstream-main-20260723`；
 - `upstream` push URL 已设为 `no_push`。
@@ -28,6 +28,8 @@ git cherry-pick <reviewed-upstream-commit>
 ```
 
 或手工迁移上游 SGNet/RGB-D-D 的配置、脚本、计划和聚合摘要，同时保留本 fork 的 `AGENTS.md`、`rules.md`、`docs/` 治理文档和文献索引。
+
+2026-07-25 已在 `research/sgnet-rgbdd-migration` 按此策略完成静态迁移，未直接 merge、未提交或推送；复核记录见 `docs/sgnet-rgbdd-migration-audit-2026-07-25.md`。
 
 ## 2. 推荐贡献方式
 

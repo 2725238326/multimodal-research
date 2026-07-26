@@ -22,6 +22,7 @@ venv/
 env/
 .cache/
 tmp/
+transfer_staging/
 
 # Raw and derived research assets
 data/raw/
@@ -35,6 +36,14 @@ paper/
 experiments/logs/
 experiments/manifests/
 results/
+!results/
+results/*
+!results/quantitative/
+results/quantitative/*
+!results/quantitative/*/
+results/quantitative/*/*
+!results/quantitative/*/README.md
+!results/quantitative/*/summary.json
 
 # Generated reports and office state
 reports/**/*.docx
