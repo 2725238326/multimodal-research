@@ -1,5 +1,6 @@
 # 本地阶段汇报
 
+- `material_constancy_negative_results_synthesis.md`：跨光照材质恒常性五轮反证的综述稿，提出稳定性—辨识性权衡这一统一发现，并汇总预注册、独立单元、四件套控制与零重叠外部确认的方法论证据链。
 - `2026-07-19_depth_physics_and_rgbd_route_summary.md`：深度物理关系当天完整实验总结，包含 AI2-THOR 干预真值、Qwen gate、Visual Jenga、DPE/RGB/结构化关系头消融、查新结论和转向 RGB-D 图像复原的下一步。
 - `material_response_probe_v0.md`：SigLIP2 frozen-feature 多光照响应 gate 的 330 样本、三 seed、负对照和 No-Go 结论。
 - `material_response_selective_gate_v0.md`：在固定 RGB 预测下对跨光照响应拒判信号进行 nested scene 评估；固定覆盖率、AURC 和 shuffled control 均未过门槛，结论为 No-Go。
