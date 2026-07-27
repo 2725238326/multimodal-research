@@ -14,6 +14,8 @@
 | `material-response-model-selection-2026-07-25.md` | Material response gate 的官方模型查新、精确 revision、许可和角色决策 |
 | `multi-illumination-provenance.md` | Multi-Illumination 官方数据/SDK 来源、CC BY 4.0 许可、固定哈希和 train/test 独立性 |
 | `hdr-light-probe-candidate-audit-2026-07-26.md` | 标定 HDR 与 light-probe normalization 的零训练可行性审计、测量证据和 No-Go 判定 |
+| `next-phase-plan-2026-07-26.md` | 网络/资源约束实测、既有证据复核（支配关系、容量混淆）与三条路线（负结果论文、SGNet 解阻塞、偏振观测量）的规划 |
+| `cross-repo-comparative-study-2026-07-26.md` | 与隔壁 Summer 仓库的只读对照：共享继承 vs 独立分叉、跨任务同构失败、SGNet 汇合点与 J1–J5 联合发展规划 |
 | `experiment-log-template.md` | 新实验统一模板 |
 | `research-paradigm-transfer-audit.md` | 旧工作范式的可迁移项、隔离边界与本项目适配 |
 | `research-design-patterns.md` | 科研模式、反模式、机制迁移卡和多方向 WIP 门禁 |

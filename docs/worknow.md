@@ -2,6 +2,27 @@
 
 **更新时间：2026-07-26**
 
+## 当前任务：与隔壁 Summer 仓库建立对照研究与联合发展规划
+
+- **状态**：`Planned`，只做只读对照与规划，不改动 Summer 仓库任何文件，不训练。
+- **背景**：`E:\Work\DXY_summer\Summer` 是同组另一位成员的独立仓库，也是本 fork 的 `upstream`（`aspera11011/multimodal-research`）来源。两仓库治理结构同源（AGENTS.md/rules.md/docs），研究对象重叠：都做过材质恒常性 + 单帧物理关系，并都转向 RGB 引导深度超分（SGNet/RGB-D-D）。
+- **对照价值**：两条线在同一批现象上独立得到 No-Go，构成天然的双人复核；且 Summer 的深度物理关系反证（DPE/ROI 关系头、Visual Jenga 反事实、结构化边分类器全部低于深度差规则 60.9%）与本 fork 的材质响应反证，可能共享同一机制——"语义/外观统计不能替代物理测量"。
+- **只读边界**：Summer 仓库有独立 git 和 owner，绝不 pull/push/commit/改动其文件；对照结论只写入本 fork。
+- **预期产出**：`docs/cross-repo-comparative-study-2026-07-26.md`——两仓库任务、方法、证据、No-Go 与仍开放方向的对照矩阵，以及一份联合发展规划（哪些可合并为一篇负结果综述、哪些需要分工、SGNet 阻塞是否两边共通）。
+- **产出（本轮完成）**：`docs/cross-repo-comparative-study-2026-07-26.md`。
+
+### 本轮完成
+
+- 已只读通读 Summer 的 project-status、project-plan、collaboration-workflow、worknow、rgbd-module-audit、material-constancy-rgb-gate；未改动其任何文件。
+- 已辨明共享继承 vs 独立分叉：材质 RGB gate v2、albedo、intrinsic text 三项在两仓库数值完全一致，属分叉前共享资产，不能表述为独立双人复核。分叉后本 fork 走冻结特征/像素物理/标定 HDR，Summer 走单帧深度关系/反事实生成。
+- 已提炼跨任务同构失败四点：精细结构不敌朴素/规则基线、对照超越主方法、语义不替代物理测量、接口保留但研究收益否决。这是把两条线合成一篇更强负结果论文的核心论点。
+- 已识别 SGNet 汇合点的对照价值：本 fork 已查清 Google Drive 权重阻塞与 RGB-D-D 授权两个独立阻塞，Summer 计划未记录此阻塞；若共用服务器/网络，Summer 也会撞墙，需共享情报。
+
+### 当前判断与下一条可执行检查
+
+- 联合规划已落 J1–J5：J1（并入 intrinsic text 机制解释）、J2（综述稿新增跨任务同构失败节）无阻塞可立即做；J3（合并发表分工）、J4（共享 SGNet 阻塞情报）、J5（upstream 回馈）需与另一位成员沟通。
+- **下一条检查**：待用户确认两仓库是否共用服务器/网络出口（决定 Google Drive 阻塞是否对 Summer 同样成立），以及合并发表意向；据此执行 J1–J2 并把 J4 情报整理成可共享形式。
+
 ## 当前任务：负结果综述稿
 
 - **状态**：`Completed synthesis`；不引入新实验，所有数字取自既有聚合结果并逐项交叉核对。
