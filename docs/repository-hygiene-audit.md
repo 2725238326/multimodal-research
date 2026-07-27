@@ -75,6 +75,12 @@ README 声明数据、权重、运行输出和未公开资料应由 `.gitignore`
 1. 放宽白名单，允许 `results/quantitative/*/` 下的聚合 JSON，使声明与事实一致；
 2. 保持白名单，把这 11 个文件合并进各自的 `summary.json` 或停止跟踪。
 
+## 2026-07-26 追加：被跟踪的测试生成物 .pyc
+
+`scripts/__pycache__/build_material_constancy_pilot.cpython-313.pyc` 是被跟踪的 Python 字节码，每次运行相关测试都会改动其字节内容。本轮提交 `b17e9b8` 在提交综述时误将其一并纳入（18545 → 18494 bytes）。由于禁止改写共享历史，未回退。
+
+该文件属于应当停止跟踪的生成物（`.gitignore` 已含 `*.py[cod]`，但只阻止新增，不回溯已跟踪项）。建议与下方已跟踪资产分类一并处理：`git rm --cached` 停止跟踪，保留本地文件。在治理决策前，后续提交须显式核对不再纳入该文件。
+
 ## 决策前需要回答
 
 0. `results/quantitative/` 白名单采用上述哪一种修法？
